@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sol, lenguaje y civilización</title>
+  <style>
+    :root {
+      --bg: #f2e8d8;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #665a52;
+      --line: rgba(84, 65, 54, 0.16);
+      --night: #211a18;
+      --sun: #d89a31;
+      --ember: #b95d41;
+      --sea: #3a7280;
+      --moss: #6f8550;
+      --violet: #715a7f;
+      --gold: #b99045;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 84% 12%, rgba(216, 154, 49, 0.18), transparent 24%),
+        linear-gradient(180deg, #f7f0e2 0%, #eadbc3 52%, #dcc7ab 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 154, 49, 0.26), rgba(216, 154, 49, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.2rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221916 0%, #46352e 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.4rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(84, 65, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .chain,
+    .phase-grid,
+    .species-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.04fr 0.96fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.04;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .card p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .tax-grid {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .tax-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .tax-cell {
+      border-radius: 22px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid var(--line);
+    }
+
+    .tax-head {
+      font-weight: 760;
+      color: var(--ink);
+    }
+
+    .sun { border-left: 5px solid var(--sun); }
+    .ember { border-left: 5px solid var(--ember); }
+    .sea { border-left: 5px solid var(--sea); }
+    .moss { border-left: 5px solid var(--moss); }
+    .violet { border-left: 5px solid var(--violet); }
+
+    .chain {
+      margin-top: 18px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .chain.chain-two-by-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chain .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chain .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -14px -42px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .phase-grid,
+    .species-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .phase-grid .card,
+    .species-grid .card {
+      min-height: 180px;
+    }
+
+    .timeline {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(216, 154, 49, 0.12), rgba(58, 114, 128, 0.08));
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .timeline-step {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 250, 244, 0.84);
+      border: 1px solid var(--line);
+    }
+
+    .timeline-step strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .timeline-step p {
+      font-size: 0.93rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #211916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.9);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .chain,
+      .phase-grid,
+      .species-grid,
+      .timeline,
+      .tax-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Cosmos · lenguaje · metacognicion</span>
+        <h1>Del Sol al simbolo</h1>
+        <p class="hero-copy">
+          Esta pieza organiza una intuicion fuerte: la materia es energia estabilizada, la vida es materia en
+          organizacion, y la cultura es energia psíquica que aprende a circular por sonido, lenguaje, memoria y
+          accion coordinada. No es una demostracion fisica cerrada: es un mapa narrativo para pensar la civilizacion
+          como un sistema de captura, traduccion y equilibrio.
+        </p>
+      </div>
+      <aside class="hero-side">
+        <div class="quote dark">
+          <span class="kicker">Hipotesis central</span>
+          <strong>El Sol libera. La Tierra acumula. La vida organiza. La mente reverbera.</strong>
+          <p>La pregunta no es solo cuanta energia extraemos, sino si sabemos hacerla circular sin romper el tablero.</p>
+        </div>
+        <div class="quote">
+          <span class="kicker">Remate</span>
+          <strong>Toda accion humana es energia negociada por interfaces simbolicas.</strong>
+          <p>Lenguaje, musica, normas y tecnologia son formas de empaquetar memoria para mover cuerpos y coordinar futuros.</p>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-label">1. Cuerpo y cosmos como ingenierias de escala</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Lectura taxonomica</span>
+        <h2>El cuerpo como manual de instrucciones; el planeta como version ampliada</h2>
+        <p>
+          Si el cuerpo esta compuesto por organos, capas, entradas, salidas y un instrumento interno que procesa la
+          experiencia, el cosmos habitable puede leerse de forma parecida: fuente, capas, sensores, acciones y
+          circuitos de memoria. La analogia no dice que sean lo mismo; dice que ambos exigen arquitectura y equilibrio.
+        </p>
+
+        <div class="tax-grid">
+          <div class="tax-row">
+            <div class="tax-cell sun"><span class="tax-head">Fisiologicos</span></div>
+            <div class="tax-cell">Organos del cuerpo denso: nutricion, metabolismo, soporte biologico.</div>
+            <div class="tax-cell">Capas planetarias y ecosistemas: suelo, agua, atmosfera, biomasa, metabolismo terrestre.</div>
+          </div>
+          <div class="tax-row">
+            <div class="tax-cell sea"><span class="tax-head">Jnanendriyas</span></div>
+            <div class="tax-cell">Organos de percepcion: puertas de entrada del mundo hacia el sistema nervioso.</div>
+            <div class="tax-cell">Sensores civilizatorios: telescopios, satelites, ciencia, observacion del clima, registros.</div>
+          </div>
+          <div class="tax-row">
+            <div class="tax-cell ember"><span class="tax-head">Karmendriyas</span></div>
+            <div class="tax-cell">Organos de accion: manos, voz, desplazamiento, manipulacion del entorno.</div>
+            <div class="tax-cell">Infraestructura de accion: agricultura, industria, redes, energia, tecnologia, trabajo.</div>
+          </div>
+          <div class="tax-row">
+            <div class="tax-cell violet"><span class="tax-head">Antahkarana</span></div>
+            <div class="tax-cell">Instrumento interno: memoria, identidad, discernimiento, mente.</div>
+            <div class="tax-cell">Mente colectiva: lenguaje, mapas, leyes, canciones, archivos, modelos y relato comun.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Primer encadenamiento</span>
+        <h2>La materia terrestre puede leerse como energia solar acumulada</h2>
+        <p>
+          En esta narrativa, el Sol no es un decorado: es la fuente de flujo. La Tierra hace de batería compleja,
+          estratificando energia en climas, corrientes, biomasa, combustibles, memoria biologica y posibilidades de
+          vida. La civilizacion entra cuando esa energia deja de ser solo soporte y se convierte en diseño deliberado.
+        </p>
+
+        <div class="chain chain-two-by-two">
+          <article class="card sun">
+            <h3>1. Radiacion</h3>
+            <p>La fuente emite flujo: calor, luz, diferencia y posibilidad.</p>
+          </article>
+          <article class="card moss">
+            <h3>2. Acumulacion</h3>
+            <p>La Tierra captura en ciclos, materia viva, capas geologicas y reservas.</p>
+          </article>
+          <article class="card sea">
+            <h3>3. Organizacion</h3>
+            <p>La vida transforma el flujo en forma, metabolismo, percepcion y aprendizaje.</p>
+          </article>
+          <article class="card violet">
+            <h3>4. Reflexion</h3>
+            <p>La mente convierte experiencia en simbolos, decisiones y estrategia consciente.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">2. Del sonido interno a la accion material</div>
+    <section class="grid-2" id="impulso-y-accion">
+      <article class="panel">
+        <span class="badge">Termodinamica psiquica</span>
+        <h2>Antes del gesto hay una vibracion, una forma, un nombre</h2>
+        <p>
+          Aqui aparece tu tesis mas fuerte: aquello que luego vemos en el plano material suele pasar primero por un
+          plano de energia psíquica. Pensar, en humanos, rara vez es puro vapor abstracto: solemos pensar en lenguaje,
+          en ritmo, en dialogo interno. El sonido interior ordena la atencion; la atencion ordena la accion.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-step">
+            <strong>Impulso</strong>
+            <p>Una tension, necesidad o deseo emerge como energia disponible.</p>
+          </div>
+          <div class="timeline-step">
+            <strong>Sonido interno</strong>
+            <p>La mente le da forma en palabra, ritmo, imagen verbal o dialogo.</p>
+          </div>
+          <div class="timeline-step">
+            <strong>Pensamiento</strong>
+            <p>El lenguaje ordena opciones, planes, juicios y anticipaciones.</p>
+          </div>
+          <div class="timeline-step">
+            <strong>Manifestacion</strong>
+            <p>La accion baja al cuerpo, a la tecnica, al objeto y al mundo compartido.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Sonido, cancion, memoria</span>
+        <h2>Reproducir una cancion es volver a concentrar energia en un patron</h2>
+        <p>
+          Una cancion no es solo entretenimiento: es memoria comprimida en frecuencia, secuencia y repeticion. Al
+          reproducirla, reactivamos una configuracion energetica y afectiva. Igual con una palabra, un himno, un mantra
+          o una ley: son paquetes de coordinacion que atraviesan cuerpos y tiempos.
+        </p>
+
+        <div class="grid-3" style="margin-top: 18px;">
+          <article class="card ember">
+            <h3>Musica</h3>
+            <p>Acumula tiempo, emocion y patron repetible.</p>
+          </article>
+          <article class="card sea">
+            <h3>Lenguaje</h3>
+            <p>Funciona como interfaz de negociacion entre mentes y juegos de interes.</p>
+          </article>
+          <article class="card moss">
+            <h3>Tecnica</h3>
+            <p>Hace estable una intencion y la vuelve reproducible en objetos o sistemas.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">3. Imitacion, juego y metacognicion</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Karma y teoria de juegos</span>
+        <h2>El lenguaje negocia; la accion devuelve consecuencias</h2>
+        <p>
+          Si vivir en sociedad es jugar partidas repetidas, entonces el karma puede leerse como una contabilidad de
+          efectos: patrones de accion que vuelven porque alteran el tablero. La teoria de juegos añade precision:
+          cooperar, engañar, castigar, confiar o coordinar depende de reglas, memoria y horizonte temporal.
+        </p>
+
+        <div class="phase-grid">
+          <article class="card sun">
+            <h3>Interfaz simbolica</h3>
+            <p>Hablar es proponer marcos, negociar expectativas y alinear acciones.</p>
+          </article>
+          <article class="card ember">
+            <h3>Retorno karmico</h3>
+            <p>Lo que haces modifica incentivos, reputacion y futuros posibles.</p>
+          </article>
+          <article class="card sea">
+            <h3>Juego repetido</h3>
+            <p>Aprender no es un acto unico: es iteracion con memoria de resultados.</p>
+          </article>
+          <article class="card violet">
+            <h3>Metacognicion</h3>
+            <p>La conciencia permite revisar la estrategia y no solo repetir el impulso.</p>
+          </article>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Aprendizaje comparado</span>
+        <h2>Toda especie imita. La singularidad humana aparece cuando la imitacion se observa a si misma</h2>
+        <p>
+          Un loro repite sonidos. Un mono repite conductas. Muchas especies juegan, aprenden por modelo y ajustan su
+          conducta. El salto humano no es aprender sin imitacion, sino poder mirar el aprendizaje, comentarlo,
+          formalizarlo y rediseñarlo. Ahi entra la metacognicion. Y no estamos solos del todo: ciertos corvidos y otras
+          especies muestran destellos de planificacion, uso de herramientas o autorregulacion.
+        </p>
+
+        <div class="species-grid">
+          <article class="card moss">
+            <h3>Imitacion animal</h3>
+            <p>Repetir sonido, gesto, ruta o tecnica mejora supervivencia y pertenencia.</p>
+          </article>
+          <article class="card sea">
+            <h3>Aprendizaje social</h3>
+            <p>La cultura nace cuando la copia se vuelve transmisible y estable.</p>
+          </article>
+          <article class="card ember">
+            <h3>Conciencia humana</h3>
+            <p>Podemos preguntarnos por que pensamos asi y si conviene seguir haciendolo.</p>
+          </article>
+          <article class="card violet">
+            <h3>Metacognicion expandida</h3>
+            <p>El pensamiento se vuelve diseñador de sus propios circuitos.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">4. Las cuatro fases de una civilizacion energetica</div>
+    <section class="panel">
+      <span class="badge">Von Neumann cosmico</span>
+      <h2>No basta captar energia. Hay que almacenarla, circularla y equilibrarla</h2>
+      <p>
+        Esta lectura civilizatoria pregunta si somos capaces de convertirnos en un sistema inteligente de circulacion,
+        no en una maquina torpe de combustion. La tension entre tecnologia solar y combustibles fosiles resume el
+        dilema: una cosa coopera con el flujo; la otra quema capital geologico de golpe y degrada el tablero.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <strong>Fase 1 · Captura</strong>
+          <p>Aprender a recibir energia: luz, viento, biomasa, conocimiento, atencion.</p>
+        </div>
+        <div class="timeline-step">
+          <strong>Fase 2 · Acumulacion</strong>
+          <p>Guardar en materia, baterias, suelos, memoria, instituciones y cultura.</p>
+        </div>
+        <div class="timeline-step">
+          <strong>Fase 3 · Circulacion</strong>
+          <p>Distribuir sin bloqueo: redes, lenguaje, comercio, cooperacion, tecnologia.</p>
+        </div>
+        <div class="timeline-step">
+          <strong>Fase 4 · Equilibrio</strong>
+          <p>Usar sin colapsar la fuente ni destruir las capas que sostienen la vida.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 18px;">
+        <article class="card sun">
+          <h3>Solar</h3>
+          <p>Trabaja con flujo renovado, descentralizacion y sincronizacion con el sistema vivo.</p>
+        </article>
+        <article class="card ember">
+          <h3>Fosil</h3>
+          <p>Extrae energia comprimida del pasado y la gasta a una velocidad brutalmente descompensada.</p>
+        </article>
+        <article class="card sea">
+          <h3>Pregunta clave</h3>
+          <p>¿Podemos hacer circular energia, memoria y tecnologia con inteligencia suficiente para no sabotearnos?</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>Cuidar la Tierra es cuidar la arquitectura que traduce el Sol en mundo vivible</h2>
+      <p>
+        Si esta narrativa acierta aunque sea a medias, entonces ecologia, lenguaje, conciencia y tecnologia no son
+        piezas sueltas del tablero. Son distintas escalas de una misma tarea: captar flujo, organizarlo en formas
+        vivas, convertir experiencia en sentido compartido y coordinar accion sin degradar la base material que lo
+        hace posible.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

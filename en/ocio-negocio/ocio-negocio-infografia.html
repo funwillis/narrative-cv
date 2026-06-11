@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leisure and business: the human limit of acceleration</title>
+  <style>
+    :root {
+      --bg: #efe6d9;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #665a52;
+      --line: rgba(82, 64, 54, 0.16);
+      --clay: #b76845;
+      --lake: #356d7c;
+      --moss: #71824a;
+      --sand: #c79a4b;
+      --plum: #7c5767;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(113, 130, 74, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(199, 154, 75, 0.24), rgba(199, 154, 75, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 9ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.1rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.4rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .timeline,
+    .balance-grid,
+    .swing-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.04fr 0.96fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .card p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .clay { border-left: 5px solid var(--clay); }
+    .lake { border-left: 5px solid var(--lake); }
+    .moss { border-left: 5px solid var(--moss); }
+    .sand { border-left: 5px solid var(--sand); }
+    .plum { border-left: 5px solid var(--plum); }
+
+    .timeline {
+      margin-top: 18px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -14px -42px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-list {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-item {
+      border-radius: 20px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid var(--line);
+    }
+
+    .mini-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .balance-grid,
+    .swing-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rail {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(53, 109, 124, 0.1), rgba(183, 104, 69, 0.08));
+      border: 1px solid var(--line);
+    }
+
+    .rail strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #221916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.9);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .timeline,
+      .balance-grid,
+      .swing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../../ocio-negocio/ocio-negocio-infografia.html">Español</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Technology · work · leisure · humanity</span>
+        <h1>Leisure and business</h1>
+        <p class="hero-copy">
+          This piece closes the previous one. If AI compresses and accelerates thought, the problem is no longer only
+          what we can do faster, but what rhythm a human being can withstand without degrading into a processor.
+          Technology accelerates; humanity needs alternation.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <aside class="quote dark">
+          <span class="kicker">Krishnamurti</span>
+          <strong>You cannot learn if you don't have leisure.</strong>
+          <p>
+            Time to be alone, listen, ask questions, and inquire. If that space does not exist, the school becomes a
+            factory and the mind becomes an instrument without depth.
+          </p>
+        </aside>
+
+        <aside class="quote">
+          <span class="kicker">Byung-Chul Han</span>
+          <strong>Excess performance turns the subject into exploiter and exploited at the same time.</strong>
+          <p>
+            When everything becomes production, optimization, and instant response, rest stops looking human and starts
+            looking like guilt. At that point we have already lost something serious.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1. Where it fits in the project</div>
+    <section class="panel">
+      <span class="badge">Necessary continuation</span>
+      <h2>If AI accelerates, leisure becomes cognitive infrastructure</h2>
+      <p>
+        `JTBD` spoke of need. `Metacognition` of self-regulation. `Banausos` of the mind fragmented by a narrow
+        function. `Situated AI` of externalized memory and cognitive acceleration. One decisive piece was missing: the
+        human limit. Without leisure, pause, bonds, and non-utilitarian time, technical acceleration ends up devouring
+        the quality of consciousness it claimed to enhance.
+      </p>
+
+      <div class="mini-list">
+        <div class="mini-item">
+          <strong>Leisure</strong>
+          <span>It is not decorative laziness: it is the space where mind assimilates, connects, and learns without coercion.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Business</strong>
+          <span>Its etymology already reveals the blow: neg-otium, the negation of leisure, the suspension of non-utilitarian time.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Contemporary problem</strong>
+          <span>When everything is measured by performance, even rest is instrumentalized and loses its human function.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">2. History changes tools, not the dilemma</div>
+    <section class="panel">
+      <span class="badge">Technological evolution</span>
+      <h2>Acceleration has changed layers: muscle, factory, information, cognition</h2>
+      <p>
+        Technology did not begin with AI. What AI does is radicalize an older tendency: transferring human effort into
+        ever more powerful systems. First the body was relieved. Then production was mechanized. Later information was
+        computerized. Now part of mental labor is being compressed.
+      </p>
+
+      <div class="timeline">
+        <article class="card clay">
+          <h3>1. Manual agriculture</h3>
+          <p>Human and animal bodies carried almost the entire productive burden.</p>
+        </article>
+        <article class="card moss">
+          <h3>2. Agricultural machinery and industry</h3>
+          <p>Physical labor, productive scale, and resource extraction are accelerated.</p>
+        </article>
+        <article class="card lake">
+          <h3>3. Computing</h3>
+          <p>Information stops moving at human pace and permeates all sectors transversally.</p>
+        </article>
+        <article class="card plum">
+          <h3>4. AI</h3>
+          <p>Acceleration enters abstraction, writing, analysis, and part of cognitive labor.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">3. The human being is not a CPU with legs</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Danger</span>
+        <h2>Without rest, the subject ends up processing without understanding</h2>
+        <p>
+          A saturated human being may keep responding, producing, and chaining tasks together, but that does not mean
+          learning is still happening well. Rest is not a pause between performances: it is the medium in which memory,
+          relationship, and judgment settle. If it disappears, the person can stay active while emptying out inside.
+        </p>
+
+        <div class="rail">
+          <strong>Diagnosis</strong>
+          <p>
+            When there is no leisure, thought becomes reactive, relationship becomes instrumental, and life is reduced
+            to throughput. That may serve to produce more for a while; it serves terribly for remaining human.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Condition of learning</span>
+        <h2>Learning requires time not colonized by immediate utility</h2>
+        <p>
+          Here Krishnamurti goes to the bone. We do not learn well when all attention is hijacked by urgency,
+          evaluation, or performance. Leisure is required in order to listen, experiment, make mistakes, look without
+          an immediate objective, and let connections emerge that the regime of business does not tolerate.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Rest</strong>
+            <span>It restores the capacity to discern instead of merely react.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Bond</strong>
+            <span>It sustains meaning, shared language, and affective regulation.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Leisure</strong>
+            <span>It opens the space where non-servile curiosity can appear.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">4. Both extremes are bad</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Extreme 1</span>
+        <h2>Only leisure degrades society</h2>
+        <p>
+          If leisure loses all tension with responsibility, care, and craft, it becomes dissolution. There is no
+          culture, maintenance, or historical continuity without labor, technique, and discipline. Society needs real
+          capacity for action.
+        </p>
+
+        <div class="balance-grid">
+          <div class="mini-item">
+            <strong>Drift</strong>
+            <span>Disorder, dependence, and erosion of practical competence.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Failure</strong>
+            <span>Freedom without form ends up devouring the conditions that make it possible.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Extreme 2</span>
+        <h2>Only business breaks circularity and exploits resources</h2>
+        <p>
+          The other extreme is the present one: constant performance, continuous extraction, and contempt for limits.
+          There not only people burn out; soils, attention, bonds, and material reserves burn out too. It is a logic
+          brilliant for acceleration and awful for duration.
+        </p>
+
+        <div class="balance-grid">
+          <div class="mini-item">
+            <strong>Drift</strong>
+            <span>Exhaustion, hyperreactivity, and the instrumentalization of time and the other.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Failure</strong>
+            <span>Production without pause consumes the human and material support on which it depends.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">5. The balance that keeps us human</div>
+    <section class="panel">
+      <span class="badge">Final thesis</span>
+      <h2>To be human is to alternate: produce, stop, relate, look again</h2>
+      <p>
+        No matter how much technology changes, the human condition is not solved by eliminating leisure. On the
+        contrary: the more powerful technique becomes, the more decisive it is to protect the space where not
+        everything is immediately translated into output. The balance between leisure and business is not a
+        post-productive luxury. It is the mechanism that prevents society from becoming a machine of exploitation
+        without interiority.
+      </p>
+
+      <div class="swing-grid">
+        <div class="mini-item">
+          <strong>Healthy business</strong>
+          <span>Work with limits, craft with meaning, technique in the service of life.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Healthy leisure</strong>
+          <span>Rest, play, contemplation, bond, and open time for learning without coercion.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>No matter how much technology appears: without alternation we become dehumanized</h2>
+      <p>
+        Agriculture mechanized effort, industry accelerated production, computing compressed information, and AI is
+        beginning to compress part of thought. But none of those technical victories solves the deeper problem. If the
+        human being does not alternate leisure and business, it ends up broken by excess or diluted by defect. The
+        closure is not technological; it is anthropological: remaining human requires rhythm, limit, and rest.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

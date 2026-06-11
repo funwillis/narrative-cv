@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idea constellations · Narrative data visualization</title>
+  <style>
+    :root {
+      --bg: #efe4d2;
+      --paper: rgba(255, 248, 238, 0.84);
+      --paper-strong: #fffaf4;
+      --ink: #201a18;
+      --muted: #645954;
+      --line: rgba(88, 70, 62, 0.18);
+      --olive: #708238;
+      --terracotta: #b85d3f;
+      --lake: #356d7c;
+      --gold: #b9912f;
+      --shadow: 0 24px 60px rgba(50, 31, 20, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(112, 130, 56, 0.18), transparent 22%),
+        linear-gradient(180deg, #f3ebdf 0%, #e8dbc5 54%, #ddccb3 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 248, 238, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto 48px;
+    }
+
+    .topbar,
+    .disclaimer {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+    }
+
+    .topbar {
+      margin-bottom: 18px;
+      padding: 18px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      padding: 22px;
+    }
+
+    .disclaimer h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.9rem;
+      line-height: 1.04;
+    }
+
+    .disclaimer p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 72ch;
+    }
+
+    .hero,
+    .card {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.72);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: 0.94;
+      max-width: 9ch;
+    }
+
+    .intro {
+      margin-top: 16px;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .hero-note {
+      border-radius: 28px;
+      padding: 24px;
+      background: linear-gradient(160deg, #201a18 0%, #3b302c 100%);
+      color: #fff8f1;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-note strong {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 248, 241, 0.72);
+    }
+
+    .hero-note p {
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .map-shell,
+    .synthesis {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      border-radius: 32px;
+      padding: 24px;
+    }
+
+    .map-shell h2,
+    .synthesis h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.1rem;
+      line-height: 1.02;
+    }
+
+    .map-intro,
+    .synthesis p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 72ch;
+    }
+
+    .map-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .map-core,
+    .map-column,
+    .map-link {
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+
+    .map-core {
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(185, 93, 65, 0.14), transparent 34%),
+        linear-gradient(155deg, rgba(255, 250, 244, 0.95), rgba(248, 239, 229, 0.82));
+    }
+
+    .map-core .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+    }
+
+    .map-core h3,
+    .map-link h3 {
+      margin-top: 14px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.8rem;
+      line-height: 1.02;
+    }
+
+    .map-core p,
+    .map-link p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .map-points {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .map-point {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid var(--line);
+    }
+
+    .map-point strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+
+    .map-point span {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.42;
+    }
+
+    .map-column {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      background:
+        radial-gradient(circle at 84% 10%, rgba(53, 109, 124, 0.12), transparent 26%),
+        rgba(255, 250, 244, 0.82);
+    }
+
+    .map-link {
+      padding: 16px;
+    }
+
+    .map-link .mini {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+    }
+
+    .map-link h3 {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+
+    .map-link a {
+      display: inline-flex;
+      margin-top: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .card {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #fff;
+    }
+
+    .tag.olive { background: var(--olive); }
+    .tag.terracotta { background: var(--terracotta); }
+    .tag.lake { background: var(--lake); }
+
+    .card h2 {
+      margin-top: 16px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.8rem;
+      line-height: 1.02;
+    }
+
+    .card p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .links {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid,
+      .map-grid,
+      .map-points {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="./index.html">Idea constellations</a>
+    <a href="../../es/constelaciones/index.html">Español</a>
+  </div>
+  <main>
+    <div class="topbar">
+      <span class="eyebrow">Conceptual satellites · Language selector</span>
+    </div>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Constellations · Satellite archive</span>
+        <h1>Idea constellations</h1>
+        <p class="intro">
+          These pieces are no longer the front door of the project. They now function as conceptual constellations
+          orbiting the central sadhana of noetic sovereignty.
+        </p>
+      </div>
+      <aside class="hero-note">
+        <strong>Access note</strong>
+        <p>The root of the project now lives in the main sadhana. These satellite pieces remain here to expand, tension, and contrast it.</p>
+      </aside>
+    </section>
+
+    <section class="disclaimer">
+      <h2>Reading note</h2>
+      <p>
+        It would be possible to attempt a complete multidimensional graph of these ideas on the web. But there is no
+        real need for that, at least not yet. This collection uses a simpler solution: constellations of navigable
+        pieces orbiting a center and returning to it when needed.
+      </p>
+      <p>
+        This is not a deficiency in the project. It is a decision for clarity. For now, what is practicable matters more than what is totalizing.
+      </p>
+    </section>
+
+    <section class="map-shell">
+      <span class="eyebrow">Relational map · Conceptual navigation</span>
+      <h2>The pieces are not isolated: they describe the same problem at different scales</h2>
+      <p class="map-intro">
+        This project is no longer just a file menu. It is a root infographic: a map showing how need, consciousness,
+        education, species, and energy chain together. Each piece grabs one layer of the problem and pushes it to the
+        next level.
+      </p>
+
+      <div class="map-grid">
+        <article class="map-core">
+          <span class="tagline">Shared axis</span>
+          <h3>How does an impulse travel from the self to a form of life that does not destroy itself?</h3>
+          <p>
+            The infographics orbit the same question. They begin with need, move through learning and the design of
+            mind, scale up to human coordination, and end at the material dilemma of every civilization: capturing
+            energy, organizing it, and not breaking the support that makes life habitable.
+          </p>
+
+          <div class="map-points">
+            <div class="map-point">
+              <strong>Need</strong>
+              <span>JTBD shows that action begins in a real job, not in a market label.</span>
+            </div>
+            <div class="map-point">
+              <strong>Self-regulation</strong>
+              <span>Metacognition shows that learning well requires watching one’s own learning.</span>
+            </div>
+            <div class="map-point">
+              <strong>Mental form</strong>
+              <span>Krishnamurti and the banausos warn against a mind that is useful but broken.</span>
+            </div>
+            <div class="map-point">
+              <strong>Species scale</strong>
+              <span>Panhumanism tries to pull the self out of its myopia and think collective interests.</span>
+            </div>
+            <div class="map-point">
+              <strong>Externalized memory</strong>
+              <span>AI turns language into operational memory and accelerates the loop between idea, critique, and action.</span>
+            </div>
+            <div class="map-point">
+              <strong>Human rhythm</strong>
+              <span>Leisure introduces the limit without which technical acceleration eventually hollows out its user.</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="map-column">
+          <article class="map-link">
+            <span class="mini">1 · Impulse</span>
+            <h3>Jobs to be Done</h3>
+            <p>From a concrete problem to the pattern of need that truly drives behavior.</p>
+            <a href="../jobs-to-be-done/jtbd-infografia.html">Open the need layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">2 · Learning</span>
+            <h3>Metacognition and gardening</h3>
+            <p>From raw need to the cultivation of inner conditions for better learning.</p>
+            <a href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Open the learning layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">3 · Mind design</span>
+            <h3>Banausos and Krishnamurti</h3>
+            <p>From functional training to the uncomfortable question: what kind of mind are we manufacturing?</p>
+            <a href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Open the education layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">4 · Civilizational scale</span>
+            <h3>Sun, language, and civilization</h3>
+            <p>From mind to the material cosmos: energy, symbol, coordination, and care for Earth’s support system.</p>
+            <a href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Open the energy layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">5 · Operational memory</span>
+            <h3>Situated AI</h3>
+            <p>From impulse to prompt: compact memory, domain abstraction, and the danger of outsourcing judgment.</p>
+            <a href="../ia-encajada/ia-encajada-infografia.html">Open the AI layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">6 · Anthropological limit</span>
+            <h3>Leisure and business</h3>
+            <p>Technology accelerates, but without rest, bonds, and leisure the human being degrades into a processor.</p>
+            <a href="../ocio-negocio/ocio-negocio-infografia.html">Open the human rhythm layer</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">7 · Human synthesis</span>
+            <h3>Noetic panhumanism</h3>
+            <p>From the individual to the species: capacity and interest as moral and political architecture.</p>
+            <a href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Open the species layer</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <span class="tag olive">Panhumanism</span>
+        <h2>Noetic panhumanism</h2>
+        <p>
+          Four anthropological pillars, concrete examples, and a causal closure: from the scattered self to the interest of the species.
+        </p>
+        <div class="links">
+          <a href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Open infographic</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">JTBD</span>
+        <h2>Jobs to be Done</h2>
+        <p>
+          A visual framework for thinking about real needs, hidden jobs, and segments finer than surface profiles.
+        </p>
+        <div class="links">
+          <a href="../jobs-to-be-done/jtbd-infografia.html">Infographic</a>
+          <a href="../jobs-to-be-done/jtbd-kickoff-visual.html">Visual kickoff</a>
+          <a href="../jobs-to-be-done/jtbd-mapa-oficios.html">Occupations map</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag lake">Metacognition</span>
+        <h2>Inner gardening</h2>
+        <p>
+          A narrative piece using plants, cultivation, creativity, and metacognition to explain why education is not
+          coercion but the design of conditions and the cultivation of reflection.
+        </p>
+        <div class="links">
+          <a href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Open infographic</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">Education</span>
+        <h2>Banausos and the whole mind</h2>
+        <p>
+          A contrast between specialization and interdisciplinarity: from the expert trapped inside one function to
+          the integral education Krishnamurti defended against the fragmented mind.
+        </p>
+        <div class="links">
+          <a href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Open infographic</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag lake">AI</span>
+        <h2>Situated AI</h2>
+        <p>
+          AI as compact memory and a refinement tool: from impulse to prompt, from language to action, with
+          Krishnamurti in the background asking what remains human if we outsource the whole mechanics of mind.
+        </p>
+        <div class="links">
+          <a href="../ia-encajada/ia-encajada-infografia.html">Open infographic</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">Human rhythm</span>
+        <h2>Leisure and business</h2>
+        <p>
+          From Byung-Chul Han to Krishnamurti: a piece about acceleration, rest, and the balance needed to avoid
+          turning the human being into an exhausted processor.
+        </p>
+        <div class="links">
+          <a href="../ocio-negocio/ocio-negocio-infografia.html">Open infographic</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag olive">Cosmology</span>
+        <h2>Sun, language, and civilization</h2>
+        <p>
+          Energy, matter, sound, thought, and planetary care in a piece that joins psychic thermodynamics,
+          metacognition, and the dilemma between solar flow and fossil combustion.
+        </p>
+        <div class="links">
+          <a href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Open infographic</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="synthesis">
+      <h2>Quick reading of the whole set</h2>
+      <p>
+        `JTBD` asks what moves us. `Metacognition` asks how we learn. `Banausos` asks what a narrow education turns us
+        into. `Situated AI` asks what happens when memory and abstraction become conversational and externalized.
+        `Leisure and business` asks what rhythm is required to keep that power from dehumanizing us. `Panhumanism`
+        asks how the self aligns with the species. `Sun, language, and civilization` asks on what material and
+        symbolic basis all this can be sustained. Seven pieces; one puzzle.
+      </p>
+    </section>
+
+    <p class="footer">The whole project is static HTML: open it and look. No build, no ceremony, no smoke.</p>
+  </main>
+</body>
+</html>

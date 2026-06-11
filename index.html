@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soberanía noética · Language selector / selector de idioma</title>
+  <style>
+    :root {
+      --bg: #efe4d2;
+      --paper: rgba(255, 248, 238, 0.86);
+      --paper-strong: #fffaf4;
+      --ink: #201a18;
+      --muted: #645954;
+      --line: rgba(88, 70, 62, 0.18);
+      --olive: #708238;
+      --terracotta: #b85d3f;
+      --lake: #356d7c;
+      --gold: #b9912f;
+      --shadow: 0 24px 60px rgba(50, 31, 20, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(112, 130, 56, 0.18), transparent 22%),
+        linear-gradient(180deg, #f3ebdf 0%, #e8dbc5 54%, #ddccb3 100%);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 24px auto 48px;
+    }
+
+    .hero,
+    .lang-card,
+    .quote,
+    .fork,
+    .note {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.72);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      margin-top: 16px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 0.94;
+      max-width: 11ch;
+    }
+
+    .intro {
+      margin-top: 16px;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(160deg, #201a18 0%, #3b302c 100%);
+      color: #fff8f1;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.18;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.5;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .lang-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .lang-jump a,
+    .actions a {
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(88, 70, 62, 0.34);
+    }
+
+    .fork {
+      border-radius: 32px;
+      padding: 24px;
+    }
+
+    .fork h2,
+    .lang-card h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.04;
+    }
+
+    .fork p,
+    .lang-card p,
+    .note p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .fork-grid,
+    .lang-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .fork-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lang-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lang-card,
+    .note {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .lang-card h3 {
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .note {
+      margin-top: 20px;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .fork-grid,
+      .lang-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Static bilingual root · Raíz bilingüe estática</span>
+        <h1>Choose your entry point</h1>
+        <p class="intro">
+          This repository is published as a static bilingual project. The main root is the sadhana on noetic
+          sovereignty, available in Spanish and English. The older pieces now live as constellations of ideas around
+          that center.
+        </p>
+        <div class="lang-jump">
+          <a href="#es">Leer en español</a>
+          <a href="#en">Read in English</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <aside class="quote dark">
+          <strong>The root is doubled so you can share the language you need.</strong>
+          <p>
+            Share `/es/index.html` if you want the Spanish root. Share `/en/index.html` if you want the English root. No cookies, no
+            session, no language guessing, no nonsense.
+          </p>
+        </aside>
+
+        <aside class="quote">
+          <strong>The constellations remain available, but they are no longer the front door.</strong>
+          <p>
+            The new front door is the personal sadhana. The previous infographics remain as conceptual satellites for
+            exploration, not as the home of the project.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Root Access</div>
+    <section class="fork">
+      <h2>Pick the language of the root you want to share</h2>
+      <div class="fork-grid">
+        <div class="lang-card">
+          <h3>Español</h3>
+          <p>
+            La raíz española es la web-sadhana de <strong>Soberanía noética</strong>, con navegación cerrada,
+            constelaciones vinculadas y retorno constante a la síntesis.
+          </p>
+        </div>
+        <div class="lang-card">
+          <h3>English</h3>
+          <p>
+            The English root is the translated version of the same sadhana, so the repository can be shared publicly
+            without dynamic language handling.
+          </p>
+        </div>
+      </div>
+      <div class="note">
+        <p>
+          Direct root links:
+          <a href="./es/index.html">/es/index.html</a>
+          and
+          <a href="./en/index.html">/en/index.html</a>.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-label">Language</div>
+    <section class="lang-grid">
+      <article class="lang-card" id="es">
+        <h3>Español</h3>
+        <h2>Raíz en español</h2>
+        <p>
+          Entra por la sadhana de soberanía noética y, desde ahí, navega las constelaciones de ideas. La raíz ya no es
+          un índice general, sino la postura filosófica personal que articula todo el conjunto.
+        </p>
+        <p>
+          Si quieres ir directo al archivo satélite, también queda un índice específico de constelaciones.
+        </p>
+        <div class="actions">
+          <a href="./es/index.html">Entrar a la raíz en español</a>
+          <a href="./es/constelaciones/index.html">Abrir constelaciones ES</a>
+        </div>
+      </article>
+
+      <article class="lang-card" id="en">
+        <h3>English</h3>
+        <h2>English root</h2>
+        <p>
+          Enter through the noetic sovereignty sadhana and navigate the idea constellations from there. The root is no
+          longer a general archive index, but the philosophical stance that holds the whole set together.
+        </p>
+        <p>
+          If you want the satellite archive directly, an English constellations index is available separately.
+        </p>
+        <div class="actions">
+          <a href="./en/index.html">Enter the English root</a>
+          <a href="./en/constellations/index.html">Open EN constellations</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

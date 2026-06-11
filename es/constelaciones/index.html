@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Constelaciones de ideas · Visualización de datos narrativa</title>
+  <style>
+    :root {
+      --bg: #efe4d2;
+      --paper: rgba(255, 248, 238, 0.84);
+      --paper-strong: #fffaf4;
+      --ink: #201a18;
+      --muted: #645954;
+      --line: rgba(88, 70, 62, 0.18);
+      --olive: #708238;
+      --terracotta: #b85d3f;
+      --lake: #356d7c;
+      --gold: #b9912f;
+      --shadow: 0 24px 60px rgba(50, 31, 20, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(112, 130, 56, 0.18), transparent 22%),
+        linear-gradient(180deg, #f3ebdf 0%, #e8dbc5 54%, #ddccb3 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 248, 238, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto 48px;
+    }
+
+    .topbar,
+    .disclaimer {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+    }
+
+    .topbar {
+      margin-bottom: 18px;
+      padding: 18px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      padding: 22px;
+    }
+
+    .disclaimer h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.9rem;
+      line-height: 1.04;
+    }
+
+    .disclaimer p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 72ch;
+    }
+
+    .hero,
+    .card {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.72);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      margin-top: 16px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height: 0.94;
+      max-width: 9ch;
+    }
+
+    .intro {
+      margin-top: 16px;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .hero-note {
+      border-radius: 28px;
+      padding: 24px;
+      background: linear-gradient(160deg, #201a18 0%, #3b302c 100%);
+      color: #fff8f1;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-note strong {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 248, 241, 0.72);
+    }
+
+    .hero-note p {
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .map-shell,
+    .synthesis {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      border-radius: 32px;
+      padding: 24px;
+    }
+
+    .map-shell h2,
+    .synthesis h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.1rem;
+      line-height: 1.02;
+    }
+
+    .map-intro,
+    .synthesis p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 72ch;
+    }
+
+    .map-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .map-core,
+    .map-column,
+    .map-link {
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+
+    .map-core {
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(185, 93, 65, 0.14), transparent 34%),
+        linear-gradient(155deg, rgba(255, 250, 244, 0.95), rgba(248, 239, 229, 0.82));
+    }
+
+    .map-core .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+    }
+
+    .map-core h3,
+    .map-link h3 {
+      margin-top: 14px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.8rem;
+      line-height: 1.02;
+    }
+
+    .map-core p,
+    .map-link p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .map-points {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .map-point {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid var(--line);
+    }
+
+    .map-point strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+
+    .map-point span {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.42;
+    }
+
+    .map-column {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      background:
+        radial-gradient(circle at 84% 10%, rgba(53, 109, 124, 0.12), transparent 26%),
+        rgba(255, 250, 244, 0.82);
+    }
+
+    .map-link {
+      padding: 16px;
+    }
+
+    .map-link .mini {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+    }
+
+    .map-link h3 {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+
+    .map-link a {
+      display: inline-flex;
+      margin-top: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .card {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #fff;
+    }
+
+    .tag.olive { background: var(--olive); }
+    .tag.terracotta { background: var(--terracotta); }
+    .tag.lake { background: var(--lake); }
+
+    .card h2 {
+      margin-top: 16px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.8rem;
+      line-height: 1.02;
+    }
+
+    .card p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .links {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid,
+      .map-grid,
+      .map-points {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Ir a la raíz</a>
+    <a href="./index.html">Constelaciones de ideas</a>
+    <a href="../../en/constellations/index.html">English</a>
+  </div>
+  <main>
+    <div class="topbar">
+      <span class="eyebrow">Satélites conceptuales · Selector de idioma</span>
+    </div>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Constelaciones · Archivo satélite</span>
+        <h1>Constelaciones de ideas</h1>
+        <p class="intro">
+          Estas piezas ya no son la puerta de entrada del proyecto. Funcionan como constelaciones conceptuales alrededor
+          de la sadhana central de soberanía noética.
+        </p>
+      </div>
+      <aside class="hero-note">
+        <strong>Nota de acceso</strong>
+        <p>La raíz del proyecto vive ahora en la sadhana principal. Aquí quedan los satélites para ampliar, tensar y contrastar.</p>
+      </aside>
+    </section>
+
+    <section class="disclaimer">
+      <h2>Advertencia de lectura</h2>
+      <p>
+        Sería posible intentar mapear un grafo multidimensional completo de estas ideas en web. Pero no hay necesidad
+        real, al menos de momento. Esta colección usa una solución más simple: constelaciones de piezas navegables que
+        orbitan un centro y vuelven a él cuando hace falta.
+      </p>
+      <p>
+        No es una carencia del proyecto. Es una decisión de claridad. Por ahora, lo practicable pesa más que lo totalizante.
+      </p>
+    </section>
+
+    <section class="map-shell">
+      <span class="eyebrow">Mapa relacional · Navegación conceptual</span>
+      <h2>Las piezas no van sueltas: describen un mismo problema desde escalas distintas</h2>
+      <p class="map-intro">
+        Este proyecto ya no es solo un menú de archivos. Es una infografía-raíz: un mapa para ver cómo necesidad,
+        conciencia, educación, especie y energía se encadenan. Cada pieza toma una capa del problema y la empuja hasta
+        el siguiente nivel.
+      </p>
+
+      <div class="map-grid">
+        <article class="map-core">
+          <span class="tagline">Eje común</span>
+          <h3>¿Cómo pasa un impulso del yo a una forma de vida que no se autodestruya?</h3>
+          <p>
+            Las infografías orbitan la misma pregunta. Empiezan en la necesidad, pasan por el aprendizaje y el diseño
+            de la mente, escalan a la coordinación humana y terminan en el dilema material de toda civilización:
+            capturar energía, organizarla y no romper el soporte que la vuelve habitable.
+          </p>
+
+          <div class="map-points">
+            <div class="map-point">
+              <strong>Necesidad</strong>
+              <span>JTBD enseña que la acción arranca en un trabajo real, no en una etiqueta de mercado.</span>
+            </div>
+            <div class="map-point">
+              <strong>Autorregulación</strong>
+              <span>Metacognición muestra que aprender bien exige mirar el propio aprendizaje.</span>
+            </div>
+            <div class="map-point">
+              <strong>Forma mental</strong>
+              <span>Krishnamurti y el banausos advierten contra una mente útil pero rota.</span>
+            </div>
+            <div class="map-point">
+              <strong>Escala de especie</strong>
+              <span>Panhumanismo intenta sacar al yo de su miopía y pensar intereses colectivos.</span>
+            </div>
+            <div class="map-point">
+              <strong>Memoria externalizada</strong>
+              <span>La IA convierte lenguaje en memoria operativa y acelera el bucle entre idea, crítica y acción.</span>
+            </div>
+            <div class="map-point">
+              <strong>Ritmo humano</strong>
+              <span>El ocio introduce el límite sin el cual la aceleración técnica termina vaciando a quien la usa.</span>
+            </div>
+            <div class="map-point">
+              <strong>Soberanía interior</strong>
+              <span>La sadhana noética devuelve el impulso a una conciencia que observa y decide.</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="map-column">
+          <article class="map-link">
+            <span class="mini">1 · Impulso</span>
+            <h3>Jobs to be Done</h3>
+            <p>Del problema concreto al patrón de necesidad que realmente mueve conducta.</p>
+            <a href="../../jobs-to-be-done/jtbd-infografia.html">Abrir capa de necesidad</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">2 · Aprendizaje</span>
+            <h3>Metacognición y jardinería</h3>
+            <p>De la necesidad bruta al cultivo de condiciones internas para aprender mejor.</p>
+            <a href="../../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Abrir capa de aprendizaje</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">3 · Diseño de mente</span>
+            <h3>Banausos y Krishnamurti</h3>
+            <p>Del entrenamiento funcional a la pregunta incómoda: qué clase de mente estamos fabricando.</p>
+            <a href="../../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Abrir capa educativa</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">4 · Escala civilizatoria</span>
+            <h3>Sol, lenguaje y civilización</h3>
+            <p>De la mente al cosmos material: energía, símbolo, coordinación y cuidado del soporte terrestre.</p>
+            <a href="../../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Abrir capa energética</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">5 · Memoria operativa</span>
+            <h3>IA encajada</h3>
+            <p>Del impulso al prompt: memoria compacta, abstracción de dominio y peligro de delegar criterio.</p>
+            <a href="../../ia-encajada/ia-encajada-infografia.html">Abrir capa de IA</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">6 · Limite antropologico</span>
+            <h3>Ocio y negocio</h3>
+            <p>La tecnología acelera, pero sin descanso, vínculo y ocio el humano se degrada a procesador.</p>
+            <a href="../../ocio-negocio/ocio-negocio-infografia.html">Abrir capa de ritmo humano</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">7 · Síntesis humana</span>
+            <h3>Panhumanismo noético</h3>
+            <p>Del individuo a la especie: capacidad e interés como arquitectura moral y política.</p>
+            <a href="../../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Abrir capa de especie</a>
+          </article>
+
+          <article class="map-link">
+            <span class="mini">8 · Sadhana personal</span>
+            <h3>Soberanía noética</h3>
+            <p>Portfolio de resistencia individual: ecología de la atención, impulso y conciencia tecnológica.</p>
+            <a href="../index.html">Volver a la sadhana raíz</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <span class="tag olive">Panhumanismo</span>
+        <h2>Panhumanismo noético</h2>
+        <p>
+          Cuatro pilares antropológicos, ejemplos concretos y cierre causal: del yo disperso al interés de especie.
+        </p>
+        <div class="links">
+          <a href="../../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Abrir infografía</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">JTBD</span>
+        <h2>Jobs to be Done</h2>
+        <p>
+          Marco visual para pensar necesidades reales, trabajos ocultos y segmentos más finos que el perfil superficial.
+        </p>
+        <div class="links">
+          <a href="../../jobs-to-be-done/jtbd-infografia.html">Infografía</a>
+          <a href="../../jobs-to-be-done/jtbd-kickoff-visual.html">Kickoff visual</a>
+          <a href="../../jobs-to-be-done/jtbd-mapa-oficios.html">Mapa de oficios</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag lake">Metacognición</span>
+        <h2>Jardinería interior</h2>
+        <p>
+          Nueva pieza narrativa: plantas, crianza, creatividad y metacognición para explicar por qué educar no es
+          forzar, sino diseñar condiciones y cultivar reflexión.
+        </p>
+        <div class="links">
+          <a href="../../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Abrir infografía</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">Educación</span>
+        <h2>Banausos y mente entera</h2>
+        <p>
+          Contraste entre especialización e interdisciplinariedad: del experto encerrado en su función a la educación
+          integral que Krishnamurti defendía contra la mente fragmentada.
+        </p>
+        <div class="links">
+          <a href="../../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Abrir infografía</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag lake">IA</span>
+        <h2>IA encajada</h2>
+        <p>
+          La IA como memoria compacta y herramienta de depuración: del impulso al prompt, del lenguaje a la acción,
+          con Krishnamurti al fondo preguntando qué queda de humano si delegamos toda la mecánica mental.
+        </p>
+        <div class="links">
+          <a href="../../ia-encajada/ia-encajada-infografia.html">Abrir infografía</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag terracotta">Ritmo humano</span>
+        <h2>Ocio y negocio</h2>
+        <p>
+          De Byung-Chul Han a Krishnamurti: una pieza sobre aceleración, descanso y el equilibrio necesario para no
+          convertir al ser humano en un procesador exhausto.
+        </p>
+        <div class="links">
+          <a href="../../ocio-negocio/ocio-negocio-infografia.html">Abrir infografía</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag lake">Sadhana</span>
+        <h2>Soberanía noética</h2>
+        <p>
+          Una postura filosófica personal en forma de grafo cerrado: compulsión o conciencia, ecología de la atención
+          y resistencia individual sin reclutamiento.
+        </p>
+        <div class="links">
+          <a href="../soberania-noetica/soberania-noetica-sadhana.html">Abrir sadhana</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag olive">Cosmología</span>
+        <h2>Sol, lenguaje y civilización</h2>
+        <p>
+          Energía, materia, sonido, pensamiento y cuidado planetario en una pieza que une termodinámica psíquica,
+          metacognición y el dilema entre flujo solar y combustión fósil.
+        </p>
+        <div class="links">
+          <a href="../../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Abrir infografía</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="synthesis">
+      <h2>Lectura rápida del conjunto</h2>
+      <p>
+        `JTBD` pregunta qué nos mueve. `Metacognición` pregunta cómo aprendemos. `Banausos` pregunta en qué nos
+        convierte una formación estrecha. `IA encajada` pregunta qué ocurre cuando la memoria y la abstracción pasan a
+        ser conversables y externalizadas. `Ocio y negocio` pregunta qué ritmo hace falta para no deshumanizar ese
+        poder. `Panhumanismo` pregunta cómo se alinea el yo con la especie. `Soberanía noética` pregunta cómo protege
+        el individuo el impulso sin volverse tecnófobo ni sectario. `Sol, lenguaje y civilización` pregunta con qué
+        base material y simbólica sostenemos todo eso. Ocho piezas; un único rompecabezas.
+      </p>
+    </section>
+
+    <p class="footer">Todo el proyecto es HTML estático: abrir y mirar. Sin build, sin ceremonia, sin humo.</p>
+  </main>
+</body>
+</html>

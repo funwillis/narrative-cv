@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Especialización vs interdisciplinariedad</title>
+  <style>
+    :root {
+      --bg: #efe6d8;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #655952;
+      --line: rgba(77, 61, 52, 0.16);
+      --iron: #4c4f69;
+      --clay: #b76443;
+      --reed: #70824a;
+      --inkblue: #2f6477;
+      --sand: #d2a85d;
+      --wine: #82505c;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 88% 16%, rgba(112, 130, 74, 0.18), transparent 20%),
+        linear-gradient(180deg, #f4ecdf 0%, #ebddc9 50%, #dfcdb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.88);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .contrast-card,
+    .rail,
+    .term-box,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 34px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -90px auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(210, 168, 93, 0.3), rgba(210, 168, 93, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.2rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.42rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.9;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(77, 61, 52, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .terms,
+    .rails,
+    .pedagogy {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .contrast-card,
+    .rail,
+    .term-box,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .contrast-card p,
+    .rail p,
+    .term-box li {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .contrast-shell {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .contrast-card h3,
+    .rail h3,
+    .term-box h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .contrast-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contrast-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -10px -36px auto;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .specialized {
+      background: linear-gradient(135deg, #ead8cc, #e2c1b5);
+      color: #3f2920;
+    }
+
+    .interdisciplinary {
+      background: linear-gradient(135deg, #d4e4dc, #bad4c5);
+      color: #1b382f;
+    }
+
+    .vs {
+      display: grid;
+      place-items: center;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.88);
+      border: 1px solid rgba(77, 61, 52, 0.14);
+      font-size: 0.92rem;
+      color: inherit;
+    }
+
+    .terms {
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 18px;
+    }
+
+    .term-box ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+    }
+
+    .term-box li + li {
+      margin-top: 8px;
+    }
+
+    .rails {
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 18px;
+    }
+
+    .rail {
+      position: relative;
+    }
+
+    .rail::before {
+      content: "";
+      display: block;
+      width: 52px;
+      height: 6px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      background: currentColor;
+      opacity: 0.45;
+    }
+
+    .iron { color: var(--iron); }
+    .clay { color: var(--clay); }
+    .reed { color: var(--reed); }
+    .inkblue { color: var(--inkblue); }
+    .sand { color: var(--sand); }
+    .wine { color: var(--wine); }
+
+    .pedagogy {
+      grid-template-columns: 0.92fr 1.08fr;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .ladder {
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      border-radius: 24px;
+      padding: 16px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #241c1a 0%, #4a3832 100%);
+      color: #fff9f4;
+    }
+
+    .closing p {
+      max-width: 70ch;
+      color: rgba(255, 249, 244, 0.88);
+    }
+
+    @media (max-width: 1024px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .rails,
+      .pedagogy,
+      .terms {
+        grid-template-columns: 1fr;
+      }
+
+      .contrast-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .vs {
+        font-size: 1.5rem;
+        min-height: 48px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100vw - 18px, 100%);
+      }
+
+      .hero,
+      .panel,
+      .contrast-card,
+      .rail,
+      .term-box,
+      .quote,
+      .closing {
+        border-radius: 24px;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Infografía narrativa · educación · trabajo</span>
+        <h1>Especialización o mente entera</h1>
+        <p class="hero-copy">
+          La cuestión no es si la especialización sirve. Claro que sirve. La cuestión es qué ocurre cuando una persona
+          queda reducida a una sola función, a una sola herramienta, a una sola esquina de sí misma. Ahí aparece el
+          <em>banausos</em>: alguien muy útil dentro de su surco y cada vez más torpe fuera de él.
+        </p>
+      </div>
+      <aside class="hero-side">
+        <div class="quote dark">
+          <span class="kicker">Tesis</span>
+          <strong>La especialización resuelve tareas. La interdisciplinariedad evita que la tarea devore a la persona.</strong>
+          <p>Krishnamurti empuja justo ahí: educación no como adiestramiento para encajar, sino como despertar de una mente completa, atenta y no fragmentada.</p>
+        </div>
+        <div class="quote">
+          <span class="kicker">Pivote conceptual</span>
+          <strong><em>Banausos</em> no es solo un oficio manual.</strong>
+          <p>Es una advertencia cultural: cuando el hacer estrecha el ver, la pericia técnica sube mientras la inteligencia global se encoge.</p>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-label">El contraste base</div>
+    <section class="panel">
+      <h2>Dos modelos de formación humana</h2>
+      <p>
+        Uno afila una punta. El otro organiza un ecosistema de capacidades. El primero puede fabricar expertos
+        brillantes y dependientes. El segundo busca personas capaces de conectar, comprender contexto y no quedar
+        atrapadas en el automatismo de su rol.
+      </p>
+      <div class="contrast-shell">
+        <article class="contrast-card specialized">
+          <h3>Aprendizaje o trabajo especializado</h3>
+          <p>
+            Maximiza profundidad, repetición, dominio técnico y rendimiento local. Su riesgo aparece cuando la persona
+            confunde su función con su identidad.
+          </p>
+          <div class="chips">
+            <span class="chip">Profundización</span>
+            <span class="chip">Concentración</span>
+            <span class="chip">Enfoque</span>
+            <span class="chip">Experticia</span>
+            <span class="chip">Tecnificación</span>
+          </div>
+        </article>
+        <div class="vs">vs</div>
+        <article class="contrast-card interdisciplinary">
+          <h3>Aprendizaje o trabajo interdisciplinario</h3>
+          <p>
+            Maximiza amplitud, traducción entre campos, plasticidad y comprensión de sistemas. No renuncia al rigor:
+            evita que el rigor se vuelva cárcel.
+          </p>
+          <div class="chips">
+            <span class="chip">Generalización</span>
+            <span class="chip">Diversificación</span>
+            <span class="chip">Amplitud</span>
+            <span class="chip">Versatilidad</span>
+            <span class="chip">Interdisciplinariedad</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">El vocabulario ya avisa</div>
+    <section class="grid-2">
+      <article class="term-box">
+        <h3>Sinónimos que aprietan el foco</h3>
+        <ul>
+          <li>Profundización</li>
+          <li>Especialidad</li>
+          <li>Concentración</li>
+          <li>Enfoque</li>
+          <li>Experticia</li>
+          <li>Profesionalización</li>
+          <li>Tecnificación</li>
+        </ul>
+      </article>
+      <article class="term-box">
+        <h3>Antónimos que abren el campo</h3>
+        <ul>
+          <li>Generalización</li>
+          <li>Diversificación</li>
+          <li>Amplitud</li>
+          <li>Polivalencia</li>
+          <li>Versatilidad</li>
+          <li>Interdisciplinariedad</li>
+          <li>Multifuncionalidad</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="section-label">El punto peligroso</div>
+    <section class="panel">
+      <h2>Cuando la pericia degenera en <em>banausos</em></h2>
+      <p>
+        El <em>banausos</em> encarna la destreza encerrada. Sabe operar una parte del mundo, pero ha perdido relación
+        viva con el conjunto. Funciona, produce, ejecuta, pero ya no mira. Esa es la crítica dura: una educación
+        diseñada solo para la función termina fabricando personas eficaces y mentalmente estrechas.
+      </p>
+      <div class="rails">
+        <article class="rail iron">
+          <h3>1. Competencia local</h3>
+          <p>La persona aprende una técnica concreta, gana precisión y se vuelve valiosa en un tramo definido del proceso.</p>
+        </article>
+        <article class="rail clay">
+          <h3>2. Encierro funcional</h3>
+          <p>Todo lo que no mejora su rendimiento inmediato empieza a parecer secundario: arte, ética, contexto, política, interioridad.</p>
+        </article>
+        <article class="rail wine">
+          <h3>3. Estrechamiento humano</h3>
+          <p>Acaba sabiendo mucho de una cosa y poco de sí mismo, del otro y del sistema del que depende su propia tarea.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">La salida pedagógica</div>
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Krishnamurti: educar no es fabricar piezas</h2>
+        <p>
+          En el modelo pedagógico de Jiddu Krishnamurti, la educación válida no consiste en adaptar al alumno a una
+          maquinaria social o profesional. Consiste en despertar observación, libertad interior y comprensión del
+          condicionamiento. Una mente fragmentada puede ser competente; una mente atenta puede además ser inteligente.
+        </p>
+        <div class="ladder">
+          <div class="step">
+            <strong>Atención antes que adiestramiento</strong>
+            <p>El estudiante aprende a observar cómo piensa, qué teme, qué imita y qué desea.</p>
+          </div>
+          <div class="step">
+            <strong>Totalidad antes que función</strong>
+            <p>La formación incluye relación, sensibilidad, naturaleza, conflicto, creatividad y autoconocimiento.</p>
+          </div>
+          <div class="step">
+            <strong>Libertad antes que conformidad</strong>
+            <p>La meta no es producir engranajes bien pulidos, sino seres humanos no atrapados por el molde.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Qué cambia cuando el eje es interdisciplinario</h2>
+        <p>
+          La interdisciplinariedad no niega la profundidad. La reubica. En vez de cavar un pozo y vivir dentro, permite
+          trazar puentes entre pozos: ciencia con ética, técnica con lenguaje, trabajo con conciencia, problema con
+          contexto.
+        </p>
+        <div class="rails">
+          <article class="rail reed">
+            <h3>Conecta niveles</h3>
+            <p>Une detalle y sistema, operación y sentido, oficio y sociedad.</p>
+          </article>
+          <article class="rail sand">
+            <h3>Reduce ceguera</h3>
+            <p>Expone sesgos del propio campo y obliga a traducir lo obvio para otros.</p>
+          </article>
+          <article class="rail inkblue">
+            <h3>Protege la mente</h3>
+            <p>Evita que la identidad quede secuestrada por una sola etiqueta profesional.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">La síntesis</div>
+    <section class="closing">
+      <h2>No se trata de abolir especialistas. Se trata de no criar banausoi.</h2>
+      <p>
+        La pieza clave es esta: una sociedad necesita expertos, pero una educación digna no puede limitarse a
+        producirlos. Si solo forma especialistas, crea eficacia sin visión. Si integra profundidad con
+        interdisciplinariedad, atención y autoconocimiento, entonces forma personas capaces de trabajar sin volverse
+        prisioneras de su trabajo. Ahí Krishnamurti entra con el cuchillo: la función importa, sí; pero una mente
+        fragmentada, aunque sea brillante, sigue estando rota.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Noetic Panhumanism</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f7f5ef;
+    --paper: #fffdf8;
+    --fg: #18202a;
+    --muted: #5b6470;
+    --line: #657084;
+    --soft-line: #c9c3b5;
+    --individual: #d8eef2;
+    --interest: #f5d8cc;
+    --collective: #dce7c8;
+    --future: #e6ddf1;
+    --risk: #f5c7c7;
+    --dark: #24313f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #11151a;
+      --paper: #171d23;
+      --fg: #edf0f2;
+      --muted: #b3bac2;
+      --line: #9ba6b4;
+      --soft-line: #47505a;
+      --individual: #1f5b66;
+      --interest: #7b3b2e;
+      --collective: #4d6330;
+      --future: #51406b;
+      --risk: #7b3030;
+      --dark: #d7dde3;
+    }
+  }
+  body {
+    margin: 0;
+    padding-top: 92px;
+    background: var(--bg);
+    color: var(--fg);
+    font:
+      15px/1.45 ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+  }
+  .project-nav {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: min(760px, calc(100vw - 24px));
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    border: 1px solid var(--soft-line);
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.88);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 45px rgba(47, 34, 24, 0.12);
+  }
+  .project-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--soft-line);
+    background: var(--paper);
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px 32px;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: var(--paper);
+    border: 1px solid var(--soft-line);
+  }
+  text {
+    fill: var(--fg);
+  }
+  .title {
+    font-size: 34px;
+    font-weight: 760;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    font-size: 17px;
+    fill: var(--muted);
+  }
+  .section {
+    font-size: 21px;
+    font-weight: 730;
+  }
+  .label {
+    font-size: 17px;
+    font-weight: 730;
+  }
+  .body {
+    font-size: 14px;
+    fill: var(--fg);
+  }
+  .small {
+    font-size: 12px;
+    fill: var(--muted);
+  }
+  .tiny {
+    font-size: 11px;
+    fill: var(--muted);
+  }
+  .formula {
+    font-size: 18px;
+    font-weight: 720;
+  }
+  .box {
+    stroke: var(--line);
+    stroke-width: 1.4;
+    rx: 8;
+  }
+  .thin {
+    stroke: var(--soft-line);
+    stroke-width: 1;
+  }
+  .edge {
+    stroke: var(--line);
+    stroke-width: 2.2;
+    fill: none;
+  }
+  .edge-soft {
+    stroke: var(--soft-line);
+    stroke-width: 1.6;
+    fill: none;
+  }
+  .dash {
+    stroke-dasharray: 8 6;
+  }
+  .individual {
+    fill: var(--individual);
+  }
+  .interest {
+    fill: var(--interest);
+  }
+  .collective {
+    fill: var(--collective);
+  }
+  .future {
+    fill: var(--future);
+  }
+  .risk {
+    fill: var(--risk);
+  }
+  .neutral {
+    fill: transparent;
+  }
+  .dark-fill {
+    fill: var(--dark);
+    opacity: 0.82;
+  }
+</style>
+<div class="project-nav">
+  <a href="../index.html">Go to root</a>
+  <a href="../constellations/index.html">Idea constellations</a>
+  <a href="../../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Español</a>
+</div>
+<main>
+  <svg viewBox="0 0 1180 1805" role="img" aria-labelledby="title desc">
+    <title id="title">Noetic Panhumanism</title>
+    <desc id="desc">Conceptual infographic in English presenting four anthropological pillars, examples, and then their causal relations.</desc>
+
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--line)"></path>
+      </marker>
+      <marker id="arrowSoft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--soft-line)"></path>
+      </marker>
+    </defs>
+
+    <!-- Header -->
+    <text class="title" x="60" y="72">Noetic Panhumanism</text>
+    <text class="subtitle" x="60" y="106">A logical defense: individual interest, if it looks far enough ahead, needs all of humanity.</text>
+    <line class="thin" x1="60" y1="132" x2="1120" y2="132"></line>
+
+    <!-- Step 1: isolated pillars -->
+    <text class="section" x="60" y="180">1. First: the anthropological algebra</text>
+    <text class="small" x="60" y="207">These four questions work as axioms: they separate human reality into observable dimensions before relating them.</text>
+
+    <rect class="box individual" x="60" y="238" width="245" height="180"></rect>
+    <text class="label" x="88" y="278">1 Individual capacity</text>
+    <text class="tiny" x="88" y="296">Axiom 1</text>
+    <text class="body" x="88" y="312">
+      <tspan x="88" dy="0">What can one</tspan>
+      <tspan x="88" dy="22">specific person do?</tspan>
+      <tspan class="small" x="88" dy="32">Health, education, energy,</tspan>
+      <tspan class="small" x="88" dy="19">judgment, tools.</tspan>
+    </text>
+
+    <rect class="box interest" x="335" y="238" width="245" height="180"></rect>
+    <text class="label" x="363" y="278">2 Individual interest</text>
+    <text class="tiny" x="363" y="296">Axiom 2</text>
+    <text class="body" x="363" y="312">
+      <tspan x="363" dy="0">Where is that</tspan>
+      <tspan x="363" dy="22">person pointed?</tspan>
+      <tspan class="small" x="363" dy="32">Desires, incentives,</tspan>
+      <tspan class="small" x="363" dy="19">identity, horizon.</tspan>
+    </text>
+
+    <rect class="box collective" x="610" y="238" width="245" height="180"></rect>
+    <text class="label" x="638" y="278">3 Collective capacity</text>
+    <text class="tiny" x="638" y="296">Axiom 3</text>
+    <text class="body" x="638" y="312">
+      <tspan x="638" dy="0">What can the</tspan>
+      <tspan x="638" dy="22">whole do?</tspan>
+      <tspan class="small" x="638" dy="32">Coordination, science,</tspan>
+      <tspan class="small" x="638" dy="19">institutions, scale.</tspan>
+    </text>
+
+    <rect class="box future" x="885" y="238" width="235" height="180"></rect>
+    <text class="label" x="913" y="278">4 Collective interest</text>
+    <text class="tiny" x="913" y="296">Axiom 4</text>
+    <text class="body" x="913" y="312">
+      <tspan x="913" dy="0">What future does</tspan>
+      <tspan x="913" dy="22">the population protect?</tspan>
+      <tspan class="small" x="913" dy="32">Survival, dignity,</tspan>
+      <tspan class="small" x="913" dy="19">planet, species.</tspan>
+    </text>
+
+    <!-- Step 2: examples -->
+    <text class="section" x="60" y="492">2. Then: concrete examples</text>
+    <text class="small" x="60" y="519">Applied to Spain today: not a condemnation, but a snapshot of the system.</text>
+
+    <rect class="box individual" x="60" y="548" width="245" height="200"></rect>
+    <text class="label" x="88" y="586">Individual capacity</text>
+    <text class="body" x="88" y="620">
+      <tspan x="88" dy="0">Reduced by precarity,</tspan>
+      <tspan x="88" dy="22">fatigue, poor education,</tspan>
+      <tspan x="88" dy="22">and low real agency.</tspan>
+      <tspan class="small" x="88" dy="34">Result: less room</tspan>
+      <tspan class="small" x="88" dy="19">to decide well.</tspan>
+    </text>
+
+    <rect class="box interest" x="335" y="548" width="245" height="200"></rect>
+    <text class="label" x="363" y="586">Individual interest</text>
+    <text class="body" x="363" y="620">
+      <tspan x="363" dy="0">Scattered: survival,</tspan>
+      <tspan x="363" dy="22">status, fast consumption,</tspan>
+      <tspan x="363" dy="22">cynicism, or withdrawal.</tspan>
+      <tspan class="small" x="363" dy="34">Point 2 disorders</tspan>
+      <tspan class="small" x="363" dy="19">everything else.</tspan>
+    </text>
+
+    <rect class="box collective" x="610" y="548" width="245" height="200"></rect>
+    <text class="label" x="638" y="586">Collective capacity</text>
+    <text class="body" x="638" y="620">
+      <tspan x="638" dy="0">Low: it is hard to coordinate,</tspan>
+      <tspan x="638" dy="22">build trust, and sustain</tspan>
+      <tspan x="638" dy="22">institutions.</tspan>
+      <tspan class="small" x="638" dy="34">Without aligned interests,</tspan>
+      <tspan class="small" x="638" dy="19">scale breaks down.</tspan>
+    </text>
+
+    <rect class="box future" x="885" y="548" width="235" height="200"></rect>
+    <text class="label" x="913" y="586">Collective interest</text>
+    <text class="body" x="913" y="620">
+      <tspan x="913" dy="0">Weak: there is no shared</tspan>
+      <tspan x="913" dy="22">story uniting present,</tspan>
+      <tspan x="913" dy="22">future, and species.</tspan>
+      <tspan class="small" x="913" dy="34">Without horizon, short-term</tspan>
+      <tspan class="small" x="913" dy="19">incentives take command.</tspan>
+    </text>
+
+    <!-- Step 3: relationships -->
+    <text class="section" x="60" y="824">3. Only now: the causal relation</text>
+    <text class="small" x="60" y="851">The thesis: the collective does not appear by magic. It emerges from capable individuals with compatible interests, repeated through time.</text>
+
+    <circle cx="590" cy="1102" r="230" fill="none" stroke="var(--soft-line)" stroke-width="2.2" stroke-dasharray="10 8"></circle>
+
+    <rect class="box interest" x="402" y="890" width="376" height="112"></rect>
+    <text class="label" x="432" y="929">Aligned individual interests</text>
+    <text class="body" x="432" y="960">When many selves want compatible futures,</text>
+    <text class="body" x="432" y="982">cooperation stops looking like a loss.</text>
+
+    <rect class="box collective" x="770" y="1050" width="330" height="122"></rect>
+    <text class="label" x="800" y="1089">Collective capacity</text>
+    <text class="body" x="800" y="1120">Alignment produces institutions,</text>
+    <text class="body" x="800" y="1142">knowledge, networks, and infrastructure.</text>
+
+    <rect class="box individual" x="402" y="1222" width="376" height="122"></rect>
+    <text class="label" x="432" y="1261">Reinforced individual capacities</text>
+    <text class="body" x="432" y="1292">The common returns to the individual as health,</text>
+    <text class="body" x="432" y="1314">education, safety, tools, and margin.</text>
+
+    <rect class="box future" x="80" y="1050" width="330" height="122"></rect>
+    <text class="label" x="110" y="1089">Explicit collective interest</text>
+    <text class="body" x="110" y="1120">The system learns to protect the horizon</text>
+    <text class="body" x="110" y="1142">that makes all interests possible.</text>
+
+    <path class="edge" d="M 742 1002 C 830 1018, 890 1036, 924 1050" marker-end="url(#arrow)"></path>
+    <path class="edge" d="M 934 1172 C 891 1222, 822 1264, 778 1282" marker-end="url(#arrow)"></path>
+    <path class="edge" d="M 402 1284 C 319 1266, 260 1222, 246 1172" marker-end="url(#arrow)"></path>
+    <path class="edge" d="M 246 1050 C 276 978, 340 938, 402 930" marker-end="url(#arrow)"></path>
+
+    <rect class="box neutral" x="452" y="1044" width="276" height="124"></rect>
+    <text class="formula" x="482" y="1090">Microdecision x Time</text>
+    <text class="body" x="482" y="1120">= systemic resonance</text>
+    <text class="small" x="482" y="1146">Not cosmic by magic:</text>
+    <text class="small" x="482" y="1164">cosmic by scale.</text>
+
+    <!-- Step 4: historical direction -->
+    <text class="section" x="60" y="1424">4. Panhumanist conclusion</text>
+    <text class="small" x="60" y="1451">Integration is not improvised: it matures from tutelage, passes through individuation, and culminates in undivided consciousness.</text>
+
+    <line class="edge-soft" x1="115" y1="1512" x2="1065" y2="1512" marker-end="url(#arrowSoft)"></line>
+    <text class="small" x="98" y="1540">Phases of the individual</text>
+    <text class="small" x="495" y="1540">Bridge of integration</text>
+    <text class="small" x="912" y="1540">Panhuman horizon</text>
+
+    <rect class="box neutral" x="60" y="1570" width="660" height="188"></rect>
+    <line class="thin" x1="60" y1="1616" x2="720" y2="1616"></line>
+    <line class="thin" x1="60" y1="1663" x2="720" y2="1663"></line>
+    <line class="thin" x1="60" y1="1710" x2="720" y2="1710"></line>
+    <line class="thin" x1="285" y1="1570" x2="285" y2="1758"></line>
+    <rect class="box future" x="60" y="1570" width="660" height="46"></rect>
+    <text class="label" x="88" y="1600">Phase</text>
+    <text class="label" x="313" y="1600">Integration into Noetic Panhumanism</text>
+
+    <text class="small" x="88" y="1645">Tutored child</text>
+    <text class="small" x="313" y="1631">
+      <tspan x="313" dy="0">Initial dependence: receives structure, care,</tspan>
+      <tspan x="313" dy="17">and language to enter the human world.</tspan>
+    </text>
+
+    <text class="small" x="88" y="1692">Psychological individuation</text>
+    <text class="small" x="313" y="1678">
+      <tspan x="313" dy="0">Forms judgment, a functional ego, and a sense</tspan>
+      <tspan x="313" dy="17">of responsibility for one’s acts.</tspan>
+    </text>
+
+    <text class="small" x="88" y="1739">Krishnamurti’s undivided mind</text>
+    <text class="small" x="313" y="1726">
+      <tspan x="313" dy="0">Transcends separation without regression and</tspan>
+      <tspan x="313" dy="17">expands interest until it embraces the whole.</tspan>
+    </text>
+
+    <path class="edge" d="M 740 1664 C 758 1664, 772 1664, 785 1664" marker-end="url(#arrow)"></path>
+
+    <rect class="box collective" x="805" y="1586" width="315" height="156"></rect>
+    <text class="label" x="833" y="1625">Noetic Panhumanism</text>
+    <text class="body" x="833" y="1655">The maturation of the individual culminates</text>
+    <text class="body" x="833" y="1677">in an identity able to think of</text>
+    <text class="body" x="833" y="1699">and protect humanity as a</text>
+    <text class="body" x="833" y="1721">single field of shared possibility.</text>
+  </svg>
+</main>

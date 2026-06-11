@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metacognition and inner gardening</title>
+  <style>
+    :root {
+      --bg: #efe7d4;
+      --paper: rgba(255, 251, 245, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #201916;
+      --muted: #65584f;
+      --line: rgba(77, 59, 48, 0.16);
+      --soil: #8a5a43;
+      --leaf: #6b8742;
+      --sage: #3f7468;
+      --sun: #d59d39;
+      --berry: #85556a;
+      --night: #241d1a;
+      --shadow: 0 22px 55px rgba(48, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.62), transparent 22%),
+        radial-gradient(circle at 88% 14%, rgba(107, 135, 66, 0.18), transparent 18%),
+        linear-gradient(180deg, #f5eedf 0%, #ebddc5 48%, #dfccb0 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 251, 245, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 251, 245, 0.88);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1220px, calc(100vw - 28px));
+      margin: 0 auto 40px;
+    }
+
+    .hero,
+    .panel,
+    .note,
+    .step,
+    .mini-card,
+    .diagram,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 34px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -90px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213, 157, 57, 0.26), rgba(213, 157, 57, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.75);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 9ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(3rem, 7vw, 5.3rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .note {
+      border-radius: 28px;
+      padding: 20px;
+    }
+
+    .note.dark {
+      background: linear-gradient(160deg, #211917 0%, #3a2d29 100%);
+      color: #fff8f2;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.35rem;
+      line-height: 1.15;
+      font-weight: 750;
+    }
+
+    .note p {
+      margin-top: 10px;
+      line-height: 1.45;
+      color: inherit;
+      opacity: 0.9;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(77, 59, 48, 0.35);
+    }
+
+    .top-grid,
+    .mid-grid,
+    .bottom-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .top-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .mid-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .bottom-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.02;
+      margin-bottom: 10px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .jobs-grid,
+    .triad,
+    .conditions {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .jobs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-card {
+      border-radius: 22px;
+      padding: 16px;
+      transition: transform 220ms ease;
+    }
+
+    .mini-card:hover,
+    .step:hover {
+      transform: translateY(-3px);
+    }
+
+    .mini-card h3,
+    .step h3 {
+      font-size: 1.02rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p,
+    .step p {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .leaf { border-left: 5px solid var(--leaf); }
+    .soil { border-left: 5px solid var(--soil); }
+    .sage { border-left: 5px solid var(--sage); }
+    .sun { border-left: 5px solid var(--sun); }
+    .berry { border-left: 5px solid var(--berry); }
+
+    .diagram {
+      border-radius: 30px;
+      padding: 20px;
+    }
+
+    .layers {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .layer {
+      border-radius: 24px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .layer::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -28px -10px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .layer h3 {
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .layer p {
+      position: relative;
+      z-index: 1;
+      color: inherit;
+      opacity: 0.92;
+      line-height: 1.45;
+    }
+
+    .layer.one {
+      background: linear-gradient(135deg, #f0dccf, #e9cdbf);
+      color: #3d2820;
+    }
+
+    .layer.two {
+      background: linear-gradient(135deg, #d9ead8, #bdd7b0);
+      color: #1f3722;
+    }
+
+    .layer.three {
+      background: linear-gradient(135deg, #cfe7e2, #b0d2cb);
+      color: #173833;
+    }
+
+    .arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .triad {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step {
+      border-radius: 26px;
+      padding: 18px;
+      position: relative;
+    }
+
+    .step .num {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .conditions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .condition-band {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .loop {
+      position: relative;
+      min-height: 520px;
+    }
+
+    .ring {
+      width: min(100%, 520px);
+      aspect-ratio: 1;
+      margin: 10px auto 0;
+      position: relative;
+    }
+
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: 12% 12%;
+      border-radius: 50%;
+      border: 2px dashed rgba(77, 59, 48, 0.28);
+    }
+
+    .node {
+      position: absolute;
+      width: 178px;
+      padding: 16px;
+      border-radius: 24px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(48, 31, 21, 0.1);
+    }
+
+    .node h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .node p {
+      font-size: 0.92rem;
+      line-height: 1.42;
+      color: var(--muted);
+    }
+
+    .node.a { top: 0; left: 50%; transform: translateX(-50%); }
+    .node.b { top: 34%; right: 0; }
+    .node.c { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .node.d { top: 34%; left: 0; }
+
+    .center-seed {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(107, 135, 66, 0.2), rgba(53, 109, 124, 0.16));
+      border: 1px solid rgba(77, 59, 48, 0.16);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 22px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.35rem;
+      line-height: 1.05;
+    }
+
+    .closing {
+      margin-top: 18px;
+      border-radius: 32px;
+      padding: 24px;
+      background: linear-gradient(145deg, #241d1a 0%, #473630 100%);
+      color: #fff9f4;
+    }
+
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+    }
+
+    .closing p {
+      max-width: 68ch;
+      line-height: 1.55;
+      color: rgba(255, 249, 244, 0.88);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .top-grid,
+      .mid-grid,
+      .bottom-grid,
+      .triad,
+      .conditions,
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr;
+      }
+
+      .loop {
+        min-height: 860px;
+      }
+
+      .ring {
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .node {
+        width: min(100%, 220px);
+      }
+
+      .node.a { top: 0; }
+      .node.b { top: 26%; right: 0; }
+      .node.d { top: 26%; left: 0; }
+      .node.c { bottom: 0; }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100vw - 18px, 100%);
+      }
+
+      .hero,
+      .panel,
+      .diagram,
+      .closing {
+        border-radius: 26px;
+        padding: 18px;
+      }
+
+      .loop {
+        min-height: 980px;
+      }
+
+      .node.a,
+      .node.b,
+      .node.c,
+      .node.d {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+      }
+
+      .node.a { top: 0; }
+      .node.b { top: 24%; }
+      .node.d { top: 48%; }
+      .node.c { bottom: 0; }
+
+      .center-seed {
+        top: 73%;
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Narrative infographic · education · learning</span>
+        <h1>Inner gardening</h1>
+        <p class="hero-copy">
+          The plant metaphor helps us remember something uncomfortable: you cannot pull on a plant to make it grow
+          sooner. Something similar happens with people. But the human being adds one rarity: it can observe how it
+          thinks, regulate its strategies, and learn how to learn. That is where metacognition enters.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="kicker">Central thesis</span>
+          <strong>To educate is not to manufacture behaviors. It is to design conditions so a mind can learn to cultivate itself.</strong>
+          <p>Less brute control. More environment, example, language, and deliberate reflection.</p>
+        </aside>
+        <aside class="note">
+          <span class="kicker">Bridge idea</span>
+          <strong>JTBD + metacognition</strong>
+          <p>
+            All life solves basic jobs. The human being, in addition, can review the method used to solve them.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1 · The shared ground</div>
+    <section class="top-grid">
+      <article class="panel">
+        <h2>Life already runs on jobs</h2>
+        <p>
+          Before pedagogy, before culture, and before ego, there are basic tasks: sustaining life, protecting oneself,
+          bonding, orienting, reproducing. At that level, a plant, a bird, and a child are in the same tournament.
+        </p>
+        <div class="jobs-grid">
+          <div class="mini-card leaf">
+            <h3>🌱 Survival</h3>
+            <p>Nourishing oneself, hydrating, staying alive. The oldest job on the planet.</p>
+          </div>
+          <div class="mini-card soil">
+            <h3>🏡 Protection</h3>
+            <p>Seeking shelter, reducing harm, regulating exposure to the environment.</p>
+          </div>
+          <div class="mini-card sun">
+            <h3>🧭 Orientation</h3>
+            <p>Detecting useful signals and choosing where to move or grow.</p>
+          </div>
+          <div class="mini-card berry">
+            <h3>🤝 Bond</h3>
+            <p>Coordinating, attracting, caring, reproducing, or belonging to a living system.</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="diagram">
+        <h2>Not every difference is essence</h2>
+        <p>
+          The intelligence underlying life is shared. What changes is the degree of complexity of the nervous system
+          and, with it, the variety of possible strategies.
+        </p>
+        <div class="condition-band">
+          <span class="pill">Plants are not “inferior”: they play a different game</span>
+          <span class="pill">Other species also use technology: tools</span>
+          <span class="pill">Bamboo and zucchini do not grow at the same pace</span>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-label">2 · The human rarity</div>
+    <section class="panel">
+      <h2>The human being can think about how it is thinking</h2>
+      <p>
+        According to Flavell, metacognition appears because a creature that thinks can also make mistakes while
+        thinking. That is why it needs a second-order mechanism: a way to plan, supervise, and evaluate its own
+        mental processes.
+      </p>
+      <div class="layers">
+        <div class="layer one">
+          <h3>1. Basic cognition</h3>
+          <p>Perceiving, remembering, attending, understanding, solving a concrete problem.</p>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer two">
+          <h3>2. Strategic control</h3>
+          <p>Choosing what to do first, what strategy to use, and how to check whether it works.</p>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer three">
+          <h3>3. Metacognition</h3>
+          <p>Knowing why I learned well or badly, what blocked me, and how to correct the next attempt.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">3 · Inner gardening</div>
+    <section class="mid-grid">
+      <article class="step">
+        <div class="num" style="background:#6b8742;">1</div>
+        <h3>Plan</h3>
+        <p>
+          What I am going to learn, what I already know, which task is harder, and what strategy seems most suitable.
+        </p>
+      </article>
+      <article class="step">
+        <div class="num" style="background:#3f7468;">2</div>
+        <h3>Monitor</h3>
+        <p>
+          Observe the process while it happens: “this is not going in”, “I am distracted”, “this method is not helping”.
+        </p>
+      </article>
+      <article class="step">
+        <div class="num" style="background:#d59d39;">3</div>
+        <h3>Evaluate</h3>
+        <p>
+          Measure the result and review the relation between strategy and effect. Not only “I scored a 7,” but “why.”
+        </p>
+      </article>
+    </section>
+
+    <div class="section-label">4 · Educational consequence</div>
+    <section class="bottom-grid">
+      <article class="panel">
+        <h2>Influence, yes. Force, no.</h2>
+        <p>
+          The image points to an unromantic truth: the influence of parents and teachers is indirect and limited. If
+          you invade too much, the other person may experience you as an obstacle. What works best is usually less
+          behavioral engineering and more legible example.
+        </p>
+        <div class="conditions">
+          <div class="mini-card soil">
+            <h3>🪴 Design conditions</h3>
+            <p>Routine, safety, language, feedback, and space to try without humiliation.</p>
+          </div>
+          <div class="mini-card leaf">
+            <h3>👀 Model</h3>
+            <p>Visible behavior teaches more than the sermon. The reverse usually fails.</p>
+          </div>
+          <div class="mini-card sage">
+            <h3>🎨 Sublimate</h3>
+            <p>When not everything can be expressed directly, art and play metabolize tension.</p>
+          </div>
+          <div class="mini-card berry">
+            <h3>⏳ Respect rhythms</h3>
+            <p>Bamboo vs. zucchini: same care, radically different timings.</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="diagram loop">
+        <h2>The loop that makes a mind autonomous</h2>
+        <div class="ring">
+          <article class="node a">
+            <h3>🌤️ Conditions</h3>
+            <p>Safety, attention, time, tools, and a context that does not punish exploration.</p>
+          </article>
+          <article class="node b">
+            <h3>🛠️ Strategy</h3>
+            <p>The person tests concrete methods to solve the job in front of them.</p>
+          </article>
+          <article class="node c">
+            <h3>🪞 Evaluation</h3>
+            <p>Reviews results, detects errors, and readjusts the mode of learning.</p>
+          </article>
+          <article class="node d">
+            <h3>🔥 Creative state</h3>
+            <p>More nervous complexity allows more combinations, imagination, and self-regulation.</p>
+          </article>
+          <div class="center-seed">Metacognition</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="closing">
+      <h2>Closing line</h2>
+      <p>
+        A plant does not need self-esteem to orient itself toward the light. A human being can get lost in its own
+        strategies, stories, and fears. That is why metacognition matters so much: it makes growth less blind. It does
+        not give us total control, of course. That would be a cheap fairy tale. But it does give us a mental hoe for
+        tending the ground on which we learn.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

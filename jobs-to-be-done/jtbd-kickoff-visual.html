@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTBD - Guía Visual de Kickoff</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --paper: #fffaf2;
+      --ink: #1f2a2e;
+      --muted: #5d6b6f;
+      --line: #dfd2be;
+      --func: #d96c3f;
+      --emo: #2e7d6b;
+      --soc: #c8a43d;
+      --dark: #20323a;
+      --soft-func: #f7e5dc;
+      --soft-emo: #e4f2ee;
+      --soft-soc: #f7efd9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fbf6ee 0, #f4efe7 36%, #efe7d8 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 242, 0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(47, 34, 24, 0.12);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 242, 0.94);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .page {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 20px auto 48px;
+      padding: 0 0 32px;
+    }
+
+    .hero,
+    .panel {
+      background: rgba(255, 250, 242, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 12px 30px rgba(44, 52, 56, 0.06);
+    }
+
+    .hero {
+      padding: 28px 30px;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 1.6fr 0.9fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(36px, 4vw, 54px);
+      line-height: 1.02;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      max-width: 900px;
+      font-size: 17px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .hero-callout {
+      background: var(--dark);
+      color: #fff;
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .hero-callout .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .hero-callout p {
+      font-size: 22px;
+      line-height: 1.22;
+      font-weight: 700;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .flow-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      min-height: 124px;
+    }
+
+    .flow-card .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .flow-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .flow-card p {
+      font-size: 14px;
+      line-height: 1.42;
+      color: var(--muted);
+    }
+
+    .panel {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title h2 {
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .panel-title span {
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .triad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .dim {
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .dim h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .dim p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .dim .q {
+      margin-top: 12px;
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .examples-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.35fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .example-note {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .example-note h3 {
+      font-size: 21px;
+      margin-bottom: 12px;
+    }
+
+    .example-note p,
+    .example-note li {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .example-note ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 12px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid #eadfce;
+      font-size: 14px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      background: #fbf6ee;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .coords {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .plot {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .plot svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .coords-copy {
+      display: grid;
+      gap: 14px;
+    }
+
+    .coords-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .coords-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .coords-card p,
+    .coords-card li {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .coords-card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .theory {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .theory-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .theory-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .theory-card p,
+    .theory-card li {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .theory-card ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .examples-grid,
+      .coords,
+      .theory {
+        grid-template-columns: 1fr;
+      }
+
+      .triad,
+      .flow {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .example-note {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: calc(100vw - 18px);
+        margin: 10px auto 24px;
+      }
+
+      .hero,
+      .panel {
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .triad,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/jobs-to-be-done/jtbd-kickoff-visual.html">English</a>
+  </div>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <h1>JTBD en modo kickoff visual</h1>
+        <p class="intro">
+          Este documento sirve como guía rápida para que el alumnado aprenda a mirar necesidades humanas con el marco
+          <strong>Jobs to Be Done</strong>: primero entiende la lógica del framework, luego observa ejemplos reales y, por último,
+          ubica esos trabajos en un mapa de dimensiones para detectar oportunidades.
+        </p>
+      </div>
+      <aside class="hero-callout">
+        <div class="eyebrow">Idea central</div>
+        <p>La gente no compra productos. Los contrata para avanzar en un trabajo.</p>
+      </aside>
+    </section>
+
+    <section class="flow" aria-label="narrativa de la guía">
+      <article class="flow-card">
+        <div class="num" style="background: var(--dark);">1</div>
+        <h3>Fundamentos</h3>
+        <p>Qué significa “contratar” una solución y por qué el foco está en la necesidad, no en el objeto.</p>
+      </article>
+      <article class="flow-card">
+        <div class="num" style="background: var(--func);">2</div>
+        <h3>Ejemplos</h3>
+        <p>Casos históricos y actuales para ver cómo distintos oficios responden a trabajos humanos persistentes.</p>
+      </article>
+      <article class="flow-card">
+        <div class="num" style="background: var(--emo);">3</div>
+        <h3>Coordenadas</h3>
+        <p>Ubicación visual según peso funcional, carga emocional y visibilidad social.</p>
+      </article>
+      <article class="flow-card">
+        <div class="num" style="background: var(--soc);">4</div>
+        <h3>Teoría completa</h3>
+        <p>Síntesis final para poder usar JTBD en entrevistas, análisis y diseño de propuestas.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>1. Las 3 dimensiones de un trabajo <span style="font-size: 0.72em; color: var(--muted); font-weight: 500;">(fundamentos del framework)</span></h2>
+        <span>Qué hay que entender antes de mirar ejemplos</span>
+      </div>
+      <div class="triad">
+        <article class="dim" style="background: var(--soft-func); border-color: #e8b59f;">
+          <h3>Funcional</h3>
+          <p>Es la tarea práctica. Lo que la persona necesita resolver de forma concreta, visible y medible.</p>
+          <p class="q">Pregunta: ¿qué quiero conseguir o evitar?</p>
+        </article>
+        <article class="dim" style="background: var(--soft-emo); border-color: #a5d0c4;">
+          <h3>Emocional</h3>
+          <p>Es el estado interno que se quiere provocar o reducir: alivio, calma, confianza, control o motivación.</p>
+          <p class="q">Pregunta: ¿cómo quiero sentirme?</p>
+        </article>
+        <article class="dim" style="background: var(--soft-soc); border-color: #dfc77b;">
+          <h3>Social</h3>
+          <p>Es la señal que envío a otros: pertenencia, estatus, competencia, gusto, identidad o reputación.</p>
+          <p class="q">Pregunta: ¿cómo quiero ser percibido?</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>2. Ejemplos de trabajos y oficios</h2>
+        <span>Todos estos casos pueden leerse con JTBD</span>
+      </div>
+      <div class="examples-grid">
+        <aside class="example-note">
+          <h3>Cómo leer esta tabla</h3>
+          <p>
+            Cada fila representa una <strong>necesidad humana persistente</strong>. Cambian las herramientas, cambian los mercados,
+            cambian los oficios, pero el trabajo de fondo sigue vivo.
+          </p>
+          <ul>
+            <li>La categoría agrupa el tipo de necesidad.</li>
+            <li>El job nombra lo que la persona intenta conseguir.</li>
+            <li>La columna histórica → actual muestra cómo evoluciona la solución.</li>
+            <li>Los oficios son quienes ayudan a ejecutar ese trabajo.</li>
+          </ul>
+        </aside>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 14%;">Categoría</th>
+                <th style="width: 18%;">Trabajo a realizar</th>
+                <th style="width: 24%;">Ejemplo histórico → actual</th>
+                <th style="width: 44%;">Oficios vinculados</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Supervivencia</td>
+                <td>Nutrir el cuerpo</td>
+                <td>Recolectar / cazar → apps de delivery</td>
+                <td>Cocinero, chef, camarero, nutricionista, agricultor, ganadero, pescador, sommelier, repostero, bioquímico.</td>
+              </tr>
+              <tr>
+                <td>Supervivencia</td>
+                <td>Hidratarse</td>
+                <td>Fuente pública → filtros de agua / agua embotellada</td>
+                <td>Ingeniero hidráulico, fontanero, operario de plantas de agua, hidrólogo, barista, técnico de filtros, analista de calidad, vendedor de bebidas, abastecedor, agrónomo.</td>
+              </tr>
+              <tr>
+                <td>Protección</td>
+                <td>Refugio y seguridad</td>
+                <td>Cueva / choza → seguridad inteligente / seguros</td>
+                <td>Arquitecto, albañil, vigilante, cerrajero, ingeniero de seguridad, policía, bombero, constructor, aparejador, diseñador de interiores.</td>
+              </tr>
+              <tr>
+                <td>Protección</td>
+                <td>Salud y cuidados</td>
+                <td>Medicina herbal → telemedicina / biotech</td>
+                <td>Médico, enfermero, terapeuta, fisioterapeuta, psicólogo, cirujano, farmacéutico, veterinario, podólogo, dentista.</td>
+              </tr>
+              <tr>
+                <td>Conectividad</td>
+                <td>Comunicación a distancia</td>
+                <td>Mensajeros a caballo → videoconferencia</td>
+                <td>Programador, ingeniero de telecomunicaciones, técnico de redes, desarrollador web, administrador de sistemas, diseñador UX/UI, soporte técnico, operador de servidores, analista de datos, especialista en ciberseguridad.</td>
+              </tr>
+              <tr>
+                <td>Conectividad</td>
+                <td>Pertenencia social</td>
+                <td>Fogata tribal → redes sociales / comunidades</td>
+                <td>Community manager, organizador de eventos, sociólogo, relacionista público, gestor de comunidades, psicólogo social, antropólogo, moderador, coach, agente de talentos.</td>
+              </tr>
+              <tr>
+                <td>Movilidad</td>
+                <td>Transporte de personas y bienes</td>
+                <td>Caminar / carretas → vehículos eléctricos / drones</td>
+                <td>Conductor, piloto, ingeniero automotriz, mecánico, controlador aéreo, capitán de barco, operario logístico, taxista, maquinista, mensajero.</td>
+              </tr>
+              <tr>
+                <td>Higiene</td>
+                <td>Limpieza y salubridad</td>
+                <td>Baños públicos → filtrado / robot aspirador</td>
+                <td>Personal de limpieza, gestor de residuos, técnico de saneamiento, higienista, especialista en reciclaje, lavandero, técnico de mantenimiento, operario de depuradoras, conserje, especialista en esterilización.</td>
+              </tr>
+              <tr>
+                <td>Conocimiento</td>
+                <td>Aprendizaje y educación</td>
+                <td>Tradición oral → cursos online / IA</td>
+                <td>Profesor, mentor, bibliotecario, investigador, editor, escritor, académico, tutor, conferencista, especialista en pedagogía.</td>
+              </tr>
+              <tr>
+                <td>Economía</td>
+                <td>Intercambio de valor</td>
+                <td>Trueque → fintech / criptoactivos</td>
+                <td>Banquero, contador, asesor financiero, auditor, gestor de inversiones, corredor de bolsa, economista, analista de riesgos, consultor fiscal, tesorero.</td>
+              </tr>
+              <tr>
+                <td>Ocio</td>
+                <td>Entretenimiento</td>
+                <td>Narración de historias → streaming / videojuegos</td>
+                <td>Artista, músico, guionista, director de cine, actor, diseñador de videojuegos, productor musical, escritor, animador, coreógrafo.</td>
+              </tr>
+              <tr>
+                <td>Identidad</td>
+                <td>Autoexpresión</td>
+                <td>Pinturas corporales / túnicas → moda / perfil digital</td>
+                <td>Diseñador de moda, estilista, sastre, joyero, fotógrafo, modelo, maquillador, barbero, creativo publicitario, artista visual.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>3. Coordenadas JTBD</h2>
+        <span>Primero ejemplos, luego ubicación visual</span>
+      </div>
+      <div class="legend">
+        <div class="tag"><span class="swatch" style="background: var(--func);"></span> Eje X: peso funcional</div>
+        <div class="tag"><span class="swatch" style="background: var(--emo);"></span> Eje Y: carga emocional</div>
+        <div class="tag"><span class="swatch" style="background: var(--soc);"></span> Tamaño del nodo: visibilidad social</div>
+      </div>
+      <div class="coords">
+        <div class="plot">
+          <svg viewBox="0 0 980 740" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa de coordenadas JTBD">
+            <rect x="0" y="0" width="980" height="740" rx="18" fill="#fffdf8"/>
+            <g stroke="#eadfce" stroke-width="1">
+              <line x1="110" y1="620" x2="900" y2="620"/>
+              <line x1="110" y1="500" x2="900" y2="500"/>
+              <line x1="110" y1="380" x2="900" y2="380"/>
+              <line x1="110" y1="260" x2="900" y2="260"/>
+              <line x1="110" y1="140" x2="900" y2="140"/>
+              <line x1="110" y1="620" x2="110" y2="90"/>
+              <line x1="300" y1="620" x2="300" y2="90"/>
+              <line x1="490" y1="620" x2="490" y2="90"/>
+              <line x1="680" y1="620" x2="680" y2="90"/>
+              <line x1="870" y1="620" x2="870" y2="90"/>
+            </g>
+
+            <line x1="110" y1="620" x2="920" y2="620" stroke="#d96c3f" stroke-width="4"/>
+            <polygon points="920,620 900,610 900,630" fill="#d96c3f"/>
+            <line x1="110" y1="650" x2="110" y2="72" stroke="#2e7d6b" stroke-width="4"/>
+            <polygon points="110,72 100,92 120,92" fill="#2e7d6b"/>
+
+            <text x="600" y="676" style="font:700 18px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Peso funcional del trabajo</text>
+            <text x="36" y="386" transform="rotate(-90 36 386)" style="font:700 18px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Carga emocional del trabajo</text>
+
+            <text x="97" y="646" style="font:14px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">bajo</text>
+            <text x="840" y="646" style="font:14px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">alto</text>
+            <text x="68" y="616" style="font:14px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">baja</text>
+            <text x="72" y="124" style="font:14px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">alta</text>
+
+            <g>
+              <circle cx="246" cy="154" r="35" fill="#e4f2ee" stroke="#2e7d6b" stroke-width="3"/>
+              <text x="203" y="148" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Salud y</text>
+              <text x="199" y="166" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">cuidados</text>
+              <text x="170" y="188" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">médico, enfermero, psicólogo</text>
+            </g>
+
+            <g>
+              <circle cx="432" cy="212" r="33" fill="#f7efd9" stroke="#c8a43d" stroke-width="3"/>
+              <text x="387" y="206" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Pertenencia</text>
+              <text x="403" y="224" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">social</text>
+              <text x="336" y="246" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">community manager, coach, sociólogo</text>
+            </g>
+
+            <g>
+              <circle cx="700" cy="192" r="39" fill="#f7efd9" stroke="#c8a43d" stroke-width="3"/>
+              <text x="666" y="186" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Auto-</text>
+              <text x="651" y="204" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">expresión</text>
+              <text x="632" y="228" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">estilista, fotógrafo, joyero</text>
+            </g>
+
+            <g>
+              <circle cx="770" cy="312" r="28" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="738" y="316" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Ocio</text>
+              <text x="706" y="338" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">artista, actor, músico</text>
+            </g>
+
+            <g>
+              <circle cx="642" cy="396" r="26" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="594" y="392" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Comunicación</text>
+              <text x="612" y="410" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">remota</text>
+              <text x="551" y="432" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">programador, UX/UI, técnico de redes</text>
+            </g>
+
+            <g>
+              <circle cx="814" cy="470" r="30" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="767" y="466" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Transporte</text>
+              <text x="788" y="484" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">y bienes</text>
+              <text x="736" y="506" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">conductor, piloto, mecánico</text>
+            </g>
+
+            <g>
+              <circle cx="892" cy="560" r="27" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="860" y="556" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Nutrir</text>
+              <text x="864" y="574" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">el cuerpo</text>
+              <text x="822" y="596" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">chef, agricultor, nutricionista</text>
+            </g>
+
+            <g>
+              <circle cx="746" cy="606" r="21" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="725" y="610" style="font:700 12px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Hidratar</text>
+              <text x="687" y="630" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">fontanero, hidrólogo, barista</text>
+            </g>
+
+            <g>
+              <circle cx="560" cy="336" r="23" fill="#e4f2ee" stroke="#2e7d6b" stroke-width="3"/>
+              <text x="518" y="332" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Aprender</text>
+              <text x="520" y="350" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">y educar</text>
+              <text x="489" y="372" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">profesor, mentor, tutor</text>
+            </g>
+
+            <g>
+              <circle cx="684" cy="416" r="22" fill="#f7efd9" stroke="#c8a43d" stroke-width="3"/>
+              <text x="652" y="420" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Economía</text>
+              <text x="631" y="440" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">banquero, auditor, economista</text>
+            </g>
+
+            <g>
+              <circle cx="214" cy="468" r="25" fill="#e4f2ee" stroke="#2e7d6b" stroke-width="3"/>
+              <text x="177" y="464" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Refugio y</text>
+              <text x="177" y="482" style="font:700 13px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">seguridad</text>
+              <text x="147" y="504" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">arquitecto, policía, bombero</text>
+            </g>
+
+            <g>
+              <circle cx="492" cy="534" r="20" fill="#f7e5dc" stroke="#d96c3f" stroke-width="3"/>
+              <text x="468" y="538" style="font:700 12px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#1f2a2e;">Higiene</text>
+              <text x="436" y="558" style="font:11px 'Trebuchet MS', 'Segoe UI', sans-serif; fill:#5d6b6f;">higienista, conserje, lavandero</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="coords-copy">
+          <article class="coords-card">
+            <h3>Qué significa el mapa</h3>
+            <p>
+              No todos los trabajos pesan igual en las tres dimensiones. Unos son muy prácticos, otros muy emocionales y otros
+              muy sociales. El mapa ayuda a ver esa mezcla de un golpe.
+            </p>
+          </article>
+
+          <article class="coords-card">
+            <h3>Cómo leerlo en clase</h3>
+            <ul>
+              <li>Más a la derecha: más tarea práctica y resolución concreta.</li>
+              <li>Más arriba: más alivio, ansiedad, vínculo o identidad emocional.</li>
+              <li>Nodo más grande: más visibilidad social o señal externa.</li>
+            </ul>
+          </article>
+
+          <article class="coords-card">
+            <h3>Pregunta útil para el alumnado</h3>
+            <p>
+              Si un oficio desapareciera mañana, ¿qué trabajo humano seguiría existiendo y con qué nueva solución podría volver a resolverse?
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <h2>4. Teoría completa, en breve</h2>
+        <span>Cierre para consolidar el marco</span>
+      </div>
+      <div class="theory">
+        <article class="theory-card">
+          <h3>Concepto clave</h3>
+          <p>
+            JTBD, popularizado por Clayton Christensen, sostiene que las personas no compran productos por sus características,
+            sino porque les ayudan a progresar en una situación concreta.
+          </p>
+          <ul>
+            <li>Contratar: elegir una solución para hacer un trabajo.</li>
+            <li>Despedir: dejar de usarla porque ya no resuelve ese trabajo.</li>
+          </ul>
+        </article>
+
+        <article class="theory-card">
+          <h3>Ejemplo clásico</h3>
+          <p>
+            El batido de McDonald’s no competía solo contra otros batidos. También competía contra donuts, plátanos o bagels
+            en el trabajo de “aguantar el trayecto al trabajo sin hambre y sin complicaciones”.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>Cómo aplicarlo</h3>
+          <ul>
+            <li>Identifica el job: qué intenta lograr la persona.</li>
+            <li>Define el contexto: cuándo, dónde y con qué fricción ocurre.</li>
+            <li>Analiza alternativas: qué soluciones contrata hoy.</li>
+            <li>Diseña valor: cómo resolverlo mejor.</li>
+            <li>Valida: entrevista para entender el porqué real.</li>
+          </ul>
+        </article>
+
+        <article class="theory-card">
+          <h3>Por qué sirve</h3>
+          <ul>
+            <li>Ayuda a innovar con sentido, no por moda.</li>
+            <li>Mejora el marketing al hablar del problema real.</li>
+            <li>Segmenta por tareas humanas, no solo por perfiles demográficos.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="footer-note">
+        Cierre del documento: la pregunta importante no es “¿qué producto quiere la gente?”, sino “¿qué trabajo necesita resolver?”.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

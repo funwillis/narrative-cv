@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metacognición y jardinería interior</title>
+  <style>
+    :root {
+      --bg: #efe7d4;
+      --paper: rgba(255, 251, 245, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #201916;
+      --muted: #65584f;
+      --line: rgba(77, 59, 48, 0.16);
+      --soil: #8a5a43;
+      --leaf: #6b8742;
+      --sage: #3f7468;
+      --sun: #d59d39;
+      --berry: #85556a;
+      --night: #241d1a;
+      --shadow: 0 22px 55px rgba(48, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.62), transparent 22%),
+        radial-gradient(circle at 88% 14%, rgba(107, 135, 66, 0.18), transparent 18%),
+        linear-gradient(180deg, #f5eedf 0%, #ebddc5 48%, #dfccb0 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 251, 245, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 251, 245, 0.88);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1220px, calc(100vw - 28px));
+      margin: 0 auto 40px;
+    }
+
+    .hero,
+    .panel,
+    .note,
+    .step,
+    .mini-card,
+    .diagram,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 34px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -90px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213, 157, 57, 0.26), rgba(213, 157, 57, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.75);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 9ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(3rem, 7vw, 5.3rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .note {
+      border-radius: 28px;
+      padding: 20px;
+    }
+
+    .note.dark {
+      background: linear-gradient(160deg, #211917 0%, #3a2d29 100%);
+      color: #fff8f2;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.35rem;
+      line-height: 1.15;
+      font-weight: 750;
+    }
+
+    .note p {
+      margin-top: 10px;
+      line-height: 1.45;
+      color: inherit;
+      opacity: 0.9;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(77, 59, 48, 0.35);
+    }
+
+    .top-grid,
+    .mid-grid,
+    .bottom-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .top-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .mid-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .bottom-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+    }
+
+    .panel {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.02;
+      margin-bottom: 10px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .jobs-grid,
+    .triad,
+    .conditions {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .jobs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-card {
+      border-radius: 22px;
+      padding: 16px;
+      transition: transform 220ms ease;
+    }
+
+    .mini-card:hover,
+    .step:hover {
+      transform: translateY(-3px);
+    }
+
+    .mini-card h3,
+    .step h3 {
+      font-size: 1.02rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p,
+    .step p {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.95rem;
+    }
+
+    .leaf { border-left: 5px solid var(--leaf); }
+    .soil { border-left: 5px solid var(--soil); }
+    .sage { border-left: 5px solid var(--sage); }
+    .sun { border-left: 5px solid var(--sun); }
+    .berry { border-left: 5px solid var(--berry); }
+
+    .diagram {
+      border-radius: 30px;
+      padding: 20px;
+    }
+
+    .layers {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .layer {
+      border-radius: 24px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .layer::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -28px -10px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .layer h3 {
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .layer p {
+      position: relative;
+      z-index: 1;
+      color: inherit;
+      opacity: 0.92;
+      line-height: 1.45;
+    }
+
+    .layer.one {
+      background: linear-gradient(135deg, #f0dccf, #e9cdbf);
+      color: #3d2820;
+    }
+
+    .layer.two {
+      background: linear-gradient(135deg, #d9ead8, #bdd7b0);
+      color: #1f3722;
+    }
+
+    .layer.three {
+      background: linear-gradient(135deg, #cfe7e2, #b0d2cb);
+      color: #173833;
+    }
+
+    .arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .triad {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step {
+      border-radius: 26px;
+      padding: 18px;
+      position: relative;
+    }
+
+    .step .num {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .conditions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .condition-band {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .loop {
+      position: relative;
+      min-height: 520px;
+    }
+
+    .ring {
+      width: min(100%, 520px);
+      aspect-ratio: 1;
+      margin: 10px auto 0;
+      position: relative;
+    }
+
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: 12% 12%;
+      border-radius: 50%;
+      border: 2px dashed rgba(77, 59, 48, 0.28);
+    }
+
+    .node {
+      position: absolute;
+      width: 178px;
+      padding: 16px;
+      border-radius: 24px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(48, 31, 21, 0.1);
+    }
+
+    .node h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .node p {
+      font-size: 0.92rem;
+      line-height: 1.42;
+      color: var(--muted);
+    }
+
+    .node.a { top: 0; left: 50%; transform: translateX(-50%); }
+    .node.b { top: 34%; right: 0; }
+    .node.c { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .node.d { top: 34%; left: 0; }
+
+    .center-seed {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(107, 135, 66, 0.2), rgba(53, 109, 124, 0.16));
+      border: 1px solid rgba(77, 59, 48, 0.16);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 22px;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.35rem;
+      line-height: 1.05;
+    }
+
+    .closing {
+      margin-top: 18px;
+      border-radius: 32px;
+      padding: 24px;
+      background: linear-gradient(145deg, #241d1a 0%, #473630 100%);
+      color: #fff9f4;
+    }
+
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+    }
+
+    .closing p {
+      max-width: 68ch;
+      line-height: 1.55;
+      color: rgba(255, 249, 244, 0.88);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .top-grid,
+      .mid-grid,
+      .bottom-grid,
+      .triad,
+      .conditions,
+      .jobs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-columns: 1fr;
+      }
+
+      .loop {
+        min-height: 860px;
+      }
+
+      .ring {
+        width: 100%;
+        max-width: 520px;
+      }
+
+      .node {
+        width: min(100%, 220px);
+      }
+
+      .node.a { top: 0; }
+      .node.b { top: 26%; right: 0; }
+      .node.d { top: 26%; left: 0; }
+      .node.c { bottom: 0; }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100vw - 18px, 100%);
+      }
+
+      .hero,
+      .panel,
+      .diagram,
+      .closing {
+        border-radius: 26px;
+        padding: 18px;
+      }
+
+      .loop {
+        min-height: 980px;
+      }
+
+      .node.a,
+      .node.b,
+      .node.c,
+      .node.d {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+      }
+
+      .node.a { top: 0; }
+      .node.b { top: 24%; }
+      .node.d { top: 48%; }
+      .node.c { bottom: 0; }
+
+      .center-seed {
+        top: 73%;
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/metacognicion-jardineria/metacognicion-jardineria-infografia.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Infografía narrativa · educación · aprendizaje</span>
+        <h1>Jardinería interior</h1>
+        <p class="hero-copy">
+          La metáfora vegetal sirve para recordar algo incómodo: no puedes estirar una planta para que crezca antes.
+          Con las personas pasa algo parecido. Pero el ser humano añade una rareza: puede observar cómo piensa, regular
+          sus estrategias y aprender a aprender. Ahí entra la metacognición.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="kicker">Tesis central</span>
+          <strong>Educar no es fabricar conductas. Es diseñar condiciones para que una mente aprenda a cultivarse.</strong>
+          <p>Menos control bruto. Más entorno, ejemplo, lenguaje y reflexión deliberada.</p>
+        </aside>
+        <aside class="note">
+          <span class="kicker">Idea puente</span>
+          <strong>JTBD + metacognición</strong>
+          <p>
+            Toda vida resuelve trabajos básicos. El humano, además, puede revisar el método con el que intenta resolverlos.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1 · El suelo compartido</div>
+    <section class="top-grid">
+      <article class="panel">
+        <h2>La vida entera ya funciona con “jobs”</h2>
+        <p>
+          Antes de la pedagogía, antes de la cultura y antes del ego, hay tareas básicas: sostener la vida, protegerse,
+          vincularse, orientarse, reproducirse. En ese nivel, una planta, un ave y un niño están en el mismo torneo.
+        </p>
+        <div class="jobs-grid">
+          <div class="mini-card leaf">
+            <h3>🌱 Supervivencia</h3>
+            <p>Nutrirse, hidratarse, mantenerse con vida. El job más viejo del planeta.</p>
+          </div>
+          <div class="mini-card soil">
+            <h3>🏡 Protección</h3>
+            <p>Buscar refugio, reducir daño, regular exposición al entorno.</p>
+          </div>
+          <div class="mini-card sun">
+            <h3>🧭 Orientación</h3>
+            <p>Detectar señales útiles y elegir hacia dónde moverse o crecer.</p>
+          </div>
+          <div class="mini-card berry">
+            <h3>🤝 Vínculo</h3>
+            <p>Coordinarse, atraer, cuidar, reproducirse o pertenecer a un sistema vivo.</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="diagram">
+        <h2>No toda diferencia es esencia</h2>
+        <p>
+          La inteligencia subyacente a la vida es compartida. Lo que cambia es el grado de complejidad del sistema
+          nervioso y, con él, la variedad de estrategias posibles.
+        </p>
+        <div class="condition-band">
+          <span class="pill">Las plantas no son “inferiores”: juegan otro juego</span>
+          <span class="pill">Otras especies también usan tecnología: herramientas</span>
+          <span class="pill">El bambú y el calabacín no crecen al mismo ritmo</span>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-label">2 · La rareza humana</div>
+    <section class="panel">
+      <h2>El humano puede pensar sobre cómo está pensando</h2>
+      <p>
+        Según Flavell, la metacognición aparece porque una criatura que piensa también puede equivocarse pensando. Por
+        eso necesita un mecanismo de segundo orden: una forma de planificar, supervisar y evaluar sus propios procesos
+        mentales.
+      </p>
+      <div class="layers">
+        <div class="layer one">
+          <h3>1. Cognición básica</h3>
+          <p>Percibir, recordar, atender, comprender, resolver un problema concreto.</p>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer two">
+          <h3>2. Control estratégico</h3>
+          <p>Elegir qué hacer primero, qué estrategia usar, cómo comprobar si funciona.</p>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="layer three">
+          <h3>3. Metacognición</h3>
+          <p>Saber por qué aprendí bien o mal, qué me bloqueó y cómo corregir el siguiente intento.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">3 · La jardinería interior</div>
+    <section class="mid-grid">
+      <article class="step">
+        <div class="num" style="background:#6b8742;">1</div>
+        <h3>Planificar</h3>
+        <p>
+          Qué voy a aprender, qué sé ya, qué tarea es más difícil y qué estrategia parece más adecuada.
+        </p>
+      </article>
+      <article class="step">
+        <div class="num" style="background:#3f7468;">2</div>
+        <h3>Monitorizar</h3>
+        <p>
+          Observar el proceso mientras ocurre: “esto no entra”, “me distraigo”, “este método no me sirve”.
+        </p>
+      </article>
+      <article class="step">
+        <div class="num" style="background:#d59d39;">3</div>
+        <h3>Evaluar</h3>
+        <p>
+          Medir el resultado y revisar la relación entre estrategia y efecto. No solo “saqué un 7”, sino “por qué”.
+        </p>
+      </article>
+    </section>
+
+    <div class="section-label">4 · Consecuencia educativa</div>
+    <section class="bottom-grid">
+      <article class="panel">
+        <h2>Influir sí. Forzar no.</h2>
+        <p>
+          La imagen apunta a una verdad poco romántica: la influencia de padres y docentes es indirecta y limitada. Si
+          invades demasiado, la otra persona puede vivirte como obstáculo. Lo más eficaz suele ser menos ingeniería de la
+          conducta y más ejemplo legible.
+        </p>
+        <div class="conditions">
+          <div class="mini-card soil">
+            <h3>🪴 Diseñar condiciones</h3>
+            <p>Rutina, seguridad, lenguaje, feedback y espacio para probar sin humillación.</p>
+          </div>
+          <div class="mini-card leaf">
+            <h3>👀 Modelar</h3>
+            <p>La conducta visible enseña más que el sermón. Al revés suele fracasar.</p>
+          </div>
+          <div class="mini-card sage">
+            <h3>🎨 Sublimar</h3>
+            <p>Cuando no puede expresarse todo directamente, el arte y el juego metabolizan tensión.</p>
+          </div>
+          <div class="mini-card berry">
+            <h3>⏳ Respetar ritmos</h3>
+            <p>Bambú vs calabacín: mismo cuidado, tiempos radicalmente distintos.</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="diagram loop">
+        <h2>El bucle que vuelve autónoma a una mente</h2>
+        <div class="ring">
+          <article class="node a">
+            <h3>🌤️ Condiciones</h3>
+            <p>Seguridad, atención, tiempo, herramientas y un contexto que no castigue explorar.</p>
+          </article>
+          <article class="node b">
+            <h3>🛠️ Estrategia</h3>
+            <p>La persona prueba métodos concretos para resolver el job que tiene delante.</p>
+          </article>
+          <article class="node c">
+            <h3>🪞 Evaluación</h3>
+            <p>Revisa resultados, detecta errores y reajusta el modo de aprender.</p>
+          </article>
+          <article class="node d">
+            <h3>🔥 Estado creativo</h3>
+            <p>Más complejidad nerviosa permite más combinaciones, imaginación y autorregulación.</p>
+          </article>
+          <div class="center-seed">Metacognición</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="closing">
+      <h2>Remate</h2>
+      <p>
+        Una planta no necesita autoestima para orientarse hacia la luz. Un humano sí puede perderse en sus propias
+        estrategias, relatos y miedos. Por eso la metacognición importa tanto: convierte el crecimiento en algo menos
+        ciego. No nos da control total, claro. Eso sería un cuento barato. Pero sí nos da una azada mental para cuidar
+        mejor el terreno donde aprendemos.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

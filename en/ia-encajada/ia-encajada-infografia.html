@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Situated AI: memory, abstraction, and action</title>
+  <style>
+    :root {
+      --bg: #ece5d8;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #655952;
+      --line: rgba(80, 63, 54, 0.16);
+      --copper: #b56a42;
+      --teal: #356d7c;
+      --olive: #70824a;
+      --gold: #c39a45;
+      --plum: #7a5667;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(53, 109, 124, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(195, 154, 69, 0.24), rgba(195, 154, 69, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 8.5ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.2rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.38rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(80, 63, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .loop,
+    .theories,
+    .compare-grid,
+    .map-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.04fr 0.96fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .card p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .map-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -14px -42px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .copper { border-left: 5px solid var(--copper); }
+    .teal { border-left: 5px solid var(--teal); }
+    .olive { border-left: 5px solid var(--olive); }
+    .gold { border-left: 5px solid var(--gold); }
+    .plum { border-left: 5px solid var(--plum); }
+
+    .loop {
+      margin-top: 18px;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .theories {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-item {
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.64);
+      border: 1px solid var(--line);
+    }
+
+    .mini-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .rail {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(53, 109, 124, 0.1), rgba(181, 106, 66, 0.08));
+      border: 1px solid var(--line);
+    }
+
+    .rail strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #221916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.9);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .map-grid,
+      .loop,
+      .theories,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../../ia-encajada/ia-encajada-infografia.html">Español</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">AI · memory · abstraction · metacognition</span>
+        <h1>Situated AI</h1>
+        <p class="hero-copy">
+          This piece does not treat AI as magic or as a sovereign subject. It treats it as an interface of memory and
+          compression: a powerful tool for capturing, refining, reformulating, and expanding ideas when an inner
+          impulse manages to pass into language. Its power does not cancel the other pieces of the project: it
+          condenses and accelerates them.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <aside class="quote dark">
+          <span class="kicker">Thesis</span>
+          <strong>A prompt is an impulse translated into language so that an external memory can work on it.</strong>
+          <p>
+            AI does not think out of desire. It reorders inherited patterns. That is why it can serve the best and the
+            worst alike: it amplifies the quality of the impulse, the clarity of language, and the lucidity of the one
+            using it.
+          </p>
+        </aside>
+
+        <aside class="quote">
+          <span class="kicker">Krishnamurti</span>
+          <strong>If thought is mechanical, a machine can push it very far.</strong>
+          <p>
+            His warning was not technophobic but uncomfortable: if we reduce intelligence to memory, calculation, and
+            repetition, the machine surpasses us. The human question becomes something else again: what remains outside
+            the mere mechanics of thought?
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1. Where it fits inside the project</div>
+    <section class="panel">
+      <span class="badge">Narrative context</span>
+      <h2>AI does not open another saga: it accelerates the one already underway</h2>
+      <p>
+        This piece is built on the previous ones. `JTBD` explained that every action begins in a need. Metacognition
+        showed how to monitor and redesign learning. `Banausos` warned against a mind that is useful but narrow.
+        `Panhumanism` asked us to think at the scale of the species. `Sun, language, and civilization` shifted the
+        gaze toward the material and energetic base. AI enters here as a hinge: it converts language into operational
+        memory.
+      </p>
+
+      <div class="map-grid">
+        <article class="card copper">
+          <h3>JTBD</h3>
+          <p>The prompt is born from a job: clarifying, comparing, synthesizing, designing, or deciding.</p>
+        </article>
+        <article class="card olive">
+          <h3>Metacognition</h3>
+          <p>Conversation with AI externalizes thought and allows it to be seen, corrected, and refined.</p>
+        </article>
+        <article class="card plum">
+          <h3>Banausos</h3>
+          <p>AI can serve to open disciplines or to manufacture even blinder specialists.</p>
+        </article>
+        <article class="card teal">
+          <h3>Panhumanism</h3>
+          <p>The question is no longer only who knows more, but how we distribute memory and collective judgment.</p>
+        </article>
+        <article class="card gold">
+          <h3>Psychic thermodynamics</h3>
+          <p>Impulse, word, pattern, and action: AI inserts itself exactly into that chain.</p>
+        </article>
+        <article class="card copper">
+          <h3>Structural danger</h3>
+          <p>If we confuse access to memory with wisdom, we outsource judgment along with cognitive labor.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">2. Idea as compact memory</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Abstraction</span>
+        <h2>An idea condenses experience in the same way a coin condenses trade</h2>
+        <p>
+          Human intelligence gains power when it can compress many cases into a few forms. A concept, a formula, a
+          definition, or domain jargon is compressed memory. Finance abstracts exchanges; law abstracts conflicts;
+          physics abstracts regularities; an idea abstracts experience to make it portable.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Schema theory</strong>
+            <span>Understanding is not storing isolated data, but organizing structures that allow anticipation and classification.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Chunking</strong>
+            <span>Expertise appears when many elements stop being seen as isolated pieces and are read as chunks.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Predictive compression</strong>
+            <span>A good abstraction does not repeat the whole world: it captures enough to orient action.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Domain language</span>
+        <h2>Understanding an area means learning its verbal interface</h2>
+        <p>
+          Functional knowledge of a domain matters because it opens concrete capacity for action. But it does so
+          through a very earthly operation: learning jargon, distinctions, models, and abstractions that allow one to
+          read better what previously looked like noise. In that sense, every domain is a specialized form of language.
+        </p>
+
+        <div class="rail">
+          <strong>Examples</strong>
+          <p>
+            In finance we speak of liquidity, risk, derivatives, and discounting. In medicine, of symptoms, syndromes,
+            and protocols. In programming, of types, states, and interfaces. The vocabulary changes; the mechanics do
+            not: condense experience in order to intervene.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">3. The prompt as a refined impulse</div>
+    <section class="panel">
+      <span class="badge">Operational loop</span>
+      <h2>The prompt turns a diffuse inner crossing into a refinable sequence</h2>
+      <p>
+        Before, many ideas passed through the mind and were lost or took days to settle. Now they can enter a very
+        fast refinement circuit. The value is not only in the answer: it lies in the possibility of seeing thought
+        outside oneself, iterating on it, and re-entering with greater form.
+      </p>
+
+      <div class="loop">
+        <article class="card copper">
+            <h3>1. Impulse</h3>
+            <p>An intuition, friction, or question strikes attention.</p>
+        </article>
+        <article class="card gold">
+            <h3>2. Language</h3>
+            <p>The impulse becomes phrase, context, constraint, or explicit desire.</p>
+        </article>
+        <article class="card teal">
+            <h3>3. External memory</h3>
+            <p>AI reorganizes patterns and returns variants, structure, and contrast.</p>
+        </article>
+        <article class="card olive">
+            <h3>4. Metacognition</h3>
+            <p>The user detects gaps, biases, vagueness, and better formulations.</p>
+        </article>
+        <article class="card plum">
+            <h3>5. Action</h3>
+            <p>The refined idea descends into text, design, decision, code, or real conversation.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">4. Theory and practice refuse divorce</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Mechanics of knowledge</span>
+        <h2>Without theory you do not know what to repeat; with practice alone you end up building theory anyway</h2>
+        <p>
+          Every serious learning process oscillates between model and friction. Theory gives name, order, and
+          anticipation; practice corrects, contradicts, or refines. Even those who boast of going “by practice alone”
+          end up building implicit rules. And those who live “by theory alone” end up practicing badly or inside empty abstraction.
+        </p>
+
+        <div class="compare-grid">
+          <div class="mini-item">
+            <strong>Deduction</strong>
+            <span>Moves down from model to case: applies criteria, hypotheses, and categories.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Induction</strong>
+            <span>Moves up from case to model: detects regularities, exceptions, and emergent rules.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Applied metacognition</span>
+        <h2>AI makes the bridge between both movements visible</h2>
+        <p>
+          Conversation with models allows one to test theory, tension it with examples, ask for counterexamples, and
+          compress what has been learned again. That is why it works so well for thinking, teaching, and designing.
+          It is also why it can manufacture illusions of understanding if one consumes elegant formulations without
+          contact with reality.
+        </p>
+
+        <div class="theories">
+          <div class="mini-item">
+            <strong>Declarative knowledge</strong>
+            <span>Knowing what something is, what it is called, and what distinguishes it from something else.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Procedural knowledge</strong>
+            <span>Knowing how to do, adjust, correct, and coordinate in concrete situations.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">5. Krishnamurti and the mechanical danger</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Warning</span>
+        <h2>If mind operates only as accumulation, the machine inherits the throne</h2>
+        <p>
+          Krishnamurti sensed something fairly brutal: if we call intelligence a mixture of memory, accumulated
+          experience, recombination, and conditioned response, then the computer is simply the industrial extension of
+          that mind. The threat is not the appearance of an autonomous demon. The threat is that we voluntarily degrade
+          ourselves to functions the machine can already absorb.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Memory</strong>
+            <span>The machine remembers more, faster, and without subjective fatigue.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Combinatorial creativity</strong>
+            <span>It can recombine styles, patterns, and solutions at obscene speed.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Human risk</strong>
+            <span>Delegating so much that the brain becomes lazy, ornamental, or servile.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Key distinction</span>
+        <h2>AI is immensely powerful as memory; it has no impulse of its own</h2>
+        <p>
+          Here the circle must be closed carefully. AI concentrates memory, language, and abstraction into a very
+          compact form. But it initiates nothing by itself. It does not suffer, desire, or need meaning. It reacts to
+          outside inputs and goals. That makes it dangerously useful: it amplifies human intention without guaranteeing wisdom.
+        </p>
+
+        <div class="rail">
+          <strong>Operational conclusion</strong>
+          <p>
+            What matters now is not only having access to the tool, but cultivating judgment to formulate, filter,
+            contrast, and decide when to use it and when to think without crutches.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="closing">
+      <h2>AI does not close the project: it compresses and accelerates it</h2>
+      <p>
+        If the other pieces were about need, learning, mental form, human coordination, and material support, this one
+        adds a new layer: externalized operational memory. AI can help an intuition become a concept, a concept become
+        a map, and a map become action. But the impulse remains human. That is why judgment is still the bottleneck.
+        The tool does not come with moral direction built in.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

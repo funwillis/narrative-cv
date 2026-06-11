@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTBD - Infografía de Autodescubrimiento</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --ink: #1f2a2e;
+      --muted: #5d6b6f;
+      --card: #fffaf2;
+      --line: #d9cbb3;
+      --accent: #d96c3f;
+      --accent-2: #2e7d6b;
+      --accent-3: #c8a43d;
+      --accent-4: #9d4edd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.88);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(47, 34, 24, 0.12);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wrap {
+      width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: linear-gradient(180deg, #f9f4ec 0%, #f3ede2 100%);
+      border: 1px solid #e2d7c4;
+    }
+
+    .title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 36px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      fill: var(--muted);
+    }
+
+    .section {
+      fill: var(--card);
+      stroke: var(--line);
+      stroke-width: 2;
+      rx: 28;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .body {
+      font-size: 16px;
+      fill: var(--ink);
+    }
+
+    .small {
+      font-size: 14px;
+      fill: var(--muted);
+    }
+
+    .pill {
+      stroke-width: 0;
+      rx: 18;
+    }
+
+    .label {
+      font-size: 15px;
+      font-weight: 700;
+      fill: #ffffff;
+    }
+
+    .step {
+      fill: #ffffff;
+      stroke: var(--line);
+      stroke-width: 2;
+      rx: 22;
+    }
+
+    .step-num {
+      font-size: 17px;
+      font-weight: 700;
+      fill: #ffffff;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .step-copy {
+      font-size: 14px;
+      fill: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/jobs-to-be-done/jtbd-infografia.html">English</a>
+  </div>
+  <div class="wrap">
+    <svg viewBox="0 0 1400 1800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+      <title id="title">Infografía JTBD para autodescubrimiento de necesidades</title>
+      <desc id="desc">Resumen visual del marco Jobs to Be Done aplicado a alumnado.</desc>
+
+      <rect x="24" y="24" width="1352" height="160" rx="34" fill="#fffaf2" stroke="#d9cbb3" stroke-width="2"/>
+      <text x="62" y="88" class="title">Jobs to Be Done</text>
+      <text x="62" y="128" class="subtitle">No compras un producto: lo contratas para avanzar en un trabajo importante de tu vida.</text>
+      <text x="62" y="156" class="small">Versión para alumnado: útil para detectar necesidades reales, motivaciones ocultas y oportunidades de proyecto.</text>
+
+      <rect x="1030" y="52" width="286" height="96" rx="28" fill="#1f2a2e"/>
+      <text x="1060" y="92" class="label">Pregunta clave</text>
+      <text x="1060" y="123" style="font-size:18px; fill:#ffffff;">“¿Qué intento resolver</text>
+      <text x="1060" y="146" style="font-size:18px; fill:#ffffff;">de verdad?”</text>
+
+      <rect x="40" y="214" width="1320" height="210" class="section"/>
+      <text x="72" y="264" class="section-title">1. La idea central</text>
+      <text x="72" y="305" class="body">El foco no está en la herramienta, sino en la necesidad que empuja a usarla.</text>
+      <text x="72" y="338" class="body">• Contratar: elijo una solución porque me ayuda a progresar.</text>
+      <text x="72" y="369" class="body">• Despedir: la abandono cuando deja de cumplir el trabajo esperado.</text>
+      <text x="72" y="400" class="small">JTBD cambia la pregunta de “¿qué características quieres?” a “¿para qué tarea necesitas una solución?”</text>
+
+      <rect x="910" y="248" width="394" height="136" rx="26" fill="#fff" stroke="#d9cbb3" stroke-width="2"/>
+      <text x="938" y="288" style="font-size:18px; font-weight:700; fill:#d96c3f;">Alumno/a en autodescubrimiento</text>
+      <text x="938" y="322" class="body">No pienses primero en la app, carrera o producto.</text>
+      <text x="938" y="349" class="body">Piensa en el bloqueo, el deseo y el contexto.</text>
+
+      <rect x="40" y="456" width="1320" height="370" class="section"/>
+      <text x="72" y="506" class="section-title">2. Las tres dimensiones del Job</text>
+
+      <rect x="78" y="548" width="388" height="222" rx="28" fill="#f5e7de" stroke="#d96c3f" stroke-width="2"/>
+      <rect x="112" y="572" width="146" height="34" class="pill" fill="#d96c3f"/>
+      <text x="136" y="595" class="label">Funcional</text>
+      <text x="112" y="639" class="body">¿Qué tarea práctica quiero completar?</text>
+      <text x="112" y="674" class="small">Ejemplo:</text>
+      <text x="112" y="702" class="body">“Llegar del punto A al punto B”</text>
+      <text x="112" y="737" class="small">Busca eficiencia, claridad, ahorro de tiempo y resultado concreto.</text>
+
+      <rect x="506" y="548" width="388" height="222" rx="28" fill="#e6f3ef" stroke="#2e7d6b" stroke-width="2"/>
+      <rect x="540" y="572" width="146" height="34" class="pill" fill="#2e7d6b"/>
+      <text x="563" y="595" class="label">Emocional</text>
+      <text x="540" y="639" class="body">¿Cómo quiero sentirme mientras lo hago?</text>
+      <text x="540" y="674" class="small">Ejemplo:</text>
+      <text x="540" y="702" class="body">“Sentirme tranquilo, seguro o capaz”</text>
+      <text x="540" y="737" class="small">Aquí viven la ansiedad, el alivio, la confianza y la motivación.</text>
+
+      <rect x="934" y="548" width="388" height="222" rx="28" fill="#f6efdb" stroke="#c8a43d" stroke-width="2"/>
+      <rect x="968" y="572" width="126" height="34" class="pill" fill="#c8a43d"/>
+      <text x="996" y="595" class="label">Social</text>
+      <text x="968" y="639" class="body">¿Cómo quiero ser percibido por los demás?</text>
+      <text x="968" y="674" class="small">Ejemplo:</text>
+      <text x="968" y="702" class="body">“Ser visto como competente o exitoso”</text>
+      <text x="968" y="737" class="small">Importa la identidad, el estatus, la pertenencia y la señal que emites.</text>
+
+      <rect x="40" y="858" width="1320" height="250" class="section"/>
+      <text x="72" y="908" class="section-title">3. Ejemplo clásico: el batido de McDonald’s</text>
+      <text x="72" y="949" class="body">Enfoque superficial: sabor, fruta, dulzor, tamaño.</text>
+      <text x="72" y="980" class="body">Enfoque JTBD: “Ayúdame a no pasar hambre en un trayecto aburrido al trabajo, mientras conduzco con una mano”.</text>
+      <text x="72" y="1016" class="small">La competencia real no eran otros batidos, sino plátanos, donuts o bagels.</text>
+
+      <rect x="930" y="910" width="362" height="148" rx="24" fill="#1f2a2e"/>
+      <text x="958" y="950" class="label">Lectura útil para clase</text>
+      <text x="958" y="984" style="font-size:18px; fill:#ffffff;">El alumno aprende a mirar</text>
+      <text x="958" y="1009" style="font-size:18px; fill:#ffffff;">más allá de la solución visible.</text>
+      <text x="958" y="1034" style="font-size:18px; fill:#ffffff;">Eso es oro para innovar.</text>
+
+      <rect x="40" y="1140" width="1320" height="364" class="section"/>
+      <text x="72" y="1190" class="section-title">4. Cómo aplicar JTBD paso a paso</text>
+
+      <line x1="156" y1="1310" x2="1238" y2="1310" stroke="#d9cbb3" stroke-width="4" stroke-linecap="round"/>
+
+      <g transform="translate(78 1238)">
+        <rect x="0" y="0" width="232" height="170" class="step"/>
+        <circle cx="28" cy="28" r="18" fill="#d96c3f"/>
+        <text x="22" y="34" class="step-num">1</text>
+        <text x="28" y="66" class="step-title">Identifica el Job</text>
+        <text x="28" y="96" class="step-copy">¿Qué intenta lograr de verdad</text>
+        <text x="28" y="118" class="step-copy">la persona?</text>
+      </g>
+
+      <g transform="translate(334 1238)">
+        <rect x="0" y="0" width="232" height="170" class="step"/>
+        <circle cx="28" cy="28" r="18" fill="#2e7d6b"/>
+        <text x="22" y="34" class="step-num">2</text>
+        <text x="28" y="66" class="step-title">Define el contexto</text>
+        <text x="28" y="96" class="step-copy">¿Cuándo aparece la necesidad?</text>
+        <text x="28" y="118" class="step-copy">¿Qué fricción la dispara?</text>
+      </g>
+
+      <g transform="translate(590 1238)">
+        <rect x="0" y="0" width="232" height="170" class="step"/>
+        <circle cx="28" cy="28" r="18" fill="#c8a43d"/>
+        <text x="22" y="34" class="step-num">3</text>
+        <text x="28" y="66" class="step-title">Analiza alternativas</text>
+        <text x="28" y="96" class="step-copy">¿Qué usa hoy?</text>
+        <text x="28" y="118" class="step-copy">¿Qué está “contratando” ya?</text>
+      </g>
+
+      <g transform="translate(846 1238)">
+        <rect x="0" y="0" width="232" height="170" class="step"/>
+        <circle cx="28" cy="28" r="18" fill="#9d4edd"/>
+        <text x="22" y="34" class="step-num">4</text>
+        <text x="28" y="66" class="step-title">Diseña valor</text>
+        <text x="28" y="96" class="step-copy">Crea una solución más útil,</text>
+        <text x="28" y="118" class="step-copy">rápida o barata.</text>
+      </g>
+
+      <g transform="translate(1102 1238)">
+        <rect x="0" y="0" width="232" height="170" class="step"/>
+        <circle cx="28" cy="28" r="18" fill="#1f2a2e"/>
+        <text x="22" y="34" class="step-num">5</text>
+        <text x="28" y="66" class="step-title">Valida</text>
+        <text x="28" y="96" class="step-copy">Entrevista y comprueba el</text>
+        <text x="28" y="118" class="step-copy">porqué de la elección.</text>
+      </g>
+
+      <rect x="40" y="1536" width="1320" height="226" class="section"/>
+      <text x="72" y="1586" class="section-title">5. Beneficios y preguntas de aula</text>
+
+      <text x="72" y="1630" class="body">• Innovación real: detectas necesidades profundas, no ideas decorativas.</text>
+      <text x="72" y="1660" class="body">• Mejor comunicación: hablas del problema que duele, no de funciones sueltas.</text>
+      <text x="72" y="1690" class="body">• Segmentación más fina: agrupas por tarea, no solo por edad o perfil.</text>
+
+      <rect x="872" y="1596" width="434" height="126" rx="24" fill="#f5e7de" stroke="#d96c3f" stroke-width="2"/>
+      <text x="900" y="1633" style="font-size:18px; font-weight:700; fill:#d96c3f;">Preguntas para el alumnado</text>
+      <text x="900" y="1664" class="body">¿Qué intento resolver?</text>
+      <text x="900" y="1691" class="body">¿Qué emoción quiero cambiar?</text>
+      <text x="900" y="1718" class="body">¿Qué quiero que otros vean en mí?</text>
+    </svg>
+  </div>
+</body>
+</html>

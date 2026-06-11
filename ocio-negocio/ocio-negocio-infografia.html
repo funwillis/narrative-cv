@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ocio y negocio: el limite humano de la aceleracion</title>
+  <style>
+    :root {
+      --bg: #efe6d9;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #665a52;
+      --line: rgba(82, 64, 54, 0.16);
+      --clay: #b76845;
+      --lake: #356d7c;
+      --moss: #71824a;
+      --sand: #c79a4b;
+      --plum: #7c5767;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(113, 130, 74, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(199, 154, 75, 0.24), rgba(199, 154, 75, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 9ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.1rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.4rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .timeline,
+    .balance-grid,
+    .swing-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.04fr 0.96fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .card p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .clay { border-left: 5px solid var(--clay); }
+    .lake { border-left: 5px solid var(--lake); }
+    .moss { border-left: 5px solid var(--moss); }
+    .sand { border-left: 5px solid var(--sand); }
+    .plum { border-left: 5px solid var(--plum); }
+
+    .timeline {
+      margin-top: 18px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -14px -42px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .mini-list {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-item {
+      border-radius: 20px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid var(--line);
+    }
+
+    .mini-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .balance-grid,
+    .swing-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rail {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(53, 109, 124, 0.1), rgba(183, 104, 69, 0.08));
+      border: 1px solid var(--line);
+    }
+
+    .rail strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #221916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.9);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .timeline,
+      .balance-grid,
+      .swing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/ocio-negocio/ocio-negocio-infografia.html">English</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Tecnologia · trabajo · ocio · humanidad</span>
+        <h1>Ocio y negocio</h1>
+        <p class="hero-copy">
+          Esta pieza cierra la anterior. Si la IA comprime y acelera el pensamiento, el problema ya no es solo qué
+          podemos hacer más rápido, sino qué ritmo puede soportar un ser humano sin degradarse a procesador. La
+          tecnología acelera; la humanidad necesita alternancia.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <aside class="quote dark">
+          <span class="kicker">Krishnamurti</span>
+          <strong>You cannot learn if you don't have leisure.</strong>
+          <p>
+            Tiempo para estar solo, escuchar, preguntar e indagar. Si no existe ese espacio, la escuela se vuelve
+            fábrica y la mente se vuelve instrumento sin profundidad.
+          </p>
+        </aside>
+
+        <aside class="quote">
+          <span class="kicker">Byung-Chul Han</span>
+          <strong>El exceso de rendimiento convierte al sujeto en explotador y explotado a la vez.</strong>
+          <p>
+            Cuando todo se vuelve producción, optimización y respuesta inmediata, el descanso deja de parecer humano y
+            empieza a parecer culpa. Ahí ya hemos perdido algo serio.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1. Donde encaja en el proyecto</div>
+    <section class="panel">
+      <span class="badge">Continuacion necesaria</span>
+      <h2>Si la IA acelera, el ocio se vuelve infraestructura cognitiva</h2>
+      <p>
+        `JTBD` hablaba de necesidad. `Metacognición` de autorregulación. `Banausos` de la mente fragmentada por una
+        función estrecha. `IA encajada` de memoria externalizada y aceleración cognitiva. Faltaba una pieza decisiva:
+        el límite humano. Sin ocio, pausa, vínculo y tiempo no utilitario, la aceleración técnica termina devorando la
+        calidad de la conciencia que pretendía potenciar.
+      </p>
+
+      <div class="mini-list">
+        <div class="mini-item">
+          <strong>Ocio</strong>
+          <span>No es vagancia decorativa: es el espacio donde la mente asimila, conecta y aprende sin coerción.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Negocio</strong>
+          <span>Su etimología ya acusa el golpe: neg-ocio, negación del ocio, suspensión del tiempo no utilitario.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Problema contemporáneo</strong>
+          <span>Cuando todo se mide por rendimiento, incluso el descanso se instrumentaliza y pierde su función humana.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">2. La historia cambia de herramienta, no de dilema</div>
+    <section class="panel">
+      <span class="badge">Evolucion tecnologica</span>
+      <h2>La aceleracion ha ido cambiando de capa: musculo, fabrica, informacion, cognicion</h2>
+      <p>
+        La tecnología no empezó con la IA. Lo que hace la IA es radicalizar una tendencia antigua: trasladar esfuerzo
+        humano a sistemas cada vez más potentes. Primero se alivió el cuerpo. Luego se mecanizó la producción. Después
+        se informatizó la información. Ahora se comprime parte del trabajo mental.
+      </p>
+
+      <div class="timeline">
+        <article class="card clay">
+          <h3>1. Agricultura manual</h3>
+          <p>El cuerpo humano y animal sostenían casi toda la carga productiva.</p>
+        </article>
+        <article class="card moss">
+          <h3>2. Máquina agrícola e industria</h3>
+          <p>Se acelera el trabajo físico, la escala productiva y la extracción de recursos.</p>
+        </article>
+        <article class="card lake">
+          <h3>3. Informática</h3>
+          <p>La información deja de moverse a ritmo humano y permea transversalmente todos los sectores.</p>
+        </article>
+        <article class="card plum">
+          <h3>4. IA</h3>
+          <p>La aceleración entra en la abstracción, la escritura, el análisis y parte del trabajo cognitivo.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">3. El ser humano no es una CPU con piernas</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Peligro</span>
+        <h2>Sin descanso, el sujeto acaba procesando sin comprender</h2>
+        <p>
+          Un ser humano saturado puede seguir respondiendo, produciendo y enlazando tareas, pero eso no significa que
+          siga aprendiendo bien. El descanso no es una pausa entre rendimientos: es el medio en el que sedimentan la
+          memoria, la relación y el juicio. Si desaparece, la persona puede seguir activa mientras se vacía por dentro.
+        </p>
+
+        <div class="rail">
+          <strong>Diagnostico</strong>
+          <p>
+            Cuando no hay ocio, el pensamiento se vuelve reactivo, la relación se instrumentaliza y la vida se reduce
+            a throughput. Eso sirve para producir más un rato; sirve fatal para seguir siendo humano.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Condicion de aprendizaje</span>
+        <h2>Aprender exige tiempo no colonizado por la utilidad inmediata</h2>
+        <p>
+          Aquí Krishnamurti va al hueso. No se aprende bien cuando toda la atención está secuestrada por urgencia,
+          evaluación o rendimiento. Hace falta ocio para escuchar, experimentar, equivocarse, mirar sin objetivo
+          inmediato y dejar que aparezcan conexiones que el régimen del negocio no tolera.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Descanso</strong>
+            <span>Recupera la capacidad de discernir en lugar de solo reaccionar.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Vinculo</strong>
+            <span>Sostiene sentido, lenguaje compartido y regulación afectiva.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Ocio</strong>
+            <span>Abre el espacio donde aparece la curiosidad no servil.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">4. Los dos extremos son malos</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Extremo 1</span>
+        <h2>Solo ocio degrada la sociedad</h2>
+        <p>
+          Si el ocio pierde toda tensión con responsabilidad, cuidado y oficio, se vuelve disolución. No hay cultura,
+          mantenimiento ni continuidad histórica sin trabajo, técnica y disciplina. La sociedad necesita capacidad de
+          acción real.
+        </p>
+
+        <div class="balance-grid">
+          <div class="mini-item">
+            <strong>Deriva</strong>
+            <span>Desorden, dependencia y erosión de la competencia práctica.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Fallo</strong>
+            <span>La libertad sin forma termina devorando las condiciones que la hacen posible.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Extremo 2</span>
+        <h2>Solo negocio rompe la circularidad y explota los recursos</h2>
+        <p>
+          El otro extremo es el actual: rendimiento constante, extracción continua y desprecio por el límite. Ahí no
+          solo se queman personas; también se queman suelos, atención, vínculos y reservas materiales. Es una lógica
+          brillante para acelerar y pésima para durar.
+        </p>
+
+        <div class="balance-grid">
+          <div class="mini-item">
+            <strong>Deriva</strong>
+            <span>Agotamiento, hiperreactividad, instrumentalización del tiempo y del otro.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Fallo</strong>
+            <span>La producción sin pausa se come el soporte humano y material del que depende.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">5. El equilibrio que nos mantiene humanos</div>
+    <section class="panel">
+      <span class="badge">Tesis final</span>
+      <h2>Ser humano es alternar: producir, parar, vincularse, volver a mirar</h2>
+      <p>
+        Por mucho que cambie la tecnología, la condición humana no se resuelve eliminando el ocio. Al contrario: cuanto
+        más potente es la técnica, más decisivo se vuelve proteger el espacio donde no todo se traduce inmediatamente
+        en output. El equilibrio entre ocio y negocio no es un lujo posproductivo. Es el mecanismo que impide que la
+        sociedad se convierta en una máquina de explotación sin interior.
+      </p>
+
+      <div class="swing-grid">
+        <div class="mini-item">
+          <strong>Negocio sano</strong>
+          <span>Trabajo con límite, oficio con sentido, técnica al servicio de la vida.</span>
+        </div>
+        <div class="mini-item">
+          <strong>Ocio sano</strong>
+          <span>Descanso, juego, contemplación, vínculo y tiempo abierto para aprender sin coerción.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>No importa cuanta tecnologia aparezca: sin alternancia nos deshumanizamos</h2>
+      <p>
+        La agricultura mecanizó el esfuerzo, la industria aceleró la producción, la informática comprimió la
+        información y la IA empieza a comprimir parte del pensamiento. Pero ninguna de esas victorias técnicas resuelve
+        el problema de fondo. Si el ser humano no alterna ocio y negocio, acaba roto por exceso o diluido por defecto.
+        El cierre no es tecnológico; es antropológico: seguir siendo humanos exige ritmo, límite y descanso.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

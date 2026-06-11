@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA encajada: memoria, abstraccion y accion</title>
+  <style>
+    :root {
+      --bg: #ece5d8;
+      --paper: rgba(255, 250, 244, 0.88);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #655952;
+      --line: rgba(80, 63, 54, 0.16);
+      --copper: #b56a42;
+      --teal: #356d7c;
+      --olive: #70824a;
+      --gold: #c39a45;
+      --plum: #7a5667;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(53, 109, 124, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 42px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(195, 154, 69, 0.24), rgba(195, 154, 69, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 8.5ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(2.9rem, 7vw, 5.2rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 62ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.03rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.38rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.46;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(80, 63, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3,
+    .loop,
+    .theories,
+    .compare-grid,
+    .map-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.04fr 0.96fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .closing p,
+    .card p {
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .map-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -14px -42px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .copper { border-left: 5px solid var(--copper); }
+    .teal { border-left: 5px solid var(--teal); }
+    .olive { border-left: 5px solid var(--olive); }
+    .gold { border-left: 5px solid var(--gold); }
+    .plum { border-left: 5px solid var(--plum); }
+
+    .loop {
+      margin-top: 18px;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .theories {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-item {
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.64);
+      border: 1px solid var(--line);
+    }
+
+    .mini-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .rail {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(53, 109, 124, 0.1), rgba(181, 106, 66, 0.08));
+      border: 1px solid var(--line);
+    }
+
+    .rail strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.96rem;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #221916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.9);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .map-grid,
+      .loop,
+      .theories,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/ia-encajada/ia-encajada-infografia.html">English</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">IA · memoria · abstraccion · metacognicion</span>
+        <h1>IA encajada</h1>
+        <p class="hero-copy">
+          Esta pieza no trata la IA como magia ni como sujeto soberano. La trata como una interfaz de memoria y
+          compresion: una herramienta potentísima para capturar, depurar, reformular y expandir ideas cuando un
+          impulso interno consigue pasar a lenguaje. Su potencia no invalida las otras piezas del proyecto: las
+          condensa y las acelera.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <aside class="quote dark">
+          <span class="kicker">Tesis</span>
+          <strong>Un prompt es un impulso traducido a lenguaje para que una memoria externa lo trabaje.</strong>
+          <p>
+            La IA no piensa por deseo propio. Reordena patrones heredados. Por eso puede servir para lo mejor y para
+            lo peor: amplifica la calidad del impulso, la claridad del lenguaje y la lucidez de quien la usa.
+          </p>
+        </aside>
+
+        <aside class="quote">
+          <span class="kicker">Krishnamurti</span>
+          <strong>Si el pensamiento es mecánico, una máquina puede empujarlo muy lejos.</strong>
+          <p>
+            Su advertencia no era tecnófoba sino incómoda: si reducimos inteligencia a memoria, cálculo y repetición,
+            la máquina nos supera. La pregunta humana vuelve a ser otra: qué queda fuera de la mera mecánica del
+            pensamiento.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">1. Donde encaja dentro del proyecto</div>
+    <section class="panel">
+      <span class="badge">Contexto narrativo</span>
+      <h2>La IA no abre otra saga: acelera la que ya estaba en marcha</h2>
+      <p>
+        Esta pieza se monta sobre las anteriores. `JTBD` explicaba que toda acción arranca en una necesidad. La
+        metacognición mostraba cómo vigilar y rediseñar el aprendizaje. `Banausos` advertía contra una mente útil pero
+        estrecha. `Panhumanismo` pedía pensar a escala de especie. `Sol, lenguaje y civilización` desplazaba la mirada
+        a la base material y energética. La IA entra aquí como bisagra: convierte lenguaje en memoria operativa.
+      </p>
+
+      <div class="map-grid">
+        <article class="card copper">
+          <h3>JTBD</h3>
+          <p>El prompt nace de un trabajo: aclarar, comparar, sintetizar, diseñar o decidir.</p>
+        </article>
+        <article class="card olive">
+          <h3>Metacognición</h3>
+          <p>La conversación con IA externaliza el pensamiento y permite verlo, corregirlo y refinarlo.</p>
+        </article>
+        <article class="card plum">
+          <h3>Banausos</h3>
+          <p>La IA puede servir para abrir disciplinas o para fabricar especialistas aún más ciegos.</p>
+        </article>
+        <article class="card teal">
+          <h3>Panhumanismo</h3>
+          <p>La cuestión ya no es solo quién sabe más, sino cómo distribuimos memoria y criterio colectivo.</p>
+        </article>
+        <article class="card gold">
+          <h3>Termodinámica psíquica</h3>
+          <p>Impulso, palabra, patrón y acción: la IA se inserta exactamente en esa cadena.</p>
+        </article>
+        <article class="card copper">
+          <h3>Peligro estructural</h3>
+          <p>Si confundimos acceso a memoria con sabiduría, delegamos criterio junto con trabajo cognitivo.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">2. Idea como memoria compacta</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Abstraccion</span>
+        <h2>Una idea condensa experiencia del mismo modo que una moneda condensa comercio</h2>
+        <p>
+          La inteligencia humana gana potencia cuando puede comprimir muchos casos en pocas formas. Un concepto, una
+          fórmula, una definición o una jerga de dominio son memoria comprimida. Las finanzas abstraen intercambios; el
+          derecho abstrae conflictos; la física abstrae regularidades; una idea abstrae experiencia para volverla
+          portable.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Teoría de esquemas</strong>
+            <span>Comprender no es guardar datos sueltos, sino organizar estructuras que permitan anticipar y clasificar.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Chunking</strong>
+            <span>La pericia aparece cuando muchos elementos dejan de verse como piezas aisladas y se leen como bloques.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Compresión predictiva</strong>
+            <span>Una buena abstracción no repite el mundo entero: captura lo bastante para orientarse y actuar.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Lenguaje de dominio</span>
+        <h2>Comprender un área es aprender su interfaz verbal</h2>
+        <p>
+          El conocimiento funcional de un dominio importa porque abre capacidad de acción concreta. Pero lo hace a
+          través de una operación muy terrestre: aprender jerga, distinciones, modelos y abstracciones que permiten
+          leer mejor lo que antes era ruido. En ese sentido, todo dominio es una forma especializada del lenguaje.
+        </p>
+
+        <div class="rail">
+          <strong>Ejemplos</strong>
+          <p>
+            En finanzas hablamos de liquidez, riesgo, derivados y descuento. En medicina de síntomas, síndromes y
+            protocolos. En programación de tipos, estados y interfaces. Cambia el vocabulario; la mecánica es la
+            misma: condensar experiencia para poder intervenir.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">3. El prompt como impulso depurado</div>
+    <section class="panel">
+      <span class="badge">Bucle operativo</span>
+      <h2>El prompt convierte un atravesamiento difuso en una secuencia refinable</h2>
+      <p>
+        Antes, muchas ideas pasaban por la mente y se perdían o tardaban días en decantarse. Ahora pueden entrar en
+        un circuito de depuración muy rápido. El valor no está solo en la respuesta: está en la posibilidad de ver el
+        pensamiento fuera de uno mismo, iterarlo y volver a entrar con más forma.
+      </p>
+
+      <div class="loop">
+        <article class="card copper">
+          <h3>1. Impulso</h3>
+          <p>Una intuición, fricción o pregunta golpea la atención.</p>
+        </article>
+        <article class="card gold">
+          <h3>2. Lenguaje</h3>
+          <p>El impulso se vuelve frase, contexto, restricción o deseo explícito.</p>
+        </article>
+        <article class="card teal">
+          <h3>3. Memoria externa</h3>
+          <p>La IA reorganiza patrones y devuelve variantes, estructura y contraste.</p>
+        </article>
+        <article class="card olive">
+          <h3>4. Metacognición</h3>
+          <p>El usuario detecta huecos, sesgos, vaguedades y mejores formulaciones.</p>
+        </article>
+        <article class="card plum">
+          <h3>5. Acción</h3>
+          <p>La idea refinada baja a texto, diseño, decisión, código o conversación real.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">4. Teoría y práctica no se dejan divorciar</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Mecánica del conocimiento</span>
+        <h2>Sin teoría no sabes qué repetir; con sola práctica acabas fabricando teoría igualmente</h2>
+        <p>
+          Todo aprendizaje serio oscila entre modelo y roce. La teoría da nombre, orden y anticipación; la práctica
+          corrige, desmiente o afina. Incluso quien presume de ir “solo por práctica” termina elaborando reglas
+          implícitas. Y quien vive “solo de teoría” acaba practicando mal o en abstracto vacío.
+        </p>
+
+        <div class="compare-grid">
+          <div class="mini-item">
+            <strong>Deducción</strong>
+            <span>Baja desde el modelo hacia el caso: aplica criterios, hipótesis y categorías.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Inducción</strong>
+            <span>Sube desde el caso hacia el modelo: detecta regularidades, excepciones y reglas emergentes.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Metacognición aplicada</span>
+        <h2>La IA hace visible el puente entre ambos movimientos</h2>
+        <p>
+          La conversación con modelos permite ensayar teoría, tensionarla con ejemplos, pedir contraejemplos y volver
+          a comprimir lo aprendido. Por eso sirve tan bien para pensar, enseñar y diseñar. También por eso puede
+          fabricar espejismos de comprensión si uno solo consume formulaciones elegantes sin contraste con realidad.
+        </p>
+
+        <div class="theories">
+          <div class="mini-item">
+            <strong>Conocimiento declarativo</strong>
+            <span>Saber qué, cómo se llama, qué distingue una cosa de otra.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Conocimiento procedimental</strong>
+            <span>Saber hacer, ajustar, corregir y coordinar en situaciones concretas.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">5. Krishnamurti y el peligro mecánico</div>
+    <section class="grid-2">
+      <article class="panel">
+        <span class="badge">Advertencia</span>
+        <h2>Si la mente opera solo como acumulación, la máquina hereda el trono</h2>
+        <p>
+          Krishnamurti intuía algo bastante brutal: si llamamos inteligencia a una mezcla de memoria, experiencia
+          acumulada, recombinación y respuesta condicionada, entonces el computador es simplemente la extensión
+          industrial de esa mente. La amenaza no es que aparezca un demonio autónomo. La amenaza es degradarnos
+          voluntariamente a funciones que la máquina ya puede absorber.
+        </p>
+
+        <div class="mini-list">
+          <div class="mini-item">
+            <strong>Memoria</strong>
+            <span>La máquina recuerda más, más rápido y sin fatiga subjetiva.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Creatividad combinatoria</strong>
+            <span>Puede recombinar estilos, patrones y soluciones con velocidad obscena.</span>
+          </div>
+          <div class="mini-item">
+            <strong>Riesgo humano</strong>
+            <span>Delegar tanto que el cerebro se vuelva perezoso, ornamental o servil.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <span class="badge">Distinción clave</span>
+        <h2>La IA es potentísima como memoria; no tiene impulso propio</h2>
+        <p>
+          Aquí conviene cerrar bien el círculo. La IA concentra memoria, lenguaje y abstracción en una forma muy
+          compacta. Pero no arranca nada por sí sola. No sufre, no desea, no necesita sentido. Reacciona a entradas y
+          objetivos ajenos. Eso la hace peligrosamente útil: amplifica la intención humana sin garantizar sabiduría.
+        </p>
+
+        <div class="rail">
+          <strong>Conclusión operativa</strong>
+          <p>
+            Lo decisivo ya no es solo tener acceso a la herramienta, sino cultivar criterio para formular, filtrar,
+            contrastar y decidir cuándo usarla y cuándo pensar sin muletas.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="closing">
+      <h2>La IA no cierra el proyecto: lo comprime y lo acelera</h2>
+      <p>
+        Si las otras piezas hablaban de necesidad, aprendizaje, forma mental, coordinación humana y soporte material,
+        esta añade una capa nueva: memoria operativa externalizada. La IA puede ayudar a que una intuición se vuelva
+        concepto, que un concepto se vuelva mapa y que un mapa se vuelva acción. Pero el impulso sigue siendo humano.
+        Por eso el criterio sigue siendo el cuello de botella. La herramienta no trae dirección moral incorporada.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

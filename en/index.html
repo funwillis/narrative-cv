@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noetic sovereignty: a sadhana of technological consciousness</title>
+  <style>
+    :root {
+      --bg: #efe5d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #665a52;
+      --line: rgba(82, 64, 54, 0.16);
+      --clay: #b76845;
+      --lake: #356d7c;
+      --moss: #71824a;
+      --sand: #c79a4b;
+      --plum: #7c5767;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.62), transparent 24%),
+        radial-gradient(circle at 88% 14%, rgba(53, 109, 124, 0.14), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .micro-nav a,
+    .trail a,
+    .graph-link,
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1260px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .graph-shell,
+    .node-panel,
+    .section-card,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -90px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 87, 103, 0.22), rgba(124, 87, 103, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 9ch;
+      font-size: clamp(2.9rem, 7vw, 5.2rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 64ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.04rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .node-panel {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .node-panel.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .node-panel .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .node-panel strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.35rem;
+      line-height: 1.14;
+    }
+
+    .node-panel p {
+      margin-top: 10px;
+      line-height: 1.48;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .micro-nav,
+    .trail {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .micro-nav a,
+    .trail a,
+    .graph-link,
+    .return-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .graph-shell {
+      border-radius: 34px;
+      padding: 24px;
+    }
+
+    .graph-shell h2,
+    .section-card h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .graph-shell p,
+    .section-card p,
+    .closing p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .graph-layout {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .graph-core,
+    .graph-map {
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.78);
+      padding: 22px;
+    }
+
+    .graph-core {
+      background:
+        radial-gradient(circle at top right, rgba(183, 104, 69, 0.14), transparent 34%),
+        linear-gradient(155deg, rgba(255, 250, 244, 0.95), rgba(248, 239, 229, 0.82));
+    }
+
+    .graph-points,
+    .route-grid,
+    .section-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .graph-points {
+      margin-top: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .graph-point,
+    .route-card,
+    .mini-card {
+      border-radius: 20px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .graph-point strong,
+    .route-card strong,
+    .mini-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+
+    .graph-map {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .graph-link {
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .graph-link span:last-child {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .section-card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+      scroll-margin-top: 24px;
+    }
+
+    .section-card {
+      margin-top: 18px;
+    }
+
+    .section-card:target {
+      border-color: rgba(53, 109, 124, 0.38);
+      box-shadow: 0 0 0 4px rgba(53, 109, 124, 0.08), var(--shadow);
+    }
+
+    .section-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .route-grid {
+      margin-top: 18px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .return-row {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .return-link {
+      background: var(--paper-strong);
+    }
+
+    .inline-links {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inline-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+
+    .closing {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #221916 0%, #3d2f2a 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .closing p {
+      color: rgba(255, 248, 241, 0.92);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .graph-layout,
+      .graph-points,
+      .section-grid,
+      .route-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="./index.html">Go to root</a>
+    <a href="./constellations/index.html">Idea constellations</a>
+    <a href="../es/index.html">Español</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Philosophical stance · individual sadhana · ecology of attention</span>
+        <h1>Noetic sovereignty</h1>
+        <p class="hero-copy">
+          This website does not try to recruit, indoctrinate, or capture anyone. It tries to leave a stance available
+          on the internet for whoever is already looking for something like it. I call it <strong>noetic
+          sovereignty</strong>: not the geopolitics of land, but sovereignty over impulse, attention, and the
+          consciousness able to observe inner dialogue instead of being dragged by it.
+        </p>
+
+        <div class="micro-nav">
+          <a href="#synthesis">Enter through the synthesis</a>
+          <a href="#fork">Go to the breaking point</a>
+          <a href="#publication">See the publication purpose</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <aside class="node-panel dark">
+          <span class="kicker">Sadhana synopsis</span>
+          <strong>Return from captured impulse to the consciousness that can observe, discriminate, and decide.</strong>
+          <p>
+            The abbreviated sadhana is this: detect compulsion, recover energy, restore attention, review the impulse,
+            and return technique to its instrumental place.
+          </p>
+        </aside>
+
+        <aside class="node-panel">
+          <span class="kicker">Moral compass</span>
+          <strong>I am not against technology. I am on the side of human consciousness.</strong>
+          <p>
+            The point is not to demonize machines, platforms, or networks. The point is to prevent work, learning, and
+            home life from organizing themselves as machines of dehumanizing compulsion.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Entry graph</div>
+    <section class="graph-shell">
+      <h2 id="synthesis">Synthesis</h2>
+      <p>
+        The underlying conflict is not between humans and technology, but between <strong>compulsion and
+        consciousness</strong>. Modern acceleration struggles for energy. When energy drops, we surrender sovereignty
+        over impulse. If impulse is governed by the machine, the platform, or the regime of performance, human
+        consciousness thins out. This piece proposes a noetic resistance: an ecology of attention, a pedagogy of rest,
+        and a voluntary association of individuals who do not hand over their interiority.
+      </p>
+
+      <div class="graph-layout">
+        <article class="graph-core">
+          <span class="badge">Center of the sadhana</span>
+          <h2>Every development must return here</h2>
+          <p>
+            This is not a linear reading with a final moral. It is a practice of return. You can enter through any
+            node, but every route must lead back to the synthesis: protect energy, sovereignty of impulse, and enough
+            consciousness not to live programmed.
+          </p>
+
+          <div class="graph-points">
+            <div class="graph-point">
+              <strong>Name of the frame</strong>
+              <span>Noetic sovereignty: sovereignty over consciousness and the direction of impulse.</span>
+            </div>
+            <div class="graph-point">
+              <strong>Field of resistance</strong>
+              <span>Ecology of attention: the inner analogue of physical ecology.</span>
+            </div>
+            <div class="graph-point">
+              <strong>Method</strong>
+              <span>Conscious use of technology, rest, bond, self-inquiry, and limit.</span>
+            </div>
+            <div class="graph-point">
+              <strong>Horizon</strong>
+              <span>Noetic panhumanism from the individual and voluntary association.</span>
+            </div>
+          </div>
+        </article>
+
+        <div class="graph-map">
+          <a class="graph-link" href="#sovereignty"><span>1 · Name the problem</span><span>Noetic sovereignty</span></a>
+          <a class="graph-link" href="#fork"><span>2 · See the fork</span><span>Compulsion or consciousness</span></a>
+          <a class="graph-link" href="#ecology"><span>3 · Care for the medium</span><span>Ecology of attention</span></a>
+          <a class="graph-link" href="#care"><span>4 · Distinguish subjects</span><span>Tutelage and sovereignty</span></a>
+          <a class="graph-link" href="#publication"><span>5 · Clarify the intent</span><span>Availability, not recruitment</span></a>
+          <a class="graph-link" href="#lineage"><span>6 · Return to the lineage</span><span>Frankl, Krishnamurti, Sadhguru</span></a>
+          <a class="graph-link" href="./constellations/index.html"><span>7 · Explore freely</span><span>Open constellations as a freely accessible pedagogical resource that preserves your sovereignty</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">Node 1</div>
+    <section class="section-card" id="sovereignty">
+      <span class="badge">Naming</span>
+      <h2>This is not geopolitics, but sovereignty over consciousness</h2>
+      <p>
+        Geopolitics deals with territories, borders, and visible resources. Here the contested territory is less
+        visible: attention, impulse, mental energy, and the quality of inner dialogue. I am not speaking of the brain
+        as an organ nor of the mind as total noise, but of the consciousness capable of noticing that noise and not
+        obeying it blindly.
+      </p>
+
+      <div class="section-grid">
+        <div class="mini-card">
+          <strong>Proposed term</strong>
+          <span><strong>Noetic sovereignty</strong>: governance of inner life by a consciousness that observes and chooses.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Pedagogical version</strong>
+          <span><strong>Sadhana of technological consciousness</strong>: a practice of technical use without inner subordination.</span>
+        </div>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#fork">Continue toward the fork</a>
+      </div>
+    </section>
+
+    <div class="section-label">Node 2</div>
+    <section class="section-card" id="fork">
+      <span class="badge">Fork</span>
+      <h2>Everything reduces to compulsion or consciousness</h2>
+      <p>
+        The hard but clean formulation is this: either impulse is eventually carried by the machine, the platform, and
+        the programmed entertainment industry, or it is recovered by a sufficiently alive human consciousness. There
+        are not twenty exits. There are many variations, yes, but the axis remains the same: who governs impulse?
+      </p>
+
+      <div class="route-grid">
+        <div class="route-card">
+          <strong>Route 1 · Subordination</strong>
+          <span>Low energy, high performance pressure, colonized leisure, compulsive entertainment, impulse programmed from outside.</span>
+        </div>
+        <div class="route-card">
+          <strong>Route 2 · Recovery</strong>
+          <span>Rest, bond, self-inquiry, conscious use of technology, and the restoration of judgment.</span>
+        </div>
+        <div class="route-card">
+          <strong>No alarmism</strong>
+          <span>This is not apocalypse. It is hygiene. Life remains open, but it helps to choose sides with gentleness and lucidity.</span>
+        </div>
+      </div>
+
+      <div class="inline-links">
+        <a href="./termodinamica-psiquica/sol-lenguaje-y-civilizacion.html#impulse-and-action">Review the impulse → action chain</a>
+        <a href="./ia-encajada/ia-encajada-infografia.html">See the situated AI layer</a>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#ecology">Continue toward the ecology of attention</a>
+      </div>
+    </section>
+
+    <div class="section-label">Node 3</div>
+    <section class="section-card" id="ecology">
+      <span class="badge">Medium</span>
+      <h2>Noetic resistance is an ecology of attention</h2>
+      <p>
+        Just as physical ecology cares for soils, waters, and atmospheres in order to sustain life, the ecology of
+        attention cares for rhythms, silences, bonds, and technical uses in order to sustain consciousness. The
+        problem is not having powerful tools. The problem is living in environments that drain energy and convert every
+        friction into consumption or distraction.
+      </p>
+
+      <div class="section-grid">
+        <div class="mini-card">
+          <strong>Work</strong>
+          <span>If performance occupies everything, there is no room left for self-inquiry. Functional dehumanization starts there.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Learning</strong>
+          <span>Without leisure, listening, and non-instrumental time, studying turns into mere ingestion of signals.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Home</strong>
+          <span>If every fatigue ends up absorbed by platforms, rest stops restoring and merely sedates.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Technical use</strong>
+          <span>Resistance passes through using technology with judgment, not through theatrical flight from it.</span>
+        </div>
+      </div>
+
+      <div class="inline-links">
+        <a href="./ocio-negocio/ocio-negocio-infografia.html">Open the piece on leisure and business</a>
+        <a href="./metacognicion-jardineria/metacognicion-jardineria-infografia.html">Open the piece on metacognition</a>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#care">Continue toward tutelage and sovereignty</a>
+      </div>
+    </section>
+
+    <div class="section-label">Node 4</div>
+    <section class="section-card" id="care">
+      <span class="badge">Subjects</span>
+      <h2>There are two regimes: tutelage for brains still in the forge and sovereignty for conscious adults</h2>
+      <p>
+        Not all subjects stand at the same point. Minors, brains in development, or adults severely captured by
+        compulsions cannot be treated the same as adults already capable of observing and self-regulating themselves.
+        This distinction is not elitist; it is clinical and pedagogical.
+      </p>
+
+      <div class="section-grid">
+        <div class="mini-card">
+          <strong>Tutelage</strong>
+          <span>Protection of environments, rhythms, and exposure when the nervous system cannot yet govern itself well.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Recovery</strong>
+          <span>For adults already fallen into compulsion, the task is one of present mental health: return energy to the present.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Sovereignty</strong>
+          <span>For relatively lucid adults, the task is individual: sustain judgment and do not outsource the impulse.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Temporal connection</strong>
+          <span>It is a future challenge for pedagogy and a present challenge for inner repair.</span>
+        </div>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#publication">Continue toward the publication intent</a>
+      </div>
+    </section>
+
+    <div class="section-label">Node 5</div>
+    <section class="section-card" id="publication">
+      <span class="badge">Purpose</span>
+      <h2>Being available is not recruiting</h2>
+      <p>
+        This nuance matters a great deal. I do not want to capture people, organize an apparatus, or found one more
+        belonging. Publication serves another function: to leave a visible stance so that whoever was already looking
+        for it can find it. This is individual resistance made public, not proselytism. Willingness for association,
+        yes; will to capture, no.
+      </p>
+
+      <div class="route-grid">
+        <div class="route-card">
+          <strong>Don't Join Anything</strong>
+          <span>Valuable association is voluntary, light, and conscious; not identity-driven or devouring.</span>
+        </div>
+        <div class="route-card">
+          <strong>My grain of sand</strong>
+          <span>Publishing this is a form of moral availability: a small torch, not a recruitment network.</span>
+        </div>
+        <div class="route-card">
+          <strong>Coherence</strong>
+          <span>If I denounce the capture of impulse, it would make no sense to reproduce it with militant propaganda.</span>
+        </div>
+      </div>
+
+      <div class="inline-links">
+        <a href="./panhumanismo-noetico/panhumanismo-noetico-infografia.html">Return to noetic panhumanism</a>
+        <a href="./banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Return to Krishnamurti and the whole mind</a>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#lineage">Continue toward the intellectual lineage</a>
+      </div>
+    </section>
+
+    <div class="section-label">Node 6</div>
+    <section class="section-card" id="lineage">
+      <span class="badge">Lineage</span>
+      <h2>Frankl, Krishnamurti, Sadhguru: three threads in the same direction</h2>
+      <p>
+        This stance does not come from nowhere. From Frankl I take the idea that the last thing that should not be
+        taken from us is the inner freedom to respond. From Krishnamurti, the refusal to enter molds and the need to
+        understand the movement of the self. From Sadhguru, the reminder that the total vision can only be realized
+        from the living individual, not from the abstract mass.
+      </p>
+
+      <div class="section-grid">
+        <div class="mini-card">
+          <strong>Frankl</strong>
+          <span>Inner freedom is not spiritual decoration: it is the last line of dignity.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Krishnamurti</strong>
+          <span>Do not enter external molds in order to get lost less inside.</span>
+        </div>
+        <div class="mini-card">
+          <strong>Sadhguru</strong>
+          <span>The great vision is not executed from abstraction, but from individuals able to sustain it.</span>
+        </div>
+        <div class="mini-card">
+          <strong>My stance</strong>
+          <span>No compulsive technology; yes to a conscious humanity able to use technique without worship.</span>
+        </div>
+      </div>
+
+      <div class="return-row">
+        <a class="return-link" href="#synthesis">Return to the synthesis</a>
+        <a class="return-link" href="#sovereignty">Restart the sadhana</a>
+      </div>
+    </section>
+
+    <section class="closing">
+      <h2>Closing</h2>
+      <p>
+        My stance is not apocalyptic. I trust life. But in this struggle over energy, attention, and impulse, I am on
+        the side of human consciousness. If this website helps one person recover a little sovereignty over their
+        interior, then it has already fulfilled its function. And if not, it remains here anyway, available for whoever
+        looks for me, without my having to go out and recruit them.
+      </p>
+
+      <div class="trail">
+        <a href="#synthesis">Return to the synthesis</a>
+        <a href="./constellations/index.html">See the constellations</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

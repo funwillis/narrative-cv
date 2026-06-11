@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JTBD - Mapa de Oficios por Dimensiones</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: #fffaf2;
+      --ink: #1f2a2e;
+      --muted: #5d6b6f;
+      --line: #d9cbb3;
+      --func: #d96c3f;
+      --emo: #2e7d6b;
+      --soc: #c8a43d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      background: var(--bg);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.88);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(47, 34, 24, 0.12);
+    }
+
+    .project-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1 1 0;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wrap {
+      width: 1600px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: linear-gradient(180deg, #faf5ec 0%, #f2ecdf 100%);
+      border: 1px solid #e2d7c4;
+    }
+
+    .title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      fill: var(--muted);
+    }
+
+    .axis-label {
+      font-size: 18px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .small {
+      font-size: 14px;
+      fill: var(--muted);
+    }
+
+    .need-box {
+      rx: 18;
+      stroke-width: 2;
+    }
+
+    .need-title {
+      font-size: 16px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .job-text {
+      font-size: 14px;
+      fill: var(--muted);
+    }
+
+    .dot-label {
+      font-size: 13px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/jobs-to-be-done/jtbd-mapa-oficios.html">English</a>
+  </div>
+  <div class="wrap">
+    <svg viewBox="0 0 1600 1280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+      <title id="title">Mapa de oficios según las tres dimensiones JTBD</title>
+      <desc id="desc">Diagrama con ejes funcional, emocional y social para ubicar categorías de oficios.</desc>
+
+      <rect x="28" y="28" width="1544" height="124" rx="32" fill="#fffaf2" stroke="#d9cbb3" stroke-width="2"/>
+      <text x="60" y="82" class="title">Mapa JTBD de oficios</text>
+      <text x="60" y="118" class="subtitle">Coordenadas interpretativas: cada necesidad se ubica según el peso funcional, emocional y social del “trabajo” que ayuda a resolver.</text>
+
+      <rect x="1168" y="52" width="344" height="72" rx="24" fill="#1f2a2e"/>
+      <circle cx="1198" cy="88" r="8" fill="#d96c3f"/>
+      <text x="1214" y="93" style="font-size:15px; fill:#ffffff;">X = funcional</text>
+      <circle cx="1316" cy="88" r="8" fill="#2e7d6b"/>
+      <text x="1332" y="93" style="font-size:15px; fill:#ffffff;">Y = emocional</text>
+      <circle cx="1438" cy="88" r="8" fill="#c8a43d"/>
+      <text x="1454" y="93" style="font-size:15px; fill:#ffffff;">tamaño = social</text>
+
+      <rect x="56" y="184" width="1140" height="980" rx="28" fill="#fffdf8" stroke="#d9cbb3" stroke-width="2"/>
+
+      <g stroke="#e8decc" stroke-width="1">
+        <line x1="200" y1="1020" x2="1120" y2="1020"/>
+        <line x1="200" y1="840" x2="1120" y2="840"/>
+        <line x1="200" y1="660" x2="1120" y2="660"/>
+        <line x1="200" y1="480" x2="1120" y2="480"/>
+        <line x1="200" y1="300" x2="1120" y2="300"/>
+        <line x1="200" y1="1020" x2="200" y2="240"/>
+        <line x1="430" y1="1020" x2="430" y2="240"/>
+        <line x1="660" y1="1020" x2="660" y2="240"/>
+        <line x1="890" y1="1020" x2="890" y2="240"/>
+        <line x1="1120" y1="1020" x2="1120" y2="240"/>
+      </g>
+
+      <line x1="200" y1="1020" x2="1148" y2="1020" stroke="#d96c3f" stroke-width="4"/>
+      <polygon points="1148,1020 1128,1010 1128,1030" fill="#d96c3f"/>
+      <line x1="200" y1="1048" x2="200" y2="228" stroke="#2e7d6b" stroke-width="4"/>
+      <polygon points="200,228 190,248 210,248" fill="#2e7d6b"/>
+
+      <text x="774" y="1070" class="axis-label">Peso funcional del trabajo</text>
+      <text x="82" y="636" transform="rotate(-90 82 636)" class="axis-label">Carga emocional del trabajo</text>
+
+      <text x="184" y="1048" class="small">bajo</text>
+      <text x="1090" y="1048" class="small">alto</text>
+      <text x="158" y="1016" class="small">baja</text>
+      <text x="158" y="260" class="small">alta</text>
+
+      <g>
+        <circle cx="384" cy="318" r="52" fill="#e6f3ef" stroke="#2e7d6b" stroke-width="3"/>
+        <text x="324" y="312" class="dot-label">Protección</text>
+        <text x="311" y="332" class="dot-label">Salud y Cuidados</text>
+        <text x="303" y="356" class="small">Médico, enfermero, psicólogo, fisioterapeuta...</text>
+      </g>
+
+      <g>
+        <circle cx="588" cy="392" r="48" fill="#f6efdb" stroke="#c8a43d" stroke-width="3"/>
+        <text x="534" y="386" class="dot-label">Conectividad</text>
+        <text x="531" y="406" class="dot-label">Pertenencia social</text>
+        <text x="498" y="430" class="small">Community manager, sociólogo, coach...</text>
+      </g>
+
+      <g>
+        <circle cx="882" cy="372" r="58" fill="#f6efdb" stroke="#c8a43d" stroke-width="3"/>
+        <text x="832" y="366" class="dot-label">Identidad</text>
+        <text x="820" y="386" class="dot-label">Autoexpresión</text>
+        <text x="780" y="410" class="small">Diseñador de moda, estilista, fotógrafo...</text>
+      </g>
+
+      <g>
+        <circle cx="968" cy="516" r="44" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="932" y="510" class="dot-label">Ocio</text>
+        <text x="899" y="530" class="dot-label">Entretenimiento</text>
+        <text x="870" y="554" class="small">Artista, músico, actor, animador...</text>
+      </g>
+
+      <g>
+        <circle cx="806" cy="618" r="40" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="756" y="612" class="dot-label">Conectividad</text>
+        <text x="741" y="632" class="dot-label">Comunicación a distancia</text>
+        <text x="696" y="656" class="small">Programador, redes, UX/UI, ciberseguridad...</text>
+      </g>
+
+      <g>
+        <circle cx="1030" cy="702" r="46" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="958" y="696" class="dot-label">Movilidad</text>
+        <text x="924" y="716" class="dot-label">Transporte de personas/bienes</text>
+        <text x="900" y="740" class="small">Conductor, piloto, mecánico, logístico...</text>
+      </g>
+
+      <g>
+        <circle cx="1116" cy="856" r="42" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="1048" y="850" class="dot-label">Supervivencia</text>
+        <text x="1032" y="870" class="dot-label">Nutrir el cuerpo</text>
+        <text x="995" y="894" class="small">Chef, agricultor, pescador, nutricionista...</text>
+      </g>
+
+      <g>
+        <circle cx="962" cy="934" r="34" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="912" y="928" class="dot-label">Supervivencia</text>
+        <text x="920" y="948" class="dot-label">Hidratarse</text>
+        <text x="882" y="972" class="small">Hidrólogo, fontanero, barista, analista...</text>
+      </g>
+
+      <g>
+        <circle cx="710" cy="786" r="32" fill="#f5e7de" stroke="#d96c3f" stroke-width="3"/>
+        <text x="628" y="780" class="dot-label">Higiene</text>
+        <text x="602" y="800" class="dot-label">Limpieza y salubridad</text>
+        <text x="582" y="824" class="small">Saneamiento, residuos, esterilización...</text>
+      </g>
+
+      <g>
+        <circle cx="742" cy="540" r="36" fill="#e6f3ef" stroke="#2e7d6b" stroke-width="3"/>
+        <text x="678" y="534" class="dot-label">Conocimiento</text>
+        <text x="652" y="554" class="dot-label">Aprendizaje y educación</text>
+        <text x="640" y="578" class="small">Profesor, mentor, investigador, tutor...</text>
+      </g>
+
+      <g>
+        <circle cx="884" cy="646" r="34" fill="#f6efdb" stroke="#c8a43d" stroke-width="3"/>
+        <text x="840" y="640" class="dot-label">Economía</text>
+        <text x="808" y="660" class="dot-label">Intercambio de valor</text>
+        <text x="792" y="684" class="small">Banquero, auditor, economista, tesorero...</text>
+      </g>
+
+      <g>
+        <circle cx="332" cy="700" r="38" fill="#e6f3ef" stroke="#2e7d6b" stroke-width="3"/>
+        <text x="282" y="694" class="dot-label">Protección</text>
+        <text x="246" y="714" class="dot-label">Refugio y seguridad</text>
+        <text x="212" y="738" class="small">Arquitecto, policía, bombero, cerrajero...</text>
+      </g>
+
+      <rect x="1224" y="184" width="320" height="980" rx="28" fill="#fffaf2" stroke="#d9cbb3" stroke-width="2"/>
+      <text x="1254" y="232" class="axis-label">Lectura del mapa</text>
+      <text x="1254" y="270" class="small">Cada punto resume una categoría de necesidad,</text>
+      <text x="1254" y="292" class="small">su job dominante y familias de oficios asociadas.</text>
+
+      <rect x="1254" y="336" width="258" height="118" class="need-box" fill="#f5e7de" stroke="#d96c3f"/>
+      <text x="1278" y="368" class="need-title">Mucho funcional</text>
+      <text x="1278" y="395" class="job-text">Resolver algo práctico, medible</text>
+      <text x="1278" y="418" class="job-text">y urgente.</text>
+
+      <rect x="1254" y="476" width="258" height="118" class="need-box" fill="#e6f3ef" stroke="#2e7d6b"/>
+      <text x="1278" y="508" class="need-title">Mucho emocional</text>
+      <text x="1278" y="535" class="job-text">Reducir miedo, ganar calma,</text>
+      <text x="1278" y="558" class="job-text">seguridad o pertenencia.</text>
+
+      <rect x="1254" y="616" width="258" height="118" class="need-box" fill="#f6efdb" stroke="#c8a43d"/>
+      <text x="1278" y="648" class="need-title">Mucho social</text>
+      <text x="1278" y="675" class="job-text">Señalar identidad, estatus</text>
+      <text x="1278" y="698" class="job-text">o reconocimiento externo.</text>
+
+      <rect x="1254" y="776" width="258" height="174" class="need-box" fill="#fff" stroke="#d9cbb3"/>
+      <text x="1278" y="808" class="need-title">Clave didáctica</text>
+      <text x="1278" y="842" class="job-text">No hay oficios “puros”.</text>
+      <text x="1278" y="866" class="job-text">Todos mezclan las tres dimensiones,</text>
+      <text x="1278" y="890" class="job-text">pero cambia cuál pesa más.</text>
+      <text x="1278" y="924" class="job-text">Eso permite al alumnado detectar</text>
+      <text x="1278" y="948" class="job-text">necesidades humanas detrás del mercado.</text>
+
+      <text x="1254" y="1012" class="axis-label">Ejemplos históricos → actuales</text>
+      <text x="1254" y="1050" class="small">Fogata tribal → redes sociales</text>
+      <text x="1254" y="1074" class="small">Medicina herbal → telemedicina</text>
+      <text x="1254" y="1098" class="small">Trueque → fintech / criptoactivos</text>
+      <text x="1254" y="1122" class="small">Caminar / carretas → drones / EV</text>
+    </svg>
+  </div>
+</body>
+</html>
