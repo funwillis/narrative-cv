@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tecnología y advertencia histórica</title>
+  <style>
+    :root {
+      --bg: #efe5d8;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #201918;
+      --muted: #665a53;
+      --line: rgba(84, 66, 56, 0.16);
+      --lake: #356d7c;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.62), transparent 24%),
+        radial-gradient(circle at 84% 16%, rgba(124, 87, 103, 0.12), transparent 20%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #decab4 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1260px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .closing, .sources, .table-shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.9rem, 7vw, 5.1rem);
+      line-height: 0.93;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+    .hero-copy, .panel p, .closing p, .sources li { color: var(--muted); line-height: 1.58; }
+    .hero-copy { margin-top: 18px; max-width: 64ch; font-size: 1.04rem; }
+    .hero-side { display: grid; gap: 16px; align-content: start; }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.16;
+    }
+    .note p { margin-top: 10px; color: inherit; opacity: 0.92; }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-3, .grid-2 { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .table-shell { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 1100px;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    td strong { display: block; margin-bottom: 6px; }
+    td { color: var(--muted); line-height: 1.48; }
+    .sources ul { margin-top: 12px; padding-left: 18px; }
+    .sources a { color: var(--lake); }
+    @media (max-width: 980px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/disyuntivas-tecnologicas/historical-technology-crossroads.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Historia intelectual · tecnología · ambivalencia</span>
+        <h1>Toda irrupción técnica abre una disyuntiva</h1>
+        <p class="hero-copy">
+          La pauta se repite: aparece una tecnología, alguien la celebra como liberación, alguien la teme como
+          degradación y, con el tiempo, la vida reorganiza el campo. No se trata de negar el peligro ni de rendirse al
+          entusiasmo. Se trata de reconocer que casi toda creación humana importante opera primero como una
+          <strong>prueba de criterio</strong>. Desde la escritura en Platón hasta la IA en Krishnamurti, la tensión
+          entre promesa y advertencia no es una rareza: es una constante histórica.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Tesis</span>
+          <strong>La vida suele trascender la tecnología, pero no sin pasar por un momento de desorientación moral.</strong>
+          <p>El error recurrente no es inventar herramientas. El error es prejuzgar sus primeros compases como salvación total o ruina total.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Clave de lectura</span>
+          <strong>La pregunta no es si la técnica aparece, sino quién educa el impulso que la usa.</strong>
+          <p>Ahí resuenan la mayéutica, la lengua viva frente a la lengua muerta, el cierre japonés, la crítica del racionalismo moderno y la advertencia ante cerebros externalizados.</p>
+        </aside>
+      </div>
+    </section>
+    <div class="section-label">Síntesis</div>
+    <section class="panel">
+      <h2>Patrón general</h2>
+      <div class="grid-3">
+        <article class="mini-card"><strong>1. Irrupción</strong><p>Nace una nueva capacidad: escribir, imprimir, mecanizar, fisionar, computar, modelizar.</p></article>
+        <article class="mini-card"><strong>2. Polarización</strong><p>Un polo promete memoria, alcance, orden o emancipación; el otro advierte pereza, manipulación, violencia o deshumanización.</p></article>
+        <article class="mini-card"><strong>3. Reequilibrio</strong><p>La historia no confirma ni la utopía pura ni la distopía pura: obliga a reeducar instituciones, ritmos y responsabilidad.</p></article>
+      </div>
+    </section>
+    <div class="section-label">Tabla histórica</div>
+    <section class="table-shell">
+      <h2>Disyuntivas tecnológicas desde la Antigüedad hasta la IA</h2>
+      <table>
+        <thead>
+          <tr><th>Época</th><th>Siglos</th><th>Pensador / actor</th><th>Tecnología o umbral</th><th>Advertencia</th><th>Visión utópica</th><th>Visión distópica</th><th>Resolución histórica</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Grecia clásica</td><td>V-IV a. C.</td><td><strong>Platón</strong><span> Fedro: mito de Theuth y Thamus</span></td><td>Escritura alfabética como memoria externa</td><td>Puede debilitar la memoria viva y producir apariencia de sabiduría sin comprensión.</td><td>Conservar saber más allá de la presencia física y ampliar la transmisión cultural.</td><td>Volver pasivo al aprendiz: recordar signos sin parir pensamiento propio.</td><td>La escritura no destruyó el pensamiento, pero desplazó la autoridad de la voz y obligó a inventar nuevas pedagogías de lectura, comentario y diálogo.</td></tr>
+          <tr><td>India clásica</td><td>II a. C.-II d. C.</td><td><strong>Bhagavad Gita / Dhammapada</strong><span> como marco previo</span></td><td>Toda capacidad humana amplificada por técnica</td><td>Sin disciplina interior, la potencia externa agranda confusión, apego o violencia.</td><td>La acción puede ponerse al servicio del dharma, la lucidez y la liberación.</td><td>La acción sin gobierno interior degenera en compulsión, guerra interior o sufrimiento repetido.</td><td>Sirven como marco estable: antes de juzgar la técnica, hay que mirar la conciencia que la empuña.</td></tr>
+          <tr><td>Cristiandad primitiva</td><td>I d. C.</td><td><strong>Jesús</strong><span> como figura de lengua viva</span></td><td>Escritura doctrinal frente a palabra encarnada</td><td>La verdad puede momificarse cuando el signo escrito sustituye a la transformación viva.</td><td>La memoria compartida permite continuidad comunitaria y transmisión.</td><td>La letra puede endurecerse como autoridad muerta o legalismo sin espíritu.</td><td>La tradición cristiana sobrevivió precisamente combinando canon escrito con interpretación viva.</td></tr>
+          <tr><td>Primera modernidad europea</td><td>XV-XVI</td><td><strong>Humanistas, reformadores y censores</strong></td><td>Imprenta</td><td>Multiplica errores, propaganda, dogma masivo y guerras de interpretación.</td><td>Democratiza acceso, acelera ciencia, educación y crítica de autoridades.</td><td>Desborda instituciones y vuelve la disputa ideológica más rápida y más incendiaria.</td><td>La imprenta rehizo Europa: alfabetización, reforma, ciencia moderna y también censura y polarización.</td></tr>
+          <tr><td>Japón Tokugawa</td><td>XVII-XIX</td><td><strong>Shogunato Tokugawa</strong></td><td>Apertura tecnológica y geopolítica exterior</td><td>La irrupción técnica extranjera puede desordenar soberanía, religión y jerarquía social.</td><td>Controlando entradas se preserva cohesión y se evita colonización prematura.</td><td>El cierre excesivo puede fosilizar y dejar atrás en capacidad industrial y militar.</td><td>El sakoku no fue clausura total ni solución eterna: ganó tiempo, pero terminó cediendo ante la presión del mundo moderno.</td></tr>
+          <tr><td>Modernidad industrial</td><td>XIX</td><td><strong>Dostoievski</strong></td><td>Racionalismo técnico, burocracia e ideologías de ingeniería social</td><td>El humano reducido a cálculo, utilidad o sistema termina rebelándose o degradándose.</td><td>La razón organizada promete orden, progreso y emancipación del atraso.</td><td>El hombre tratado como engranaje puede desembocar en nihilismo, violencia y totalitarismo.</td><td>El siglo XX le dio bastante razón en el diagnóstico del exceso racionalista, sin invalidar los logros materiales de la modernidad.</td></tr>
+          <tr><td>Edad atómica</td><td>XX</td><td><strong>Oppenheimer</strong></td><td>Fisión nuclear y bomba atómica</td><td>Una inteligencia capaz de liberar energía cósmica sin suficiente sabiduría moral puede volverse autodestructiva.</td><td>Energía abundante, nuevo conocimiento físico, posible disuasión de guerras totales.</td><td>Exterminio industrial, carrera armamentística y amenaza de aniquilación planetaria.</td><td>La energía nuclear no quedó reducida a apocalipsis ni a salvación: produjo electricidad, medicina y también un equilibrio inestable basado en disuasión y miedo.</td></tr>
+          <tr><td>Aldea global</td><td>XX</td><td><strong>McLuhan y críticos de medios</strong></td><td>Radio, televisión y medios masivos</td><td>El medio reconfigura percepción, atención y organización social antes de que el usuario se dé cuenta.</td><td>Conexión ampliada y nueva sensibilidad planetaria.</td><td>Entretenimiento programado, pasividad y manipulación de masas.</td><td>Los medios no abolieron la agencia humana, pero sí convirtieron la ecología de la atención en un frente histórico central.</td></tr>
+          <tr><td>Umbral digital</td><td>XX-XXI</td><td><strong>Jiddu Krishnamurti</strong></td><td>Computadoras, automatización e IA como extensión del pensamiento mecánico</td><td>Si la máquina hace todo lo que hace el pensamiento, el cerebro puede volverse vago y entregarse al entretenimiento o a la subordinación.</td><td>Liberar a la humanidad de trabajo mental repetitivo y abrir espacio para una inteligencia no mecánica.</td><td>Externalizar memoria, criterio y actividad mental hasta perder energía para la indagación interior.</td><td>Seguimos dentro del experimento: la cuestión no es si la IA existe, sino si la usamos para ampliar conciencia o para rendirla al automatismo.</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>La lección transversal</h2>
+      <div class="grid-2">
+        <article class="mini-card"><strong>No prejuzgar el primer compás</strong><p>Casi toda irrupción parece exageradamente utópica para unos y excesivamente distópica para otros. La historia corrige ambas impaciencias.</p></article>
+        <article class="mini-card"><strong>No abdicar del discernimiento</strong><p>Que la vida termine reabsorbiendo una tecnología no significa que el daño intermedio sea irrelevante. La trascendencia no elimina la responsabilidad.</p></article>
+      </div>
+      <p style="margin-top: 18px;">La intuición de fondo es esta: las tecnologías son puntos de inflexión, no oráculos definitivos. Siempre abren una bifurcación entre uso consciente y captura del impulso.</p>
+    </section>
+    <div class="section-label">Fuentes</div>
+    <section class="sources">
+      <h2>Apoyos para esta síntesis</h2>
+      <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Phaedrus_(dialogue)">Platón, <em>Fedro</em> y el mito de Theuth/Thamus</a>.</li>
+        <li><a href="https://en.wikipedia.org/wiki/Sakoku">Resumen histórico del <em>sakoku</em> y su revisión historiográfica</a>.</li>
+        <li><a href="https://en.wikipedia.org/wiki/Destroyer_of_Worlds">Contexto de la cita de Oppenheimer asociada a la Bhagavad Gita</a>.</li>
+        <li>La fila de Krishnamurti condensa la línea de sus charlas sobre ocio, aprendizaje y mecanización del pensamiento ya integrada en el resto del proyecto.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

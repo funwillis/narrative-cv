@@ -40,6 +40,7 @@ entre sí y reconducidas a la raíz.
 - `ia-encajada/ia-encajada-infografia.html`
 - `ocio-negocio/ocio-negocio-infografia.html`
 - `termodinamica-psiquica/sol-lenguaje-y-civilizacion.html`
+- `disyuntivas-tecnologicas/tecnologia-y-advertencia-historica.html`
 
 ## Nota práctica
 
