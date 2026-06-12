@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Definición y posibilidad · colapso creador</title>
+  <style>
+    :root {
+      --bg: #ece4d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #665952;
+      --line: rgba(82, 64, 54, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --plum: #765567;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(53, 109, 124, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1280px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .table-shell, .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+    .hero-main {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero-copy, .panel p, .closing p, td, li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.16;
+    }
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+    .hero-wide {
+      grid-column: 1 / -1;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-4, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .table-shell { overflow: hidden; }
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      line-height: 1.42;
+    }
+    th, td {
+      padding: 11px 10px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+    th {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--paper-strong);
+    }
+    td strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1180px) {
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr {
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper-strong);
+        overflow: hidden;
+      }
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px 10px 154px;
+        position: relative;
+      }
+      td:last-child { border-bottom: 0; }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        width: 126px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    }
+    @media (max-width: 980px) {
+      .hero, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/janus-fitzgerald/definition-and-possibility.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow">Janusianidad · Fitzgerald · flexibilidad cognitiva · mecánica cuántica</span>
+        <h1>Definición y posibilidad</h1>
+        <p class="hero-copy">
+          La cuestión no es si limitarse es triste, sino cómo una vida pasa de <strong>campo de posibilidades</strong>
+          a <strong>realidad habitable</strong>. Mientras algo permanece en superposición, conserva apertura; cuando
+          colapsa en una forma, gana espesor, costo y consecuencias. El pensamiento janusiano inclusivo no elige un
+          solo polo: sostiene a la vez que la apertura protege potencial y que la definición construye mundo. La
+          inteligencia fuerte no adora ni la niebla ni la rigidez; sabe cuándo explorar, cuándo medir y cuándo aceptar
+          el colapso creador.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Núcleo</span>
+          <strong>La realidad no aparece antes del corte: aparece con el corte.</strong>
+          <p>Querer todas las puertas abiertas indefinidamente no es libertad superior. A menudo es miedo a la irreversibilidad que toda forma concreta exige.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Cautela</span>
+          <strong>La física aquí funciona como analogía formal, no como disfraz de autoridad.</strong>
+          <p>Superposición, incertidumbre, entrelazamiento y medición ayudan a pensar la transición de lo posible a lo actual sin volver la pieza pseudocientífica.</p>
+        </aside>
+      </div>
+      <aside class="note hero-wide">
+        <span class="badge">Trivia</span>
+        <strong>Jano, dios romano de los umbrales, no intuía la mecánica cuántica, pero sirve para pensarla.</strong>
+        <p>Su doble rostro mira dos umbrales, dos estados y dos direcciones a la vez. No describe electrones; sugiere una forma mental útil para sostener simultaneidad antes del colapso.</p>
+      </aside>
+    </section>
+
+    <div class="section-label">Cuatro llaves</div>
+    <section class="panel">
+      <h2>Cómo leer la tensión</h2>
+      <div class="grid-4">
+        <article class="mini-card"><strong>Pensamiento janusiano</strong><p>Mirar dos verdades contrapuestas sin mutilar una para tranquilizarse con la otra.</p></article>
+        <article class="mini-card"><strong>Fitzgerald</strong><p>Sostener ideas opuestas en la mente y seguir funcionando, sin que la lucidez mate la acción.</p></article>
+        <article class="mini-card"><strong>Flexibilidad cognitiva</strong><p>Revisar rumbo, identidad y estrategia sin congelarse en una forma ni evaporarse en posibilidades.</p></article>
+        <article class="mini-card"><strong>Analogía cuántica</strong><p>El mundo posible no es todavía mundo vivido. Hace falta medición, corte y renuncia para que algo gane forma.</p></article>
+      </div>
+    </section>
+
+    <div class="section-label">Tabla de transición</div>
+    <section class="table-shell">
+      <h2>De la posibilidad a la realidad</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tensión</th>
+            <th>Campo de posibilidad</th>
+            <th>Paso a realidad</th>
+            <th>Analogía cuántica</th>
+            <th>Lectura janusiana inclusiva</th>
+            <th>Flexibilidad madura</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Tensión"><strong>Superposición y forma</strong></td>
+            <td data-label="Campo">Mientras no eliges, varias vidas permanecen abiertas a la vez.</td>
+            <td data-label="Realidad">Elegir una forma colapsa el abanico y vuelve una trayectoria concreta.</td>
+            <td data-label="Cuántica">La superposición contiene estados compatibles en lo abstracto; la medición fuerza una actualización.</td>
+            <td data-label="Janusiana">La apertura es real, pero no equivale todavía a existencia encarnada.</td>
+            <td data-label="Flexibilidad">Explorar bastante antes del corte, pero aceptar que sin corte no hay biografía.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Incertidumbre y control</strong></td>
+            <td data-label="Campo">Cuanto más intentas asegurar todos los futuros, menos te comprometes con uno.</td>
+            <td data-label="Realidad">Actuar siempre deja variables sin fijar.</td>
+            <td data-label="Cuántica">El principio de incertidumbre recuerda que no todo puede determinarse a la vez con precisión absoluta.</td>
+            <td data-label="Janusiana">La necesidad de dirección convive con un margen irreductible de indeterminación.</td>
+            <td data-label="Flexibilidad">Obrar con información incompleta y corregir sin convertir la incertidumbre en coartada.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Entrelazamiento y vínculo</strong></td>
+            <td data-label="Campo">Antes de decidir, imaginas tu elección como si solo te afectara a ti.</td>
+            <td data-label="Realidad">Toda definición reorganiza pareja, trabajo, tiempo, cuerpo y entorno.</td>
+            <td data-label="Cuántica">El entrelazamiento sirve como figura de sistemas que dejan de poder describirse de modo aislado.</td>
+            <td data-label="Janusiana">La libertad individual existe, pero nunca en vacío relacional.</td>
+            <td data-label="Flexibilidad">Elegir sabiendo que cada decisión modifica una red y no un punto suelto.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Observación y compromiso</strong></td>
+            <td data-label="Campo">Mientras no miras de cerca, una fantasía puede parecer intacta.</td>
+            <td data-label="Realidad">Observar con seriedad cambia la relación con lo observado y obliga a precisar.</td>
+            <td data-label="Cuántica">La medición no es pasiva: define el tipo de resultado que puede aparecer.</td>
+            <td data-label="Janusiana">Contemplar abre, pero una observación rigurosa también selecciona.</td>
+            <td data-label="Flexibilidad">Ver antes de actuar, pero no usar la contemplación infinita para evitar el compromiso.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Identidad y actualización</strong></td>
+            <td data-label="Campo">Sin definición, muchas narrativas del yo siguen especulativamente vivas.</td>
+            <td data-label="Realidad">Toda identidad funcional actualiza unas capacidades y atrofia otras.</td>
+            <td data-label="Cuántica">No hay estado observado sin base de observación; toda lectura privilegia una descripción.</td>
+            <td data-label="Janusiana">Definirse limita y, a la vez, vuelve legible una vida.</td>
+            <td data-label="Flexibilidad">Revisar identidad por etapas, sin convertir cada ajuste en demolición total del yo.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Creatividad y poda</strong></td>
+            <td data-label="Campo">Toda obra empieza como nube de versiones posibles.</td>
+            <td data-label="Realidad">Crear exige descartar, fijar, editar y perder variantes.</td>
+            <td data-label="Cuántica">El colapso no destruye el valor del campo previo; lo vuelve forma operativa.</td>
+            <td data-label="Janusiana">Sin apertura no hay invención; sin poda no hay obra.</td>
+            <td data-label="Flexibilidad">Mantener amplitud en la exploración y dureza en la ejecución.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Deseo y comparación</strong></td>
+            <td data-label="Campo">Las redes inflan la sensación de que siempre hay un estado mejor esperando.</td>
+            <td data-label="Realidad">Vivir algo requiere presencia repetida, no solo imaginación de reemplazo.</td>
+            <td data-label="Cuántica">Un sistema expuesto a demasiadas perturbaciones no estabiliza fácilmente un estado útil.</td>
+            <td data-label="Janusiana">La proliferación de posibles ensancha la mente y puede corroer la gratitud por lo actual.</td>
+            <td data-label="Flexibilidad">Distinguir exploración legítima de intoxicación comparativa permanente.</td>
+          </tr>
+          <tr>
+            <td data-label="Tensión"><strong>Acción e irreversibilidad</strong></td>
+            <td data-label="Campo">No decidir parece preservar todas las opciones.</td>
+            <td data-label="Realidad">Cada acto introduce costo hundido, aprendizaje y pérdida de reversibilidad.</td>
+            <td data-label="Cuántica">Tras la medición no vuelves al estado previo como si nada hubiera pasado.</td>
+            <td data-label="Janusiana">La irreversibilidad da miedo y también hace posible la historia.</td>
+            <td data-label="Flexibilidad">Asumir que corregir no es deshacer mágicamente, sino construir a partir de lo ya colapsado.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>Versión madura</h2>
+      <div class="grid-2">
+        <article class="mini-card"><strong>Versión ingenua</strong><p>Confundir apertura con superioridad y tratar toda definición como derrota del potencial.</p></article>
+        <article class="mini-card"><strong>Versión útil</strong><p>Entender que el potencial necesita colapso selectivo para volverse mundo, y que la revisión sigue siendo posible dentro de una historia ya empezada.</p></article>
+      </div>
+      <ul>
+        <li>La posibilidad infinita sin medición produce fantasía, no realidad encarnada.</li>
+        <li>La definición sin revisión produce rigidez, no carácter.</li>
+        <li>La mente fuerte soporta apertura, incertidumbre e irreversibilidad sin pedir garantías imposibles.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

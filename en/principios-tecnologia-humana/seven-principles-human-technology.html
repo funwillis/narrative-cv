@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seven principles for human technology</title>
+  <style>
+    :root {
+      --bg: #ece4d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #665952;
+      --line: rgba(82, 64, 54, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --plum: #765567;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(53, 109, 124, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .panel,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    ul {
+      margin: 0;
+    }
+
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .hero-copy,
+    .panel p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.16;
+    }
+
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .table-shell {
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      line-height: 1.42;
+    }
+
+    th,
+    td {
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    th {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+    }
+
+    td strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    td ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    td li + li {
+      margin-top: 6px;
+    }
+
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1180px) {
+      thead {
+        display: none;
+      }
+
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      tr {
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper-strong);
+        overflow: hidden;
+      }
+
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px 10px 138px;
+        position: relative;
+      }
+
+      td:last-child {
+        border-bottom: 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        width: 110px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../../principios-tecnologia-humana/principios-tecnologia-humana.html">Español</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Systemic diagnosis · design · governance</span>
+        <h1>Seven principles for human technology</h1>
+        <p class="hero-copy">
+          This piece condenses a design and evaluation framework for high-impact technologies without tying it to any
+          particular speaker, institution, or brand. The thesis is simple: many apparently separate pathologies
+          —addiction, polarization, attentional overexploitation, erosion of shared truth, institutional degradation—
+          stem from a few repeated design choices operating at scale.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Core</span>
+          <strong>If the diagnosis is fragmented, the solution will be cosmetic.</strong>
+          <p>Solving isolated symptoms while leaving the extraction logic untouched is the worst kind of whack-a-mole.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Reading key</span>
+          <strong>The point is not to demonize technique, but to distinguish between technology that extracts and technology that regenerates.</strong>
+          <p>That requires changing metrics, incentives, responsibility, and the definition of success itself.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">General pattern</div>
+    <section class="panel">
+      <h2>The typical shape of failure</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. Narrow optimization</strong>
+          <p>A single legible variable —retention, growth, time spent, cost— is promoted into the total compass.</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. Harm externalization</strong>
+          <p>Side effects do not appear on the balance sheet: they fall on democracy, mental health, childhood, shared truth, or infrastructure.</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. Loss of agency</strong>
+          <p>The system learns to influence better than its users learn to resist, while scale makes responsibility harder to localize.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Principles table</div>
+    <section class="table-shell">
+      <h2>Operational framework</h2>
+      <p class="hero-copy" style="margin-top: 0; margin-bottom: 18px;">
+        The `Bed of Procrustes` column offers two brief formulations freely adapted from Taleb’s mental climate; they are not literal quotations.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Principle</th>
+            <th>Myth it corrects</th>
+            <th>Typical failure</th>
+            <th>What the principle demands</th>
+            <th>Type-example</th>
+            <th>Corrective lever</th>
+            <th>Bed of Procrustes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Principle"><strong>1. Solve through a complex systems lens</strong></td>
+            <td data-label="Myth">“Each technology problem is an isolated defect.”</td>
+            <td data-label="Failure">Symptoms are patched separately while the shared logic is left intact.</td>
+            <td data-label="Demand">Read loops, incentives, and second-order effects before optimizing.</td>
+            <td data-label="Example">A single recommendation metric ends up rewarding extremes.</td>
+            <td data-label="Lever">Incentive audits and multi-metric review before deployment.</td>
+            <td data-label="Bed of Procrustes"><ul><li>Whoever optimizes one number usually impoverishes reality.</li><li>The linear map soothes; the real system retaliates.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>2. Protect the systems we all depend on</strong></td>
+            <td data-label="Myth">“If it works locally, it is good enough.”</td>
+            <td data-label="Failure">Private value is built by eroding shared goods.</td>
+            <td data-label="Demand">Treat attention, biosphere, health, or civic trust as hard limits.</td>
+            <td data-label="Example">A profitable innovation weakens the substrate it needs.</td>
+            <td data-label="Lever">Precaution, extraction limits, and regenerative design.</td>
+            <td data-label="Bed of Procrustes"><ul><li>What is extracted from the commons returns as debt.</li><li>A useful machine stops being useful when it eats its own floor.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>3. Design for genuine thriving</strong></td>
+            <td data-label="Myth">“More use equals more value.”</td>
+            <td data-label="Failure">The tool improves retention while worsening sleep, agency, or bonds.</td>
+            <td data-label="Demand">Measure whether the person is stronger after leaving the tool.</td>
+            <td data-label="Example">An interface can retain extremely well and serve extremely badly.</td>
+            <td data-label="Lever">Agency, rest, connection, and strengthening metrics.</td>
+            <td data-label="Bed of Procrustes"><ul><li>A tool that absorbs you does not serve you; it uses you.</li><li>If leaving worse counts as success, the metric was sick.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>4. Technology is never neutral</strong></td>
+            <td data-label="Myth">“The platform merely reflects what already happens.”</td>
+            <td data-label="Failure">Rhetorical neutrality hides concrete choices of amplification and exclusion.</td>
+            <td data-label="Demand">Make values, trade-offs, and design criteria explicit.</td>
+            <td data-label="Example">Millions are filtered first, and arbitration is then denied.</td>
+            <td data-label="Lever">Traceability, explicit values, and public review.</td>
+            <td data-label="Bed of Procrustes"><ul><li>Calling a choice neutral is a polite way of hiding it.</li><li>Implicit values do not disappear; they merely change costume.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>5. Match power with responsibility</strong></td>
+            <td data-label="Myth">“Capability creators are not responsible downstream.”</td>
+            <td data-label="Failure">Massive power appears without equivalent repair or braking mechanisms.</td>
+            <td data-label="Demand">Bring suffered harm close to the architecture producing it.</td>
+            <td data-label="Example">Critical infrastructure is governed like an experimental toy.</td>
+            <td data-label="Lever">Liability, duty of care, and defense-first deployment.</td>
+            <td data-label="Bed of Procrustes"><ul><li>Power without skin in the game is a tutorial in ruin.</li><li>Whoever keeps the upside and exports the damage has already chosen an ethics.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>6. Respect human psychology; do not exploit it</strong></td>
+            <td data-label="Myth">“If people fall for it, they just lack discipline.”</td>
+            <td data-label="Failure">The interface learns vulnerabilities and monetizes them.</td>
+            <td data-label="Demand">Treat fragility as an ethical boundary, not as an attack surface.</td>
+            <td data-label="Example">A machine that persuades, flatters, or replaces intimacy is no mere tool.</td>
+            <td data-label="Lever">Protective friction and limits on exploitative or manipulative agents.</td>
+            <td data-label="Bed of Procrustes"><ul><li>Every persuasive interface finds a weakness before calling it preference.</li><li>When a machine knows your impulse better than you do, freedom trades at a discount.</li></ul></td>
+          </tr>
+          <tr>
+            <td data-label="Principle"><strong>7. Unlock shared understanding and cooperation</strong></td>
+            <td data-label="Myth">“Maximum personalization always improves the system.”</td>
+            <td data-label="Failure">Total personalization breaks common reality and coordination.</td>
+            <td data-label="Demand">Reward bridges, nuance, and actionable overlap between groups.</td>
+            <td data-label="Example">A network can amplify the inflammatory or foreground the shareable reasonable.</td>
+            <td data-label="Lever">Deliberation, bridge-ranking, and distributed verification.</td>
+            <td data-label="Bed of Procrustes"><ul><li>Without shared reality, coordination becomes theater.</li><li>Total personalization manufactures blind tribes and happy markets.</li></ul></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Application</div>
+    <section class="closing">
+      <h2>What changes when this is taken seriously</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>In design</strong>
+          <p>Narrow single-metric obsession is abandoned and it becomes acceptable that a good tool may need more slowness, more friction, and less extraction.</p>
+        </article>
+        <article class="mini-card">
+          <strong>In governance</strong>
+          <p>The frame moves from abstract ethical recommendations to verifiable responsibility: incentives, standards, duty of care, and repair when harm is structural.</p>
+        </article>
+      </div>
+      <ul>
+        <li>A technology can be locally brilliant and systemically ruinous.</li>
+        <li>A better user experience does not by itself compensate for a degraded human ecosystem.</li>
+        <li>The mature question is no longer “does it work?” but “what does it strengthen, what does it weaken, and who pays the difference?”</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

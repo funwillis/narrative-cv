@@ -3,38 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Idea constellations · Narrative data visualization</title>
+  <title>Idea constellations · thematic index</title>
   <style>
     :root {
-      --bg: #efe4d2;
-      --paper: rgba(255, 248, 238, 0.84);
-      --paper-strong: #fffaf4;
-      --ink: #201a18;
-      --muted: #645954;
-      --line: rgba(88, 70, 62, 0.18);
-      --olive: #708238;
-      --terracotta: #b85d3f;
-      --lake: #356d7c;
-      --gold: #b9912f;
-      --shadow: 0 24px 60px rgba(50, 31, 20, 0.11);
+      --bg: #f6f1e8;
+      --paper: #fffaf2;
+      --ink: #201a17;
+      --muted: #6d625a;
+      --line: #d8c8b2;
+      --accent: #8a5a35;
+      --accent-soft: #f0dfcd;
+      --shadow: rgba(60, 35, 10, 0.08);
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding-top: 92px;
-      min-height: 100vh;
+      background: linear-gradient(180deg, #efe6d8 0%, var(--bg) 100%);
       color: var(--ink);
-      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 32%),
-        radial-gradient(circle at 85% 15%, rgba(112, 130, 56, 0.18), transparent 22%),
-        linear-gradient(180deg, #f3ebdf 0%, #e8dbc5 54%, #ddccb3 100%);
+      font: 18px/1.6 Georgia, "Times New Roman", serif;
     }
-
     .project-nav {
       position: fixed;
       top: 14px;
@@ -47,11 +35,10 @@
       gap: 8px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(255, 248, 238, 0.84);
+      background: rgba(255, 250, 242, 0.92);
       backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 14px 40px var(--shadow);
     }
-
     .project-nav a {
       flex: 1 1 0;
       display: inline-flex;
@@ -60,648 +47,356 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: var(--paper-strong);
+      background: var(--paper);
       color: var(--ink);
       text-decoration: none;
-      font-size: 14px;
-      font-weight: 700;
-      box-shadow: var(--shadow);
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: 0 6px 18px rgba(60, 35, 10, 0.08);
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
-
+    .project-nav a:hover {
+      transform: translateY(-1px);
+      background: #fffdf9;
+      box-shadow: 0 10px 22px rgba(60, 35, 10, 0.12);
+    }
     main {
-      width: min(1180px, calc(100vw - 32px));
-      margin: 0 auto 48px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 72px;
     }
-
-    .topbar,
-    .disclaimer {
-      border: 1px solid var(--line);
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 2.8rem; line-height: 1.05; margin-bottom: 12px; }
+    h2 { font-size: 1.8rem; margin-bottom: 16px; }
+    h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .lead { max-width: 68ch; color: var(--muted); margin-bottom: 22px; }
+    .shell {
       background: var(--paper);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      border-radius: 28px;
-    }
-
-    .topbar {
-      margin-bottom: 18px;
-      padding: 18px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .disclaimer {
-      margin-top: 20px;
-      padding: 22px;
-    }
-
-    .disclaimer h2 {
-      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-      font-size: 1.9rem;
-      line-height: 1.04;
-    }
-
-    .disclaimer p {
-      margin-top: 12px;
-      color: var(--muted);
-      line-height: 1.55;
-      max-width: 72ch;
-    }
-
-    .hero,
-    .card {
       border: 1px solid var(--line);
-      background: var(--paper);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 10px 34px var(--shadow);
+      margin-bottom: 24px;
     }
-
-    .hero {
-      border-radius: 36px;
-      padding: 30px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-    }
-
-    .eyebrow {
+    .hero { display: grid; gap: 18px; }
+    .pill-row, .links, .mini-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill, .nav-link {
       display: inline-flex;
-      gap: 8px;
       align-items: center;
-      padding: 8px 14px;
+      gap: 6px;
+      padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(255, 250, 244, 0.72);
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .nav-link {
+      border: 1px solid rgba(138, 90, 53, 0.22);
+      box-shadow: 0 8px 18px rgba(138, 90, 53, 0.12);
+      font-weight: 700;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      cursor: pointer;
+    }
+    .nav-link:hover {
+      transform: translateY(-1px);
+      background: #ead0b6;
+      box-shadow: 0 12px 24px rgba(138, 90, 53, 0.16);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .stat {
       border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(255, 250, 242, 0.65);
     }
-
-    h1,
-    h2,
-    p {
-      margin: 0;
-    }
-
-    h1 {
-      margin-top: 16px;
-      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      line-height: 0.94;
-      max-width: 9ch;
-    }
-
-    .intro {
-      margin-top: 16px;
-      max-width: 58ch;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.5;
-    }
-
-    .hero-note {
-      border-radius: 28px;
-      padding: 24px;
-      background: linear-gradient(160deg, #201a18 0%, #3b302c 100%);
-      color: #fff8f1;
-      align-self: stretch;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .hero-note strong {
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255, 248, 241, 0.72);
-    }
-
-    .hero-note p {
-      font-size: 1.35rem;
-      line-height: 1.2;
-    }
-
+    .stat strong { display: block; font-size: 1.5rem; margin-bottom: 4px; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
     }
-
-    .map-shell,
-    .synthesis {
-      margin-top: 20px;
+    .group {
       border: 1px solid var(--line);
-      background: var(--paper);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-      border-radius: 32px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255, 250, 242, 0.74);
     }
-
-    .map-shell h2,
-    .synthesis h2 {
-      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-      font-size: 2.1rem;
-      line-height: 1.02;
-    }
-
-    .map-intro,
-    .synthesis p {
-      margin-top: 12px;
-      color: var(--muted);
-      line-height: 1.55;
-      max-width: 72ch;
-    }
-
-    .map-grid {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .map-core,
-    .map-column,
-    .map-link {
-      border-radius: 26px;
-      border: 1px solid var(--line);
-      background: rgba(255, 250, 244, 0.82);
-    }
-
-    .map-core {
-      padding: 24px;
-      background:
-        radial-gradient(circle at top right, rgba(185, 93, 65, 0.14), transparent 34%),
-        linear-gradient(155deg, rgba(255, 250, 244, 0.95), rgba(248, 239, 229, 0.82));
-    }
-
-    .map-core .tagline {
+    .group p { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .story-list { display: grid; gap: 8px; }
+    .story-link {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
+      gap: 6px;
+      width: fit-content;
+      padding: 7px 11px;
+      border: 1px solid rgba(138, 90, 53, 0.16);
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid var(--line);
+      background: rgba(240, 223, 205, 0.42);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(60, 35, 10, 0.06);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+      cursor: pointer;
     }
-
-    .map-core h3,
-    .map-link h3 {
-      margin-top: 14px;
-      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-      font-size: 1.8rem;
-      line-height: 1.02;
+    .story-link:hover {
+      transform: translateY(-1px);
+      color: var(--accent);
+      border-color: rgba(138, 90, 53, 0.34);
+      background: rgba(240, 223, 205, 0.7);
+      box-shadow: 0 10px 22px rgba(60, 35, 10, 0.1);
     }
-
-    .map-core p,
-    .map-link p {
-      margin-top: 10px;
-      color: var(--muted);
-      line-height: 1.52;
-    }
-
-    .map-points {
-      margin-top: 18px;
+    .story-meta { color: var(--muted); font-size: 0.92rem; }
+    .catalog {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
     }
-
-    .map-point {
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.68);
+    .story-card {
       border: 1px solid var(--line);
-    }
-
-    .map-point strong {
-      display: block;
-      font-size: 0.92rem;
-      margin-bottom: 6px;
-    }
-
-    .map-point span {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.42;
-    }
-
-    .map-column {
+      border-radius: 18px;
       padding: 18px;
-      display: grid;
-      gap: 12px;
-      background:
-        radial-gradient(circle at 84% 10%, rgba(53, 109, 124, 0.12), transparent 26%),
-        rgba(255, 250, 244, 0.82);
+      background: rgba(255, 250, 242, 0.82);
     }
-
-    .map-link {
-      padding: 16px;
-    }
-
-    .map-link .mini {
-      display: inline-block;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.76);
-      border: 1px solid var(--line);
-    }
-
-    .map-link h3 {
-      margin-top: 10px;
-      font-size: 1.2rem;
-    }
-
-    .map-link a {
-      display: inline-flex;
-      margin-top: 12px;
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 700;
-    }
-
-    .card {
-      border-radius: 28px;
-      padding: 22px;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      color: #fff;
-    }
-
-    .tag.olive { background: var(--olive); }
-    .tag.terracotta { background: var(--terracotta); }
-    .tag.lake { background: var(--lake); }
-
-    .card h2 {
-      margin-top: 16px;
-      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-      font-size: 1.8rem;
-      line-height: 1.02;
-    }
-
-    .card p {
-      margin-top: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .links {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .links a {
-      text-decoration: none;
-      color: var(--ink);
-      background: var(--paper-strong);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 0.95rem;
-    }
-
-    .footer {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 920px) {
-      .hero,
-      .grid,
-      .map-grid,
-      .map-points {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        max-width: 100%;
-      }
+    .story-card h3 { margin-bottom: 8px; }
+    .story-card .story-meta { margin-bottom: 10px; }
+    .story-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .section-anchor { scroll-margin-top: 120px; }
+    @media (max-width: 700px) {
+      h1 { font-size: 2.2rem; }
+      main { padding: 22px 14px 56px; }
+      .shell { padding: 20px; }
     }
   </style>
 </head>
 <body>
   <div class="project-nav">
-    <a href="../index.html">Go to root</a>
-    <a href="./index.html">Idea constellations</a>
-    <a href="../../es/constelaciones/index.html">Español</a>
+    <a href="../index.html">🏠 Go to root</a>
+    <a href="#themes">🧭 Thematic index</a>
+    <a href="../../es/constelaciones/index.html">🌍 Español</a>
   </div>
   <main>
-    <div class="topbar">
-      <span class="eyebrow">Conceptual satellites · Language selector</span>
-    </div>
-
-    <section class="hero">
+    <section class="shell hero">
       <div>
-        <span class="eyebrow">Constellations · Satellite archive</span>
         <h1>Idea constellations</h1>
-        <p class="intro">
-          These pieces are no longer the front door of the project. They now function as conceptual constellations
-          orbiting the central sadhana of noetic sovereignty.
+        <p class="lead">
+          This index gathers the satellite pieces of the project and arranges them for easier navigation. They all
+          engage the same problem, but they do not require linear reading. The conceptual root remains `Noetic
+          sovereignty`; this page presents the rest of the set organized by themes, routes, and formats.
         </p>
       </div>
-      <aside class="hero-note">
-        <strong>Access note</strong>
-        <p>The root of the project now lives in the main sadhana. These satellite pieces remain here to expand, tension, and contrast it.</p>
-      </aside>
+      <div class="pill-row">
+        <span class="pill">Static HTML</span>
+        <span class="pill">Bilingual</span>
+        <span class="pill">13 pieces</span>
+        <span class="pill">Theme-first access</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>13</strong><span>Linked pieces</span></div>
+        <div class="stat"><strong>5</strong><span>Thematic blocks</span></div>
+        <div class="stat"><strong>4</strong><span>Suggested routes</span></div>
+        <div class="stat"><strong>2</strong><span>Parallel languages</span></div>
+      </div>
+      <div class="links">
+        <a class="nav-link" href="#routes">🧭 Route proposals</a>
+        <a class="nav-link" href="#themes">🗂️ Thematic index</a>
+        <a class="nav-link" href="#catalog">📚 Full catalog</a>
+        <a class="nav-link" href="../index.html">↩️ Return to root</a>
+      </div>
     </section>
 
-    <section class="disclaimer">
+    <section class="shell">
       <h2>Reading note</h2>
-      <p>
-        It would be possible to attempt a complete multidimensional graph of these ideas on the web. But there is no
-        real need for that, at least not yet. This collection uses a simpler solution: constellations of navigable
-        pieces orbiting a center and returning to it when needed.
-      </p>
-      <p>
-        This is not a deficiency in the project. It is a decision for clarity. For now, what is practicable matters more than what is totalizing.
+      <p class="lead">
+        There is no need to read everything or obey a fixed order. Each block opens a different entry point: need,
+        learning, identity, AI, civilization, death, or flexibility. The index is meant to orient without imposing a
+        rigid hierarchy.
       </p>
     </section>
 
-    <section class="map-shell">
-      <span class="eyebrow">Relational map · Conceptual navigation</span>
-      <h2>The pieces are not isolated: they describe the same problem at different scales</h2>
-      <p class="map-intro">
-        This project is no longer just a file menu. It is a root infographic: a map showing how need, consciousness,
-        education, species, and energy chain together. Each piece grabs one layer of the problem and pushes it to the
-        next level.
-      </p>
-
-      <div class="map-grid">
-        <article class="map-core">
-          <span class="tagline">Shared axis</span>
-          <h3>How does an impulse travel from the self to a form of life that does not destroy itself?</h3>
-          <p>
-            The infographics orbit the same question. They begin with need, move through learning and the design of
-            mind, scale up to human coordination, and end at the material dilemma of every civilization: capturing
-            energy, organizing it, and not breaking the support that makes life habitable.
-          </p>
-
-          <div class="map-points">
-            <div class="map-point">
-              <strong>Need</strong>
-              <span>JTBD shows that action begins in a real job, not in a market label.</span>
-            </div>
-            <div class="map-point">
-              <strong>Self-regulation</strong>
-              <span>Metacognition shows that learning well requires watching one’s own learning.</span>
-            </div>
-            <div class="map-point">
-              <strong>Mental form</strong>
-              <span>Krishnamurti and the banausos warn against a mind that is useful but broken.</span>
-            </div>
-            <div class="map-point">
-              <strong>Species scale</strong>
-              <span>Panhumanism tries to pull the self out of its myopia and think collective interests.</span>
-            </div>
-            <div class="map-point">
-              <strong>Externalized memory</strong>
-              <span>AI turns language into operational memory and accelerates the loop between idea, critique, and action.</span>
-            </div>
-            <div class="map-point">
-              <strong>Human rhythm</strong>
-              <span>Leisure introduces the limit without which technical acceleration eventually hollows out its user.</span>
-            </div>
+    <section class="shell section-anchor" id="routes">
+      <h2>Route proposals</h2>
+      <div class="grid">
+        <article class="group">
+          <h3>Start from the mind</h3>
+          <p>For readers who want to build judgment from the inside before moving to history or technology.</p>
+          <div class="story-list">
+            <a class="story-link" href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">1. Inner gardening</a>
+            <a class="story-link" href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">2. Banausos and the whole mind</a>
+            <a class="story-link" href="../janus-fitzgerald/definition-and-possibility.html">3. Definition and possibility</a>
           </div>
         </article>
-
-        <div class="map-column">
-          <article class="map-link">
-            <span class="mini">1 · Impulse</span>
-            <h3>Jobs to be Done</h3>
-            <p>From a concrete problem to the pattern of need that truly drives behavior.</p>
-            <a href="../jobs-to-be-done/jtbd-infografia.html">Open the need layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">2 · Learning</span>
-            <h3>Metacognition and gardening</h3>
-            <p>From raw need to the cultivation of inner conditions for better learning.</p>
-            <a href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Open the learning layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">3 · Mind design</span>
-            <h3>Banausos and Krishnamurti</h3>
-            <p>From functional training to the uncomfortable question: what kind of mind are we manufacturing?</p>
-            <a href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Open the education layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">4 · Civilizational scale</span>
-            <h3>Sun, language, and civilization</h3>
-            <p>From mind to the material cosmos: energy, symbol, coordination, and care for Earth’s support system.</p>
-            <a href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Open the energy layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">5 · Operational memory</span>
-            <h3>Situated AI</h3>
-            <p>From impulse to prompt: compact memory, domain abstraction, and the danger of outsourcing judgment.</p>
-            <a href="../ia-encajada/ia-encajada-infografia.html">Open the AI layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">6 · Anthropological limit</span>
-            <h3>Leisure and business</h3>
-            <p>Technology accelerates, but without rest, bonds, and leisure the human being degrades into a processor.</p>
-            <a href="../ocio-negocio/ocio-negocio-infografia.html">Open the human rhythm layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">7 · Human synthesis</span>
-            <h3>Noetic panhumanism</h3>
-            <p>From the individual to the species: capacity and interest as moral and political architecture.</p>
-            <a href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Open the species layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">8 · Long history</span>
-            <h3>Technology and historical warning</h3>
-            <p>From Plato to Krishnamurti: a genealogy of technologies welcomed as promise and feared as danger.</p>
-            <a href="../disyuntivas-tecnologicas/historical-technology-crossroads.html">Open the historical layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">9 · Human frontier</span>
-            <h3>Noetic sovereignty and AI</h3>
-            <p>Language, emotion, contemplation, and cognitive delegation as a test of judgment in the age of agents.</p>
-            <a href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">Open the frontier layer</a>
-          </article>
-
-          <article class="map-link">
-            <span class="mini">10 · Semiotic table</span>
-            <h3>Naming is not knowing</h3>
-            <p>Death, innocence, childhood, and little bodily deaths crossed through Dostoevsky, Kierkegaard, and Krishnamurti.</p>
-            <a href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">Open the comparative table</a>
-          </article>
-        </div>
+        <article class="group">
+          <h3>Start from AI</h3>
+          <p>For readers who want to enter through the contemporary problem and then open the wider scales.</p>
+          <div class="story-list">
+            <a class="story-link" href="../ia-encajada/ia-encajada-infografia.html">1. Situated AI</a>
+            <a class="story-link" href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">2. Noetic sovereignty and AI</a>
+            <a class="story-link" href="../principios-tecnologia-humana/seven-principles-human-technology.html">3. Seven principles for human technology</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>Start from the long scale</h3>
+          <p>For readers who need the civilizational plane first and only then want to descend to the individual.</p>
+          <div class="story-list">
+            <a class="story-link" href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">1. Sun, language, and civilization</a>
+            <a class="story-link" href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">2. Noetic panhumanism</a>
+            <a class="story-link" href="../disyuntivas-tecnologicas/historical-technology-crossroads.html">3. Technology and historical warning</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>Start from the existential edge</h3>
+          <p>For readers who enter more naturally through death, identity, language, and the cost of choosing.</p>
+          <div class="story-list">
+            <a class="story-link" href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">1. Naming is not knowing</a>
+            <a class="story-link" href="../janus-fitzgerald/definition-and-possibility.html">2. Definition and possibility</a>
+            <a class="story-link" href="../index.html">3. Noetic sovereignty</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <span class="tag olive">Panhumanism</span>
-        <h2>Noetic panhumanism</h2>
-        <p>
-          Four anthropological pillars, concrete examples, and a causal closure: from the scattered self to the interest of the species.
-        </p>
-        <div class="links">
-          <a href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag terracotta">JTBD</span>
-        <h2>Jobs to be Done</h2>
-        <p>
-          A visual framework for thinking about real needs, hidden jobs, and segments finer than surface profiles.
-        </p>
-        <div class="links">
-          <a href="../jobs-to-be-done/jtbd-infografia.html">Infographic</a>
-          <a href="../jobs-to-be-done/jtbd-kickoff-visual.html">Visual kickoff</a>
-          <a href="../jobs-to-be-done/jtbd-mapa-oficios.html">Occupations map</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag lake">Metacognition</span>
-        <h2>Inner gardening</h2>
-        <p>
-          A narrative piece using plants, cultivation, creativity, and metacognition to explain why education is not
-          coercion but the design of conditions and the cultivation of reflection.
-        </p>
-        <div class="links">
-          <a href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag terracotta">Education</span>
-        <h2>Banausos and the whole mind</h2>
-        <p>
-          A contrast between specialization and interdisciplinarity: from the expert trapped inside one function to
-          the integral education Krishnamurti defended against the fragmented mind.
-        </p>
-        <div class="links">
-          <a href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag lake">AI</span>
-        <h2>Situated AI</h2>
-        <p>
-          AI as compact memory and a refinement tool: from impulse to prompt, from language to action, with
-          Krishnamurti in the background asking what remains human if we outsource the whole mechanics of mind.
-        </p>
-        <div class="links">
-          <a href="../ia-encajada/ia-encajada-infografia.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag terracotta">Human rhythm</span>
-        <h2>Leisure and business</h2>
-        <p>
-          From Byung-Chul Han to Krishnamurti: a piece about acceleration, rest, and the balance needed to avoid
-          turning the human being into an exhausted processor.
-        </p>
-        <div class="links">
-          <a href="../ocio-negocio/ocio-negocio-infografia.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag olive">Cosmology</span>
-        <h2>Sun, language, and civilization</h2>
-        <p>
-          Energy, matter, sound, thought, and planetary care in a piece that joins psychic thermodynamics,
-          metacognition, and the dilemma between solar flow and fossil combustion.
-        </p>
-        <div class="links">
-          <a href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag terracotta">History</span>
-        <h2>Technology and historical warning</h2>
-        <p>
-          A narrative table of crossroads: writing, print, Japanese closure, industrial modernity, atom, media, and
-          computing as tests of judgment rather than fixed destinies.
-        </p>
-        <div class="links">
-          <a href="../disyuntivas-tecnologicas/historical-technology-crossroads.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag lake">Humane tech</span>
-        <h2>Noetic sovereignty and the human frontier of AI</h2>
-        <p>
-          A piece aimed at humanist institutions: it separates symbols from facts, compulsion from observation, and
-          tools from agents in order to think about cognitive delegation without hysteria or worship.
-        </p>
-        <div class="links">
-          <a href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">Open infographic</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <span class="tag olive">Semiotics</span>
-        <h2>Naming is not knowing</h2>
-        <p>
-          A sharper and more mature table: it crosses death, innocence, childhood, sleep, and orgasm under a triad of
-          Dostoevsky, Kierkegaard, and Krishnamurti.
-        </p>
-        <div class="links">
-          <a href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">Open table</a>
-        </div>
-      </article>
+    <section class="shell section-anchor" id="themes">
+      <h2>Thematic index</h2>
+      <div class="grid">
+        <article class="group">
+          <h3>Need, learning, and education</h3>
+          <p>Pieces for entering through the formation of judgment before moving into civilization or AI.</p>
+          <div class="story-list">
+            <a class="story-link" href="../jobs-to-be-done/jtbd-infografia.html">🔗 Jobs to be Done</a>
+            <a class="story-link" href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">🔗 Inner gardening</a>
+            <a class="story-link" href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">🔗 Banausos and the whole mind</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>Consciousness, identity, and flexibility</h3>
+          <p>Where the self becomes a discipline of observation, pruning, and revision.</p>
+          <div class="story-list">
+            <a class="story-link" href="../index.html">🔗 Noetic sovereignty</a>
+            <a class="story-link" href="../janus-fitzgerald/definition-and-possibility.html">🔗 Definition and possibility</a>
+            <a class="story-link" href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">🔗 Naming is not knowing</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>AI, judgment, and governance</h3>
+          <p>From the concrete tool to the civic frame required if judgment is not to be fully outsourced.</p>
+          <div class="story-list">
+            <a class="story-link" href="../ia-encajada/ia-encajada-infografia.html">🔗 Situated AI</a>
+            <a class="story-link" href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">🔗 Noetic sovereignty and AI</a>
+            <a class="story-link" href="../principios-tecnologia-humana/seven-principles-human-technology.html">🔗 Seven principles for human technology</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>Civilization, history, and species</h3>
+          <p>Long scale: energy, species, historical warning, and the material architecture of the symbol.</p>
+          <div class="story-list">
+            <a class="story-link" href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">🔗 Sun, language, and civilization</a>
+            <a class="story-link" href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">🔗 Noetic panhumanism</a>
+            <a class="story-link" href="../disyuntivas-tecnologicas/historical-technology-crossroads.html">🔗 Technology and historical warning</a>
+          </div>
+        </article>
+        <article class="group">
+          <h3>Rhythm, limit, and concrete life</h3>
+          <p>The body, rest, and the cost of living a real form instead of a frictionless imagination.</p>
+          <div class="story-list">
+            <a class="story-link" href="../ocio-negocio/ocio-negocio-infografia.html">🔗 Leisure and business</a>
+            <a class="story-link" href="../janus-fitzgerald/definition-and-possibility.html">🔗 Definition and possibility</a>
+            <a class="story-link" href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">🔗 Noetic sovereignty and AI</a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="synthesis">
-      <h2>Quick reading of the whole set</h2>
-      <p>
-        `JTBD` asks what moves us. `Metacognition` asks how we learn. `Banausos` asks what a narrow education turns us
-        into. `Situated AI` asks what happens when memory and abstraction become conversational and externalized.
-        `Leisure and business` asks what rhythm is required to keep that power from dehumanizing us. `Panhumanism`
-        asks how the self aligns with the species. `Sun, language, and civilization` asks on what material and
-        symbolic basis all this can be sustained. `Technology and historical warning` asks how often that tension has
-        already appeared before. `Noetic sovereignty and the human frontier of AI` asks what perceptual discipline the
-        human needs when the tool starts competing for context and judgment. `Naming is not knowing` asks what relation
-        death, innocence, childhood, and nonduality keep when forced through Dostoevsky, Kierkegaard, and
-        Krishnamurti. Ten became eleven; one puzzle.
-      </p>
+    <section class="shell section-anchor" id="catalog">
+      <h2>Full catalog</h2>
+      <div class="catalog">
+        <article class="story-card">
+          <h3>Noetic sovereignty</h3>
+          <div class="story-meta">Conceptual root · manifesto</div>
+          <p>The root piece: ecology of attention, compulsion or consciousness, and defense of judgment without sect or recruitment.</p>
+          <div class="mini-links"><a class="story-link" href="../index.html">📄 Open root</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Jobs to be Done</h3>
+          <div class="story-meta">Need · visual framework</div>
+          <p>Real needs, hidden jobs, and segmentation by function before surface label.</p>
+          <div class="mini-links">
+            <a class="story-link" href="../jobs-to-be-done/jtbd-infografia.html">📄 Infographic</a>
+            <a class="story-link" href="../jobs-to-be-done/jtbd-kickoff-visual.html">📄 Kickoff</a>
+            <a class="story-link" href="../jobs-to-be-done/jtbd-mapa-oficios.html">📄 Occupations map</a>
+          </div>
+        </article>
+        <article class="story-card">
+          <h3>Inner gardening</h3>
+          <div class="story-meta">Metacognition · learning</div>
+          <p>Education not as coercion, but as the design of conditions and the cultivation of reflection, rhythm, and awareness of process.</p>
+          <div class="mini-links"><a class="story-link" href="../metacognicion-jardineria/metacognicion-jardineria-infografia.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Banausos and the whole mind</h3>
+          <div class="story-meta">Education · fragmentation</div>
+          <p>Specialization versus integral formation: the useful expert can become an anthropologically narrow mind.</p>
+          <div class="mini-links"><a class="story-link" href="../banausos-krishnamurti/aprendizaje-especializado-vs-interdisciplinario.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Situated AI</h3>
+          <div class="story-meta">AI · memory · judgment</div>
+          <p>AI as compact memory, abstraction interface, and metacognitive refinement without confusing tool and impulse.</p>
+          <div class="mini-links"><a class="story-link" href="../ia-encajada/ia-encajada-infografia.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Leisure and business</h3>
+          <div class="story-meta">Human rhythm · limit</div>
+          <p>Without rest, leisure, and bonds, technological acceleration reduces the human being to a tired processor.</p>
+          <div class="mini-links"><a class="story-link" href="../ocio-negocio/ocio-negocio-infografia.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Sun, language, and civilization</h3>
+          <div class="story-meta">Civilization · energy · symbol</div>
+          <p>From solar flow to language: energy, matter, coordination, and care for the terrestrial support system.</p>
+          <div class="mini-links"><a class="story-link" href="../termodinamica-psiquica/sol-lenguaje-y-civilizacion.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Noetic panhumanism</h3>
+          <div class="story-meta">Species · interest · capacity</div>
+          <p>Four anthropological pillars for moving beyond the scattered self and thinking collective interest without erasing the individual.</p>
+          <div class="mini-links"><a class="story-link" href="../panhumanismo-noetico/panhumanismo-noetico-infografia.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Technology and historical warning</h3>
+          <div class="story-meta">History · technical ambivalence</div>
+          <p>From Plato to Krishnamurti: almost every technical rupture promised liberation and also manufactured a new danger.</p>
+          <div class="mini-links"><a class="story-link" href="../disyuntivas-tecnologicas/historical-technology-crossroads.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Noetic sovereignty and AI</h3>
+          <div class="story-meta">Humane tech · perception</div>
+          <p>Language, emotion, contemplation, and cognitive delegation as a test of judgment in the age of agents.</p>
+          <div class="mini-links"><a class="story-link" href="../frontera-humana-ia/noetic-sovereignty-human-frontier.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Naming is not knowing</h3>
+          <div class="story-meta">Semiotics · death · innocence</div>
+          <p>Dostoevsky, Kierkegaard, and Krishnamurti crossed to think death, childhood, little deaths, and innocence.</p>
+          <div class="mini-links"><a class="story-link" href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Seven principles for human technology</h3>
+          <div class="story-meta">Governance · civic design</div>
+          <p>A neutral table of limits, responsibility, psychology, and cooperation for high-impact technologies.</p>
+          <div class="mini-links"><a class="story-link" href="../principios-tecnologia-humana/seven-principles-human-technology.html">📄 Open</a></div>
+        </article>
+        <article class="story-card">
+          <h3>Definition and possibility</h3>
+          <div class="story-meta">Flexibility · identity · decision</div>
+          <p>Janusian thought, Fitzgerald, and the transition from possibility to reality through a careful analogy with quantum mechanics.</p>
+          <div class="mini-links"><a class="story-link" href="../janus-fitzgerald/definition-and-possibility.html">📄 Open</a></div>
+        </article>
+      </div>
     </section>
-
-    <p class="footer">The whole project is static HTML: open it and look. No build, no ceremony, no smoke.</p>
   </main>
 </body>
 </html>

@@ -43,6 +43,8 @@ entre sí y reconducidas a la raíz.
 - `disyuntivas-tecnologicas/tecnologia-y-advertencia-historica.html`
 - `frontera-humana-ia/soberania-noetica-frontera-humana.html`
 - `semiotica-no-dualidad/nombrar-no-es-conocer-tabla.html`
+- `principios-tecnologia-humana/principios-tecnologia-humana.html`
+- `janus-fitzgerald/definicion-y-posibilidad.html`
 
 ## Nota práctica
 
