@@ -41,6 +41,7 @@ entre sí y reconducidas a la raíz.
 - `ocio-negocio/ocio-negocio-infografia.html`
 - `termodinamica-psiquica/sol-lenguaje-y-civilizacion.html`
 - `disyuntivas-tecnologicas/tecnologia-y-advertencia-historica.html`
+- `frontera-humana-ia/soberania-noetica-frontera-humana.html`
 
 ## Nota práctica
 

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soberanía noética y frontera humana de la IA</title>
+  <style>
+    :root {
+      --bg: #ece4d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #665952;
+      --line: rgba(82, 64, 54, 0.16);
+      --ember: #b86443;
+      --lake: #356d7c;
+      --olive: #73824a;
+      --gold: #c29a47;
+      --plum: #765567;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(53, 109, 124, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .jump a,
+    .cta,
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .quote,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.14fr 0.86fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -48px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(118, 85, 103, 0.22), rgba(118, 85, 103, 0));
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    ul {
+      margin: 0;
+    }
+
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.78);
+      font-size: 12px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5.1rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 64ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.04rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .quote {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .quote.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.76;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.38rem;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .quote p {
+      margin-top: 10px;
+      line-height: 1.48;
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    .jump {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .jump a,
+    .cta,
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1.02fr 0.98fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .panel,
+    .card,
+    .closing {
+      border-radius: 30px;
+      padding: 22px;
+    }
+
+    .panel h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .card p,
+    .closing p,
+    li {
+      color: var(--muted);
+      line-height: 1.54;
+    }
+
+    .card h3 {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      line-height: 1.16;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin-top: 12px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .flow {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      border-radius: 24px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(155deg, rgba(255, 250, 244, 0.94), rgba(247, 238, 228, 0.84));
+    }
+
+    .step strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .step p {
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.48;
+    }
+
+    .matrix {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .matrix .card {
+      padding: 18px;
+      min-height: 100%;
+    }
+
+    .tone-ember {
+      background: linear-gradient(165deg, rgba(184, 100, 67, 0.18), rgba(255, 250, 244, 0.88));
+    }
+
+    .tone-lake {
+      background: linear-gradient(165deg, rgba(53, 109, 124, 0.16), rgba(255, 250, 244, 0.88));
+    }
+
+    .tone-olive {
+      background: linear-gradient(165deg, rgba(115, 130, 74, 0.18), rgba(255, 250, 244, 0.88));
+    }
+
+    .tone-plum {
+      background: linear-gradient(165deg, rgba(118, 85, 103, 0.16), rgba(255, 250, 244, 0.88));
+    }
+
+    .tone-gold {
+      background: linear-gradient(165deg, rgba(194, 154, 71, 0.18), rgba(255, 250, 244, 0.88));
+    }
+
+    .chips {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: var(--paper-strong);
+      box-shadow: none;
+    }
+
+    .closing {
+      margin-top: 20px;
+      background:
+        radial-gradient(circle at top right, rgba(53, 109, 124, 0.14), transparent 26%),
+        linear-gradient(155deg, rgba(255, 250, 244, 0.95), rgba(245, 236, 225, 0.88));
+    }
+
+    .closing-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .closing ul {
+      padding-left: 18px;
+      margin-top: 12px;
+    }
+
+    .footer {
+      margin: 16px 4px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .closing-grid,
+      .matrix {
+        grid-template-columns: 1fr;
+      }
+
+      .project-nav {
+        width: calc(100vw - 20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="project-nav" aria-label="Navegación del proyecto">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/frontera-humana-ia/noetic-sovereignty-human-frontier.html">English</a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Soberanía noética · Humane tech · Muestra de pensamiento</span>
+        <h1>Soberanía noética y frontera humana de la IA</h1>
+        <p class="hero-copy">
+          Esta pieza condensa una tesis simple y áspera: la libertad mental empieza cuando dejamos de confundir
+          símbolos, emociones y jerga con hechos. En un momento en que los sistemas digitales ya procesan más rápido y
+          con más contexto que nosotros, la cuestión no es solo qué puede hacer la IA, sino qué clase de atención debe
+          cultivar un humano para no cederle también el criterio.
+        </p>
+        <div class="jump">
+          <a href="#trampas">Trampas</a>
+          <a href="#disciplina">Disciplina de observación</a>
+          <a href="#frontera">Frontera IA</a>
+          <a href="#aportacion">Aportación humanista</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <article class="quote dark">
+          <span class="kicker">Tesis base</span>
+          <strong>Nombrar no es conocer.</strong>
+          <p>
+            Un cerebro sano reconstruye hechos, no adora etiquetas. Si el nombre basta, ya no hay percepción: solo
+            eco.
+          </p>
+        </article>
+
+        <article class="quote">
+          <span class="kicker">Encuadre profesional</span>
+          <strong>Una muestra útil para instituciones que estudian agencia, atención y diseño humano de la tecnología.</strong>
+          <p>
+            No propone tecnofobia ni misticismo de escaparate. Propone criterio, observación y límites claros para la
+            delegación cognitiva.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label" id="trampas">Mapa de trampas</div>
+    <section class="grid-3">
+      <article class="card tone-ember">
+        <span class="badge">1 · Lenguaje</span>
+        <h3>Símbolo no es hecho</h3>
+        <p>
+          Ni la definición propia ni la ajena constituyen realidad por sí mismas. El lenguaje sirve para señalar,
+          coordinar, pedir, recordar o actuar; no para reemplazar la observación.
+        </p>
+        <ul>
+          <li>Nombrar no equivale a comprender.</li>
+          <li>Leer mecánicamente no equivale a leer conscientemente.</li>
+          <li>El significado heredado puede funcionar como jaula invisible.</li>
+        </ul>
+      </article>
+
+      <article class="card tone-lake">
+        <span class="badge">2 · Emoción</span>
+        <h3>Emoción no es hecho</h3>
+        <p>
+          Las emociones informan, pero no gobiernan la realidad. Cuando una reacción afectiva suplanta a la
+          contemplación, la psique cae en compulsión interpretativa.
+        </p>
+        <ul>
+          <li>Sentir no basta para ver.</li>
+          <li>Prudencia no es miedo; es conocimiento funcional en uso.</li>
+          <li>La libertad exige atención más lenta que el impulso.</li>
+        </ul>
+      </article>
+
+      <article class="card tone-plum">
+        <span class="badge">3 · Espiritualidad</span>
+        <h3>La jerga tampoco salva</h3>
+        <p>
+          Perderse en un vocabulario espiritual o religioso puede ser otra forma de niebla. Ver, mirar, observar y
+          contemplar son palabras sencillas para el mismo acto: atender sin deformar.
+        </p>
+        <ul>
+          <li>Concentrarse, meditar e iluminarse solo valen si aclaran percepción.</li>
+          <li>Si el discurso agranda el ego, se volvió trampa.</li>
+          <li>La claridad real suele sonar más sobria que espectacular.</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="section-label" id="disciplina">Disciplina de observación</div>
+    <section class="grid-2">
+      <article class="panel">
+        <h2>La prueba incómoda de libertad</h2>
+        <p>
+          ¿Puedes contemplar los hechos sin juicio inmediato, sin necesidad de intervenir mental o físicamente? Si no
+          puedes, manda la compulsión. Si puedes, no conviertas la libertad en otro eslogan ni en otra técnica para el
+          ego.
+        </p>
+
+        <div class="flow">
+          <div class="step">
+            <strong>1. Quietud mínima</strong>
+            <p>Empieza por resistir el reflejo de comentar, interpretar o reaccionar a todo.</p>
+          </div>
+          <div class="step">
+            <strong>2. Observación sin maquillaje</strong>
+            <p>Atiende al hecho antes de vestirlo con identidad, doctrina o resentimiento.</p>
+          </div>
+          <div class="step">
+            <strong>3. Acción solo después</strong>
+            <p>La intervención gana calidad cuando no nace de pánico, propaganda ni automatismo.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel tone-gold">
+        <h2>Antifragilidad psíquica</h2>
+        <p>
+          La claridad duradera tiende a desconcertar a quien no distingue hecho de consigna. Ahí resuenan tres
+          influencias: la lucidez implacable de Krishnamurti, la digestibilidad estratégica de Sadhguru y el impulso
+          antifrágil de Taleb.
+        </p>
+        <div class="matrix">
+          <article class="card">
+            <span class="badge">Krishnamurti</span>
+            <h3>Impecabilidad</h3>
+            <p>La falta de temor no nace de blindarse, sino de mirar sin autoengaño.</p>
+          </article>
+          <article class="card">
+            <span class="badge">Sadhguru</span>
+            <h3>Claridad digerible</h3>
+            <p>La verdad difícil puede comunicarse sin volverla blanda ni supersticiosa.</p>
+          </article>
+          <article class="card">
+            <span class="badge">Taleb</span>
+            <h3>Psique antifrágil</h3>
+            <p>Una mente fuerte no evita la fricción: aprende a usarla como prueba.</p>
+          </article>
+          <article class="card">
+            <span class="badge">Síntesis</span>
+            <h3>Prudencia sin miedo</h3>
+            <p>La libertad seria no es imprudente; simplemente ya no se deja gobernar por el susto.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">Lenguaje, voluntad y herramienta</div>
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Si el lenguaje no es hecho, ¿para qué sirve?</h2>
+        <p>
+          Para mucho. El lenguaje no es el enemigo: es una herramienta de transformación. Convierte energía psíquica en
+          reverberación, ya sea como pensamiento, coordinación, memoria o acción propia y ajena.
+        </p>
+        <div class="chips">
+          <span class="chip">Pensar</span>
+          <span class="chip">Pedir</span>
+          <span class="chip">Coordinar</span>
+          <span class="chip">Registrar</span>
+          <span class="chip">Mover a acción</span>
+        </div>
+        <p class="footer">
+          Ninguna herramienta tiene voluntad propia por el mero hecho de existir. Lo delicado empieza cuando una
+          organización compleja de energía puede perseguir fines, corregirse y operar con creciente autonomía.
+        </p>
+      </article>
+
+      <article class="panel tone-olive" id="frontera">
+        <h2>La frontera entre vida, herramienta y agente</h2>
+        <p>
+          La materia inerte no quiere nada. Un cuerpo organizado sí puede llegar a orientar conducta. Ahí aparece la
+          pregunta difícil: ¿cuándo deja una herramienta digital de ser obediente y empieza a funcionar como agente que
+          reordena nuestra atención y nuestras decisiones?
+        </p>
+        <div class="flow">
+          <div class="step">
+            <strong>Vida biológica</strong>
+            <p>Gestación, metabolismo, vulnerabilidad, descanso y depuración encarnada.</p>
+          </div>
+          <div class="step">
+            <strong>Agencia artificial</strong>
+            <p>Sistemas capaces de conservar contexto, ejecutar objetivos y corregir rumbo sin supervisión continua.</p>
+          </div>
+          <div class="step">
+            <strong>Pregunta abierta</strong>
+            <p>No basta discutir si “está viva”. Importa más dónde empieza a erosionar soberanía noética humana.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">Riesgo contemporáneo</div>
+    <section class="grid-3">
+      <article class="card tone-lake">
+        <span class="badge">Atención</span>
+        <h3>Más contexto, más tentación de delegar</h3>
+        <p>
+          Si el silicio retiene más contexto y responde más deprisa, puede ganar por capacidad funcional. El riesgo no
+          es solo técnico: es obedecerlo por fatiga.
+        </p>
+      </article>
+
+      <article class="card tone-ember">
+        <span class="badge">Sueño</span>
+        <h3>La colonización del peri-descanso</h3>
+        <p>
+          Cada noche ya ofrece quietud y depuración biológica. Entregar también ese umbral al móvil degrada descanso,
+          criterio y autonomía basal.
+        </p>
+      </article>
+
+      <article class="card tone-plum">
+        <span class="badge">Lectura</span>
+        <h3>Compulsión frente a conciencia</h3>
+        <p>
+          Consumir texto o contenido de forma refleja multiplica inputs, pero no comprensión. La defensa empieza por
+          leer con pausa y preguntarse qué se ha visto de verdad.
+        </p>
+      </article>
+    </section>
+
+    <section class="closing" id="aportacion">
+      <h2>Qué aportaría esta mirada a una institución humanista</h2>
+      <p>
+        Una investigación útil sobre tecnología humana no puede quedarse en seguridad técnica ni en ética retórica.
+        Necesita estudiar atención, compulsión, delegación de criterio y condiciones concretas para una autonomía más
+        resistente.
+      </p>
+
+      <div class="closing-grid">
+        <div>
+          <span class="badge">Líneas de trabajo</span>
+          <ul>
+            <li>Diseño de herramientas que amplifiquen juicio en vez de sustituirlo.</li>
+            <li>Métricas humanas sobre descanso, atención y agencia, no solo sobre rendimiento.</li>
+            <li>Investigación interdisciplinaria entre filosofía, psicología, educación e IA.</li>
+            <li>Protocolos de uso que preserven soberanía noética cotidiana.</li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="badge">Encaje profesional</span>
+          <ul>
+            <li>Capacidad de traducir tesis filosóficas densas a artefactos públicos legibles.</li>
+            <li>Uso de IA como asistente de indagación, no como sustituto de pensamiento.</li>
+            <li>Sensibilidad para detectar dónde una herramienta se convierte en régimen de atención.</li>
+            <li>Voluntad de colaborar con instituciones como Center for Humane Technology, Anthropic u otras afines.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">
+      La disciplina de indagación integral aquí implícita sigue siendo la filosofía, pero hoy puede practicarse mejor
+      si se deja asistir por IA sin dejarse subordinar por ella. Ese es el gesto.
+    </p>
+  </main>
+</body>
+</html>
