@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naming is not knowing · a semiotic table of nonduality</title>
+  <style>
+    :root {
+      --bg: #efe5d8;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #201918;
+      --muted: #665a53;
+      --line: rgba(84, 66, 56, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --plum: #765567;
+      --gold: #c39a45;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.62), transparent 24%),
+        radial-gradient(circle at 84% 16%, rgba(118, 85, 103, 0.14), transparent 20%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #decab4 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1380px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .closing, .table-shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    h1 {
+      margin-top: 14px;
+      max-width: 12ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+    .hero-copy, .panel p, .closing p, td, li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.16;
+    }
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .table-shell { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 1560px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+    }
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 980px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../../semiotica-no-dualidad/nombrar-no-es-conocer-tabla.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Death · innocence · practical nonduality</span>
+        <h1>Naming is not knowing</h1>
+        <p class="hero-copy">
+          This version no longer revolves around a museum of compared symbols, but around a starker tension:
+          <strong>the relation between death and innocence</strong>. Read with mature labels, Advaita stops sounding like
+          remote cosmology and can be phrased like this: the individual becomes separated from the Whole through the
+          distortions of a mind loaded with the past. Under that axis, `Dostoevsky`, `Kierkegaard`, and
+          `Krishnamurti` form a fertile triad: humanist literature, Christian religious thought, and vital or
+          biological philosophy converge on the question of how to die to self-deception without ceasing to live
+          intensely.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Core thesis</span>
+          <strong>Innocence is not naivete: it is a mind that has died sufficiently to psychological residue to see again.</strong>
+          <p>The opposite is not theological sin but a mind saturated with fear, image, consolation, and defensive deliberation.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Embodied key</span>
+          <strong>Sleep and orgasm can be read as little deaths.</strong>
+          <p>They are biographical miniatures of Krishnamurti’s “die every day”: partial interruptions of the self, rests from the center, rehearsals of dissolution.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Three pillars</div>
+    <section class="panel">
+      <h2>The cohesion of the piece</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>Dostoevsky · intensity without sterile consolation</strong>
+          <p>Struggle, suffering, and contradiction must not be anesthetized by comfortable systems. Self-deception breaks the capacity to love and to see.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Kierkegaard · inwardness and existential leap</strong>
+          <p>Truth becomes embodied subjectivity when the individual stops hiding behind abstractions and assumes anxiety, faith, and decision.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Krishnamurti · dying to the past</strong>
+          <p>Innocence does not arrive through belief, but through the daily death of psychological memory, accumulated pleasure, fear, and internalized authority.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Crossing table</div>
+    <section class="table-shell">
+      <h2>Death, innocence, and nonduality through three thinkers</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Theme</th>
+            <th>Dostoevsky</th>
+            <th>Kierkegaard</th>
+            <th>Krishnamurti</th>
+            <th>Expanded semiotic resonance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Death</strong><span> Death as a test of truth</span></td>
+            <td>It destroys cheap consolations and forces one to measure the authenticity of a life lived in real conflict.</td>
+            <td>It awakens anxiety, vertigo, and singularity; nobody dies abstractly.</td>
+            <td>It is understood only if one dies every day to what has been accumulated, not by fantasizing about an afterlife.</td>
+            <td>Advaita: return of the individual to the Whole. Existential Christianity: decision before the Absolute. Practical nonduality: end of the psychological center.</td>
+          </tr>
+          <tr>
+            <td><strong>Innocence</strong><span> Not naivete, but freshness</span></td>
+            <td>It appears only after passing through humiliation, guilt, struggle, and inward truth.</td>
+            <td>It resembles the transparency of the individual appearing before God without hiding in the crowd.</td>
+            <td>It is the fresh mind no longer carrying yesterday as identity.</td>
+            <td>Innocence works here as the mature version of purity: neither moralism nor candor, but perception without dominant residue.</td>
+          </tr>
+          <tr>
+            <td><strong>Consolation</strong><span> The refuge that weakens</span></td>
+            <td>Comforting fictions can render consciousness cowardly and sentimental.</td>
+            <td>Comfortable Christendom is worse than honest doubt: it turns faith into a sofa.</td>
+            <td>Believing in reincarnation or an afterlife out of fear is an evasion of the present fact.</td>
+            <td>All three distrust the mental analgesic. The elevated word can function as symbolic sedative.</td>
+          </tr>
+          <tr>
+            <td><strong>Suffering</strong><span> Irreducible friction</span></td>
+            <td>It can purify, expose, and reveal greatness or abjection.</td>
+            <td>Anxiety is a teacher of inwardness, not a mere bug to be fixed.</td>
+            <td>Suffering signals contradiction in the self; seeing it without escape is already transformation.</td>
+            <td>Pain is not glorified for its own sake; what is rejected is using pleasure or doctrine to avoid looking at it.</td>
+          </tr>
+          <tr>
+            <td><strong>Dying every day</strong><span> The axial motif</span></td>
+            <td>Intensity demands destroying masks, pride, and inner lying.</td>
+            <td>Authentic repetition asks for existential renewal, not self-management as routine.</td>
+            <td>Daily death to the psychological past returns innocence to the mind.</td>
+            <td>It can be read as a nondual version of detachment, metanoia, or pruning of identifications.</td>
+          </tr>
+          <tr>
+            <td><strong>Sleep</strong><span> Everyday little death</span></td>
+            <td>It suspends for a few hours the narrative drama of the self.</td>
+            <td>It recalls the radical impotence of the individual: one does not sustain oneself either awake or asleep.</td>
+            <td>It is a biological rehearsal of letting go of psychological continuity.</td>
+            <td>Sleep functions as a humble icon of dissolution: rest from the character, not magical enlightenment.</td>
+          </tr>
+          <tr>
+            <td><strong>Orgasm</strong><span> Discharge and brief eclipse</span></td>
+            <td>It can be real intensity or simple escape from consciousness.</td>
+            <td>It reveals the paradox of body, desire, vertigo, and momentary loss of control.</td>
+            <td>It resembles a micro-death of the center, though usually reappropriated at once by memory and pleasure.</td>
+            <td>It is not elevated into automatic sacrament: it matters as a figure of interruption of the self, not as carnival tantra fetish.</td>
+          </tr>
+          <tr>
+            <td><strong>Childhood</strong><span> The newborn as creative summit</span></td>
+            <td>Childlike purity matters precisely because it has not yet fully hardened into calculation and lying.</td>
+            <td>Childhood resonates with dependence, openness, and original trembling.</td>
+            <td>A newborn is closer to a mind not yet colonized by accumulation.</td>
+            <td>If it “comes from the same place” we go to in death, that formula should be read as symbol of nonaccumulation, not as demonstrable cosmological data.</td>
+          </tr>
+          <tr>
+            <td><strong>Creativity</strong><span> To be born again</span></td>
+            <td>Authentic creation emerges from traversed wound, not from comfort.</td>
+            <td>It demands singular appropriation of existence, not imitation of the crowd.</td>
+            <td>It is born when the mind is innocent, without dominant ballast of remembrance.</td>
+            <td>Childhood, genius, and nonduality touch here: creation as the appearance of the undomesticated.</td>
+          </tr>
+          <tr>
+            <td><strong>God and the Whole</strong><span> Mature rereading</span></td>
+            <td>God appears as horizon of moral intensity and redemptive suffering, not as administrative reward.</td>
+            <td>God is the absolute relation to the Absolute: a lived demand, not decorative thesis.</td>
+            <td>The Whole needs no religious name; nonfragmented perception is enough.</td>
+            <td>`God`, `Brahman`, `Whole`, `Absolute` are arbitrary symbols for different maps of totality.</td>
+          </tr>
+          <tr>
+            <td><strong>Self-deception</strong><span> The great distortion</span></td>
+            <td>The one who lies to himself ends without inward truth or real love.</td>
+            <td>Despair is not wanting to be oneself before God.</td>
+            <td>The observer invents distance in order not to see that he himself is the observed.</td>
+            <td>This is the raw version of Maya: not cosmic mist, but active structure of mental deformation.</td>
+          </tr>
+          <tr>
+            <td><strong>The present</strong><span> The only arena</span></td>
+            <td>Justice deferred forever insults concrete suffering.</td>
+            <td>Truth is played out in the present existence of the individual, not in the system.</td>
+            <td>The only thing that can truly transform is this instant seen without escape.</td>
+            <td>All three push against postponement: remote salvation, abstract theory, or future promise as anesthesia.</td>
+          </tr>
+          <tr>
+            <td><strong>Faith, attention, leap</strong><span> The decisive gesture</span></td>
+            <td>Faith as existential crossing, not doctrinal varnish.</td>
+            <td>The leap does not remove anxiety; it passes through it.</td>
+            <td>Total attention neither believes nor disbelieves: it observes.</td>
+            <td>The triad closes here: literature of intensity, existential Christianity, and biology of consciousness.</td>
+          </tr>
+          <tr>
+            <td><strong>Naming is not knowing</strong><span> Final hygiene rule</span></td>
+            <td>Neither “redemption” nor “soul” saves one from lying if they are merely pronounced.</td>
+            <td>Neither “faith” nor “God” means anything if it does not cut through a singular life.</td>
+            <td>Neither “enlightenment” nor “death of the self” has value if it remains accumulated verbalization.</td>
+            <td>Words remain symbols. Useful, yes. Sovereign, no.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Closure</div>
+    <section class="closing">
+      <h2>The mature resignification</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Advaita, without doctrinal fog</strong>
+          <p>
+            Individual and God can be reread as individual and Whole; Maya as distortion of the mind according to the
+            past. Nonduality then stops being exotica and becomes radical perceptual hygiene.
+          </p>
+        </article>
+        <article class="mini-card">
+          <strong>Death and innocence</strong>
+          <p>
+            Sleep, orgasm, childhood, and death point to the same symbolic motif: the suspension or partial absence of
+            the accumulative self. The issue is not to romanticize this, but to learn psychological dying before
+            biological death arrives.
+          </p>
+        </article>
+      </div>
+      <ul>
+        <li>Dostoevsky protects intensity against sterile consolations.</li>
+        <li>Kierkegaard protects inwardness against system and crowd.</li>
+        <li>Krishnamurti protects innocence against the psychological past.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nombrar no es conocer · tabla semiótica de la no dualidad</title>
+  <style>
+    :root {
+      --bg: #efe5d8;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #201918;
+      --muted: #665a53;
+      --line: rgba(84, 66, 56, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --plum: #765567;
+      --gold: #c39a45;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.62), transparent 24%),
+        radial-gradient(circle at 84% 16%, rgba(118, 85, 103, 0.14), transparent 20%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #decab4 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(760px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1380px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .closing, .table-shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+    .hero-copy, .panel p, .closing p, td, li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.28rem;
+      line-height: 1.16;
+    }
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .table-shell { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 1560px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+    }
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 980px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../en/semiotica-no-dualidad/naming-is-not-knowing-table.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Muerte · inocencia · no dualidad práctica</span>
+        <h1>Nombrar no es conocer</h1>
+        <p class="hero-copy">
+          Esta versión ya no gira en torno a un museo de símbolos comparados, sino a una tensión más desnuda:
+          <strong>la relación entre muerte e inocencia</strong>. Releído con etiquetas maduras, Advaita deja de sonar a
+          cosmología remota y pasa a formularse así: el individuo se separa del Todo por las distorsiones de una mente
+          cargada de pasado. Bajo ese eje, `Dostoievski`, `Kierkegaard` y `Krishnamurti` forman una tríada fértil:
+          literatura humanista, pensamiento religioso cristiano y filosofía vital o biológica convergen en la pregunta
+          por cómo morir al autoengaño sin dejar de vivir con intensidad.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Tesis central</span>
+          <strong>La inocencia no es ingenuidad: es una mente que ha muerto al residuo psicológico suficiente como para volver a ver.</strong>
+          <p>Lo contrario no es el pecado teológico sino la mente saturada de miedo, imagen, consuelo y deliberación defensiva.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Clave corporal</span>
+          <strong>Dormir y el orgasmo pueden leerse como pequeñas muertes.</strong>
+          <p>Son miniaturas biográficas del “morir cada día” de Krishnamurti: interrupciones parciales del yo, descansos del centro, ensayos de disolución.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Tres pilares</div>
+    <section class="panel">
+      <h2>La cohesión de la pieza</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>Dostoievski · intensidad sin consuelo estéril</strong>
+          <p>La lucha, el sufrimiento y la contradicción no deben anestesiarse con sistemas cómodos. El autoengaño rompe la capacidad de amar y de ver.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Kierkegaard · interioridad y salto existencial</strong>
+          <p>La verdad se vuelve subjetividad encarnada cuando el individuo deja de esconderse tras abstracciones y asume angustia, fe y decisión.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Krishnamurti · morir al pasado</strong>
+          <p>La inocencia no llega por creencia, sino por la muerte diaria de memoria psicológica, placer acumulado, miedo y autoridad interiorizada.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Tabla de cruce</div>
+    <section class="table-shell">
+      <h2>Muerte, inocencia y no dualidad atravesadas por tres pensadores</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tema</th>
+            <th>Dostoievski</th>
+            <th>Kierkegaard</th>
+            <th>Krishnamurti</th>
+            <th>Resonancia semiótica ampliada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Muerte</strong><span> La muerte como prueba de verdad</span></td>
+            <td>Destruye los consuelos baratos y obliga a medir la autenticidad de una vida vivida en conflicto real.</td>
+            <td>Despierta angustia, vértigo y singularidad; nadie muere en abstracto.</td>
+            <td>Solo se comprende si se muere cada día a lo acumulado, no si se fantasea con un después.</td>
+            <td>Advaita: retorno del individuo al Todo. Cristianismo existencial: decisión ante el Absoluto. No dualidad práctica: fin del centro psicológico.</td>
+          </tr>
+          <tr>
+            <td><strong>Inocencia</strong><span> No ingenuidad, sino frescura</span></td>
+            <td>Solo aparece tras atravesar humillación, culpa, lucha y verdad interior.</td>
+            <td>Se parece a la transparencia del individuo que comparece ante Dios sin escudarse en la multitud.</td>
+            <td>Es la mente fresca que ya no carga ayer como identidad.</td>
+            <td>La inocencia funciona como versión madura de la pureza: ni moralina ni candidez, sino percepción sin residuo dominante.</td>
+          </tr>
+          <tr>
+            <td><strong>Consuelo</strong><span> El refugio que debilita</span></td>
+            <td>Las ficciones reconfortantes pueden volver cobarde y sentimental a la conciencia.</td>
+            <td>La cristiandad cómoda es peor que la duda honesta: convierte la fe en sofá.</td>
+            <td>Creer en reencarnación o más allá por miedo es evasión del hecho presente.</td>
+            <td>Los tres sospechan del analgésico mental. La palabra elevada puede operar como sedante simbólico.</td>
+          </tr>
+          <tr>
+            <td><strong>Sufrimiento</strong><span> Fricción irreductible</span></td>
+            <td>Puede depurar, desnudar y revelar grandeza o abyección.</td>
+            <td>La angustia es maestra de interioridad, no simple error a corregir.</td>
+            <td>El sufrimiento señala contradicción del yo; verlo sin escape es ya transformación.</td>
+            <td>No se glorifica el dolor por sí mismo; se rechaza usar placer o doctrina para no mirarlo.</td>
+          </tr>
+          <tr>
+            <td><strong>Morir cada día</strong><span> El motivo axial</span></td>
+            <td>La intensidad exige destruir máscaras, orgullo y mentira interior.</td>
+            <td>La repetición auténtica pide renovarse existencialmente, no administrarse como rutina.</td>
+            <td>Morir diariamente al pasado psicológico devuelve inocencia a la mente.</td>
+            <td>Se puede leer como versión no dual del desasimiento, la metanoia o la poda de identificaciones.</td>
+          </tr>
+          <tr>
+            <td><strong>Dormir</strong><span> Pequeña muerte cotidiana</span></td>
+            <td>Suspende por unas horas el drama narrativo del yo.</td>
+            <td>Recuerda la impotencia radical del individuo: no se sostiene a sí mismo ni despierto ni dormido.</td>
+            <td>Es un ensayo biológico de soltar continuidad psicológica.</td>
+            <td>El sueño funciona como icono humilde de disolución: descanso del personaje, no iluminación mágica.</td>
+          </tr>
+          <tr>
+            <td><strong>Orgasmo</strong><span> Descarga y eclipse breve</span></td>
+            <td>Puede ser intensidad real o simple fuga de la conciencia.</td>
+            <td>Revela la paradoja entre cuerpo, deseo, vértigo y pérdida momentánea de control.</td>
+            <td>Se parece a una micro-muerte del centro, aunque normalmente reapropiada enseguida por memoria y placer.</td>
+            <td>No se eleva a sacramento automático: interesa como figura de interrupción del yo, no como fetiche tántrico de feria.</td>
+          </tr>
+          <tr>
+            <td><strong>Infancia</strong><span> El recién nacido como cumbre creativa</span></td>
+            <td>La pureza infantil importa precisamente porque todavía no se ha endurecido del todo en cálculo y mentira.</td>
+            <td>La infancia resuena con dependencia, apertura y temblor originario.</td>
+            <td>Un bebé recién nacido está más cerca de la mente no colonizada por acumulación.</td>
+            <td>Si viene “del mismo lugar” al que vamos al morir, la fórmula debe leerse como símbolo de no acumulación, no como dato cosmológico demostrable.</td>
+          </tr>
+          <tr>
+            <td><strong>Creatividad</strong><span> Nacer de nuevo</span></td>
+            <td>La creación auténtica emerge de la herida atravesada, no del confort.</td>
+            <td>Exige apropiación singular de la existencia, no copia de la muchedumbre.</td>
+            <td>Nace cuando la mente está inocente, sin lastre dominante del recuerdo.</td>
+            <td>Infancia, genio y no dualidad se tocan aquí: creación como aparición de lo no domesticado.</td>
+          </tr>
+          <tr>
+            <td><strong>Dios y el Todo</strong><span> Relectura madura</span></td>
+            <td>Dios aparece como horizonte de intensidad moral y sufrimiento redentor, no como premio administrativo.</td>
+            <td>Dios es la relación absoluta con el Absoluto: una exigencia vivida, no tesis decorativa.</td>
+            <td>El Todo no necesita nombre religioso; basta la percepción no fragmentada.</td>
+            <td>`Dios`, `Brahman`, `Todo`, `Absoluto` son símbolos arbitrarios para distintos mapas de totalidad.</td>
+          </tr>
+          <tr>
+            <td><strong>Autoengaño</strong><span> La gran distorsión</span></td>
+            <td>Quien se miente a sí mismo acaba sin verdad interior ni amor real.</td>
+            <td>La desesperación es no querer ser uno mismo ante Dios.</td>
+            <td>El observador inventa distancia para no ver que él mismo es lo observado.</td>
+            <td>Aquí se encuentra la versión cruda de Maya: no bruma cósmica, sino estructura activa de deformación mental.</td>
+          </tr>
+          <tr>
+            <td><strong>Presente</strong><span> La única arena</span></td>
+            <td>La justicia diferida eternamente insulta el sufrimiento concreto.</td>
+            <td>La verdad se juega en la existencia presente del individuo, no en el sistema.</td>
+            <td>Lo único real que puede transformarse es este instante visto sin fuga.</td>
+            <td>Los tres empujan contra la posposición: salvación remota, teoría abstracta o promesa futura como anestesia.</td>
+          </tr>
+          <tr>
+            <td><strong>Fe, atención, salto</strong><span> El gesto decisivo</span></td>
+            <td>Fe como travesía existencial, no como barniz doctrinal.</td>
+            <td>El salto no elimina la angustia; la atraviesa.</td>
+            <td>La atención total no cree ni descree: observa.</td>
+            <td>La trinidad queda cerrada: literatura de la intensidad, cristianismo existencial y biología de la conciencia.</td>
+          </tr>
+          <tr>
+            <td><strong>Nombrar no es conocer</strong><span> Regla de higiene final</span></td>
+            <td>Ni “redención” ni “alma” salvan de la mentira si solo se pronuncian.</td>
+            <td>Ni “fe” ni “Dios” significan nada si no atraviesan una vida singular.</td>
+            <td>Ni “iluminación” ni “muerte del yo” tienen valor si siguen siendo verbalización acumulada.</td>
+            <td>Las palabras siguen siendo símbolos. Útiles, sí. Soberanas, no.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>La resignificación madura</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Advaita, sin niebla doctrinal</strong>
+          <p>
+            Individuo y Dios pueden releerse como individuo y Todo; Maya, como distorsión de la mente según el pasado.
+            La no dualidad deja entonces de ser exotismo y se vuelve higiene perceptiva radical.
+          </p>
+        </article>
+        <article class="mini-card">
+          <strong>Muerte e inocencia</strong>
+          <p>
+            Dormir, el orgasmo, la infancia y la muerte apuntan al mismo motivo simbólico: la suspensión o ausencia
+            parcial del yo acumulativo. La cuestión no es romantizarlo, sino aprender a morir psicológicamente sin
+            esperar a la muerte biológica.
+          </p>
+        </article>
+      </div>
+      <ul>
+        <li>Dostoievski protege la intensidad frente a los consuelos estériles.</li>
+        <li>Kierkegaard protege la interioridad frente al sistema y la multitud.</li>
+        <li>Krishnamurti protege la inocencia frente al pasado psicológico.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
