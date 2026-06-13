@@ -18,6 +18,10 @@
   - explicit sexual tension
   - doctrinal ending
   - characters that feel like thesis carriers instead of living creatures
+  - siloed chapters that behave like lightly connected mini-essays
+  - idealist metaphors that turn too sugary or detach from lived experience
+  - turning personality notes into overly literal images
+  - overloaded portraits like "golden in skin and patience"
 
 ## Reserved for future styles
 

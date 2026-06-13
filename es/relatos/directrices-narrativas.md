@@ -48,6 +48,7 @@
 - El narrador puede ser personaje, pero no debe sonar como un profesor dictando conclusiones.
 - La geografía debe sentirse vivida, no documentada.
 - Evitar nombres de lugares reales cuando la historia pida aura o desplazamiento simbólico.
+- La introducción debe sugerir procedencias y conflictos sin declararlos de forma escolar.
 
 ## Público
 
@@ -100,6 +101,8 @@
   - elecciones
 - Nunca presentar una tesis como tabla disfrazada de cuento.
 - Si aparece teoría, debe aparecer porque el personaje **la necesita para seguir viviendo, amar, decidir o perder algo**.
+- Evitar citas o traslados demasiado directos de maestros contemporáneos: sus intuiciones deben reformularse dentro de la trama principal o de las subtramas.
+- Si un ideal abstracto aparece, debe aterrizarse como experiencia verificable, hábito, arrepentimiento, cuidado o consecuencia, no como lema flotante.
 
 ## Layout
 

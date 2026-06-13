@@ -48,6 +48,7 @@
 - The narrator may be a character, but should not sound like a lecturer dictating conclusions.
 - Geography should feel inhabited rather than documented.
 - Avoid real place names when the story benefits from aura or symbolic displacement.
+- The introduction should suggest origins and tensions rather than declaring them in a school-like way.
 
 ## Audience
 
@@ -100,6 +101,8 @@
   - choices
 - Never present a thesis as a table disguised as fiction.
 - If theory appears, it should appear because the character **needs it in order to live, love, choose, or lose something**.
+- Avoid direct lifts or quasi-quotes from contemporary teachers: their intuitions should be reformulated inside the main plot or the side plots.
+- If an abstract ideal appears, it must land as a verifiable experience, habit, regret, care, or consequence, not as a floating slogan.
 
 ## Layout
 

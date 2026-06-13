@@ -12,6 +12,8 @@
 - Direct, sober, clear.
 - No ornamental rhetoric and no over-explained psychology.
 - Emotion embodied through acts, silences, objects, trades, and decisions.
+- Subtlety matters more than declaration: better to evoke origin, class, faith, or wound than to label them head-on.
+- Personality notes are a starting point, not material for literal transfer or copied metaphor.
 
 ## World
 
@@ -44,6 +46,8 @@
   - the characters need them
   - a relationship is strained or saved by them
   - a decision can only be taken through them
+- Intellectual references must be metabolized into the story's own voice; they should never sound like pasted-in quotations.
+- In this line, literary references should not appear explicitly in the body of the story; they should be absorbed into scene, tone, or at most evocative titles.
 
 ## Rhythm
 
@@ -60,3 +64,6 @@
 - Cosmic love as the opposite of cosmic horror.
 - Final sensation: the reader has not merely received ideas; the reader has traveled.
 - Golden rule: if a sentence explains too much, suggest it through a fact, a reply, or an object.
+- Companion rule: if a chapter can be read as an isolated micro-essay without losing anything, it needs stronger continuity with the chapter before or after it.
+- Avoid sentimental ornament or soft-focus poetic portraiture when a precise observation is enough.
+- When a character appears for the first time, give a brief human context so they do not feel like a name dropped in passing.

@@ -18,6 +18,10 @@
   - tensión sexual explícita
   - cierre doctrinal
   - personajes que parezcan portadores de tesis y no criaturas vivas
+  - capítulos-silo con miniensayos apenas conectados
+  - metáforas idealistas demasiado cursis o despegadas de la experiencia
+  - convertir notas de personalidad en imágenes demasiado literales
+  - retratos recargados tipo "dorada de piel y de paciencia"
 
 ## Reservas para futuros estilos
 
