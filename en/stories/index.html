@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stories · Narrative index</title>
+  <style>
+    :root {
+      --bg: #efe6d9;
+      --paper: #fffaf3;
+      --ink: #211a17;
+      --muted: #6a5e57;
+      --line: #dbcab6;
+      --accent: #8d5b3f;
+      --accent-soft: #f0dfcf;
+      --lake: #356d7c;
+      --shadow: rgba(60, 35, 10, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      background: linear-gradient(180deg, #f3eadf 0%, var(--bg) 100%);
+      color: var(--ink);
+      font: 18px/1.6 Georgia, "Times New Roman", serif;
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 40px var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: 0 6px 18px rgba(60, 35, 10, 0.08);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 72px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 2.8rem; line-height: 1.04; margin-bottom: 12px; }
+    h2 { font-size: 1.8rem; margin-bottom: 14px; }
+    h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .lead { max-width: 70ch; color: var(--muted); }
+    .shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 10px 34px var(--shadow);
+      margin-bottom: 24px;
+    }
+    .pill-row, .meta-row, .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill, .mini-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .stats, .facet-grid, .story-grid {
+      display: grid;
+      gap: 16px;
+    }
+    .stats {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      margin-top: 18px;
+    }
+    .stat, .facet, .story-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255, 250, 243, 0.82);
+    }
+    .stat strong { display: block; font-size: 1.5rem; margin-bottom: 4px; }
+    .facet-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .facet p, .story-card p { color: var(--muted); font-size: 0.96rem; }
+    .story-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .story-card {
+      background:
+        radial-gradient(circle at top right, rgba(53, 109, 124, 0.08), transparent 28%),
+        rgba(255, 250, 243, 0.92);
+    }
+    .story-card .meta-row { margin: 10px 0 14px; }
+    .story-card strong {
+      color: var(--lake);
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .story-card a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: 0 6px 18px rgba(60, 35, 10, 0.08);
+    }
+    @media (max-width: 700px) {
+      h1 { font-size: 2.2rem; }
+      main { padding: 22px 14px 56px; }
+      .shell { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">🏠 Go to root</a>
+    <a href="../constellations/index.html">🧭 Constellations</a>
+    <a href="#catalog">📚 Story index</a>
+    <a href="../../es/relatos/index.html">🌍 Español</a>
+  </div>
+  <main>
+    <section class="shell">
+      <h1>Stories</h1>
+      <p class="lead">
+        This section does not extend the infographics: it departs from them. Here ideas stop arriving as schemes and
+        start arriving as destiny, wound, desire, romance, community, and transformation. The prose should remain
+        clear and fast, yes, but this is literature: a cohesive story able to move before it concludes.
+      </p>
+      <div class="pill-row" style="margin-top: 18px;">
+        <span class="pill">Static HTML</span>
+        <span class="pill">Bilingual</span>
+        <span class="pill">Historical fiction</span>
+        <span class="pill">Cosmic love</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>1</strong><span>Published story</span></div>
+        <div class="stat"><strong>10 min</strong><span>Opening reading</span></div>
+        <div class="stat"><strong>3</strong><span>Access indexes</span></div>
+        <div class="stat"><strong>2</strong><span>Parallel languages</span></div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexed by length</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Long</h3>
+          <p>Sustained reading, around ten minutes, meant to produce immersion, bond, and transformation.</p>
+          <div class="mini-links" style="margin-top: 12px;">
+            <span class="pill">A Love from Another Planet</span>
+          </div>
+        </article>
+        <article class="facet">
+          <h3>Medium</h3>
+          <p>Reserved for future stories of concentrated scope, halfway between intuition and scene.</p>
+        </article>
+        <article class="facet">
+          <h3>Short</h3>
+          <p>Reserved for brief, aphoristic pieces or stories built around one decisive situation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexed by theme</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Noetic panhumanism</h3>
+          <p>Stories where individual consciousness opens toward species-level care, cooperation, shared destiny, and responsibility.</p>
+        </article>
+        <article class="facet">
+          <h3>Language, symbol, and truth</h3>
+          <p>Stories where word, sound, memory, thought, and reality are examined as relative systems.</p>
+        </article>
+        <article class="facet">
+          <h3>Cosmic love</h3>
+          <p>The antithesis of cosmic horror: the universe not as mute menace, but as openness, patience, and community.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexed by narrative style</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Logbook</h3>
+          <p>Reflection enters in the first person, with route, destination, and situated perception.</p>
+        </article>
+        <article class="facet">
+          <h3>Condensed short novel</h3>
+          <p>Clean sentences, continuous rhythm, almost no ornamental rhetoric: facts, dialogue, and decisions, not literary fog.</p>
+        </article>
+        <article class="facet">
+          <h3>Transformative romance</h3>
+          <p>Love, moral conflict, and inner change inside an adventure that moves forward with tension and hope.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" id="catalog">
+      <h2>Catalog</h2>
+      <div class="story-grid">
+        <article class="story-card">
+          <strong>Opening story</strong>
+          <h3>A Love from Another Planet</h3>
+          <div class="meta-row">
+            <span class="pill">10 min</span>
+            <span class="pill">Logbook</span>
+            <span class="pill">Noetic panhumanism</span>
+          </div>
+          <p>
+            The narrator meets a woman in a library, loses his footing while reading `The Aleph`, and begins with her
+            a journey that mixes romance, philosophy, and civilizational conspiracy. Plato, Jesus Christ, Augustine,
+            Jung, and Krishnamurti appear as living stations of one shared mutation: moving from compulsion to
+            consciousness, and from consciousness to enough stillness to board the ship toward planet `Love`.
+          </p>
+          <a href="./a-love-from-another-planet.html">Open story</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

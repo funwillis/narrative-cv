@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Un amor de otro planeta</title>
+  <style>
+    :root {
+      --bg: #f1e8dc;
+      --paper: rgba(255, 250, 244, 0.94);
+      --ink: #221a17;
+      --muted: #675b54;
+      --line: rgba(86, 68, 58, 0.14);
+      --gold: #c49d4a;
+      --lake: #356d7c;
+      --ember: #b76745;
+      --shadow: 0 22px 48px rgba(49, 31, 21, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(255, 255, 255, 0.66), transparent 24%),
+        radial-gradient(circle at 82% 12%, rgba(53, 109, 124, 0.13), transparent 20%),
+        linear-gradient(180deg, #f7f0e7 0%, #eadcca 56%, #dec9b4 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.94);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(980px, calc(100vw - 28px));
+      margin: 0 auto 48px;
+    }
+    .masthead,
+    .story,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .masthead {
+      padding: 28px;
+    }
+    .story {
+      margin-top: 22px;
+      padding: 18px 0;
+    }
+    .closing {
+      margin-top: 22px;
+      padding: 28px;
+    }
+    h1, h2, h3, p, blockquote { margin: 0; }
+    .eyebrow, .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.82);
+      font: 12px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+    }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    .deck {
+      margin-top: 18px;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+    .meta {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .chapter {
+      width: min(680px, calc(100% - 44px));
+      margin: 0 auto;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .chapter:last-child { border-bottom: 0; }
+    .chapter h3 {
+      margin-top: 10px;
+      margin-bottom: 14px;
+      font-size: 1.45rem;
+      line-height: 1.14;
+    }
+    .chapter p,
+    .closing p,
+    .closing li {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.78;
+    }
+    .chapter p + p,
+    .closing p + p {
+      margin-top: 14px;
+    }
+    blockquote {
+      margin: 16px 0;
+      padding: 14px 18px;
+      border-left: 4px solid var(--gold);
+      background: rgba(255, 250, 244, 0.6);
+      color: var(--ink);
+      line-height: 1.68;
+    }
+    .chapter em {
+      color: var(--ink);
+      font-style: normal;
+    }
+    .chapter strong,
+    .closing strong {
+      color: var(--ink);
+    }
+    .closing ul {
+      margin: 16px 0 0;
+      padding-left: 18px;
+    }
+    .trail {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .trail a {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.94);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Ir a la raíz</a>
+    <a href="../constelaciones/index.html">Constelaciones</a>
+    <a href="./index.html">Relatos</a>
+    <a href="../../en/stories/a-love-from-another-planet.html">English</a>
+  </div>
+  <main>
+    <section class="masthead">
+      <span class="eyebrow">Diario de a bordo · ficción histórica · amor cósmico</span>
+      <h1>Un amor de otro planeta</h1>
+      <p class="deck">
+        Si te apetece, deja un momento en la puerta tus certezas más ruidosas. Este viaje se disfruta mejor así. El
+        planeta al que nos dirigimos no está en este sistema solar. Se llama <strong>Amor</strong>. A veces parece una
+        metáfora; a veces, una patria futura. En cualquier caso, conviene acercarse con un poco de paciencia y con el
+        corazón menos armado.
+      </p>
+      <p class="deck">
+        Todo empezó en una isla de cal, sal y patios hondos, entre gente llegada de lejos y gente que nunca terminó de
+        irse. Nosotros éramos dos inmigrantes latinoamericanos con antepasados españoles e italianos: yo,
+        <strong>Matías Rinaldi Serra</strong>; ella, <strong>Lucía Ferretti Salas</strong>. La isla nos recibió como
+        reciben ciertos puertos: sin prometer nada, pero dejando sitio para que uno cambie de vida si viene dispuesto.
+      </p>
+      <div class="meta">
+        <span class="tag">12 capítulos breves</span>
+        <span class="tag">Monomito</span>
+        <span class="tag">Romance</span>
+        <span class="tag">Amor Vincit Omnia</span>
+      </div>
+    </section>
+
+    <section class="story">
+      <article class="chapter">
+        <span class="tag">Capítulo 1</span>
+        <h3>La mujer del abrigo azul</h3>
+        <p>
+          La vi por primera vez en la biblioteca del Muelle Viejo. Tenía un abrigo azul, una libreta roja y una forma
+          seca de pasar las páginas. Yo había ido a devolver un libro. Ella estaba leyendo <em>El Aleph</em>. Me
+          senté lejos. A los diez minutos levantó la vista y dijo:
+        </p>
+        <blockquote>
+          “Si Borges tuviera razón, hablar sería una indecencia”.
+        </blockquote>
+        <p>
+          Me reí. Ella no. Me llamó con un dedo. Fui. Vi su nombre en la libreta: <strong>Lucía</strong>. Me enseñó una
+          frase subrayada. Dijo:
+        </p>
+        <blockquote>
+          “En una palabra metes medio universo, y luego pretendes discutir tranquilo”.
+        </blockquote>
+        <p>
+          Aquel fue el principio. No de una teoría. De una ruina.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 2</span>
+        <h3>La primera caída</h3>
+        <p>
+          Empezamos a leer juntos cada jueves. No parecía una cita. Lo era. Lucía llevaba a Platón. Yo llevaba a
+          Borges. A veces ninguno abría el libro. Hablábamos de palabras, de símbolos, de esa cosa rara por la que uno
+          dice amor y otro oye cárcel. A la cuarta semana me dijo:
+        </p>
+        <blockquote>
+          “No te enamores de mí por mi cabeza. Sería muy vulgar”.
+        </blockquote>
+        <p>
+          Le respondí:
+        </p>
+        <blockquote>
+          “Ya voy tarde”.
+        </blockquote>
+        <p>
+          Se echó a reír y luego se quedó seria. Esa seriedad fue lo que me dejó sin defensa.
+        </p>
+        <p>
+          No estábamos solos en aquellos jueves. A veces acabábamos la tarde con <strong>Alma Quiroga</strong> y
+          <strong>Dante Bellini</strong>, una pareja tan trabajadora que daba pudor quejarse delante de ellos. Alma,
+          dorada de piel y de paciencia, llevaba siempre algo resuelto antes de que los demás notáramos el problema.
+          Dante cuidaba un pequeño tambor africano y sabía poner a vibrar la mesa al ritmo de la brasa cuando nos
+          juntábamos a cenar. Iban casi siempre con su hija, <strong>Lía</strong>, una chispa de dos pasos inseguros y
+          ojos atentos que golpeaba el suelo con las cucharas como si quisiera descubrir el compás del mundo.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 3</span>
+        <h3>Platón en la barra del bar</h3>
+        <p>
+          Una noche nos refugiamos del viento en un bar pequeño del Barrio de la Cal. Lucía dibujó una escalera en la
+          servilleta. Abajo escribió <strong>cuerpo</strong>. Arriba escribió <strong>belleza sin dueño</strong>.
+        </p>
+        <blockquote>
+          “Diotima”, dijo. “El deseo empieza pegado a la piel. Si no aprende a subir, se pudre”.
+        </blockquote>
+        <p>
+          Yo quise acortar la distancia. Ella retiró la mano.
+        </p>
+        <blockquote>
+          “Todavía no. A ver si vas a confundir hambre con destino”.
+        </blockquote>
+        <p>
+        No le puse nombre entonces, pero vi el problema entero sobre la mesa: la vida empuja, toma, quiere; si no
+        aprende a subir, acaba amando como un mendigo elegante.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 4</span>
+        <h3>El cura, el ateo y Jesucristo</h3>
+        <p>
+          Lucía me arrastró un domingo a un comedor social cerca del Mercado Bajo. “Para leer el Evangelio hay que verle las manos”,
+          dijo. Allí un viejo ateo servía sopa como si reparara un motor. Un cura joven recogía platos. Ninguno hablaba
+          de Dios. Lucía susurró:
+        </p>
+        <blockquote>
+          “El amor no se prueba cuando te sale solo. Se prueba cuando preferirías no dar nada”.
+        </blockquote>
+        <p>
+        Volví a casa con una frase simple: amar al prójimo no era una metáfora bonita. Si el impulso manda, devuelves
+        golpe por golpe. Si hay consciencia, ves el golpe antes de soltar el brazo.
+        </p>
+        <p>
+          Aquella noche cenamos con <strong>Mariela Pons</strong> y <strong>Bruno Vassallo</strong>. Ella enseñaba
+          repostería a chicas que habían dejado el instituto y hablaba de las masas como quien habla de educación: si
+          fuerzas demasiado, rompes la forma; si esperas lo justo, algo sube por dentro. Bruno mandaba en una cocina
+          del puerto con cara de no tolerar tonterías, pero luego corregía la posición de un cuchillo como si estuviera
+          arreglando una mano herida. Lucía los quería porque sabían transformar lo sencillo en un banquete sin volver
+          solemne la mesa.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 5</span>
+        <h3>El tiempo vive en los nervios</h3>
+        <p>
+          Durante semanas Lucía insistió en una idea. La repetía andando junto al borde del agua, cenando,
+          esperándome bajo aleros húmedos del centro viejo.
+        </p>
+        <blockquote>
+          “El tiempo es la concatenación infinita de nuestro sistema nervioso”.
+        </blockquote>
+        <p>
+          Decía que la atención, la memoria y el sistema nervioso formaban un solo almacén. Que nuestra biografía no
+          era un relato puro sino una cadena de impactos retenidos. Que por eso la verdad era individual y subjetiva, y
+          por eso no era transferible. Yo discutía. Ella se reía.
+        </p>
+        <blockquote>
+          “Si quieres convencer a todo el mundo, no has entendido nada”.
+        </blockquote>
+        <p>
+          Aquel mes dormí mal. Empecé a sospechar que la mente era más porosa de lo que parecía.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 6</span>
+        <h3>San Agustín y la iglesia de piedra</h3>
+        <p>
+          No fuimos a ninguna ciudad ilustre. Bastó con una iglesia antigua del Valle de las Campanas y con una tarde larga de noviembre. Lucía
+          dijo que si Platón había levantado la escalera, San Agustín la había metido en una catedral interior.
+          Entramos cuando ya casi no quedaba nadie. Ella me habló sin bajar la voz:
+        </p>
+        <blockquote>
+          “La tradición siempre canoniza una subida. La salva y la estropea a la vez”.
+        </blockquote>
+        <p>
+        Aquello me golpeó. Toda palabra conserva algo y traiciona algo. Toda teología fija un fuego para que no se
+        apague, y al fijarlo le quita aire.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 7</span>
+        <h3>Jung, la sombra y el hombre múltiple</h3>
+        <p>
+          Empezamos a discutir de verdad cuando apareció Jung. Yo me creía más coherente de lo que era. Lucía no me dejó
+          pasar una.
+        </p>
+        <blockquote>
+          “Cuando las cosas van bien dices: ‘yo lo hice’. Cuando van mal, buscas otro dentro de ti. El miedo. El
+          karma. El ego. Siempre sale algún suplente”.
+        </blockquote>
+        <p>
+          Luego añadió:
+        </p>
+        <blockquote>
+          “Individuo significa que no eres más divisible. Si eres maravilloso, eres tú. Si eres desagradable, eres tú”.
+        </blockquote>
+        <p>
+        Me enfadé. Ella me dejó enfadarme. Esa noche no la acompañé a casa. Caminé solo hasta quedarme sin excusas.
+        </p>
+        <p>
+          Al doblar por la Plaza Alta me crucé con <strong>Camila Ordóñez</strong> y <strong>Renzo Fiore</strong>.
+          Camila llevaba en brazos a <strong>Trufa</strong>, una gatita nerviosa que había recogido de un solar y que
+          protegía con una ternura casi feroz. Renzo olía siempre a bergamota o a vetiver; era de esos hombres que
+          saben más de perfumes que de política y, por eso mismo, escuchan mejor. No les conté nada. Camila me tocó el
+          hombro y dijo: “No pongas esa cara de viudo si la chica sigue viva”. Me hizo bien.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 8</span>
+        <h3>Es mejor caminar solo</h3>
+        <p>
+          A la semana siguiente me citó en el mirador de la Sal. Había viento. No me rozó siquiera. Dijo:
+        </p>
+        <blockquote>
+          “Cierta tradición dice: si quieres hacer un viaje corto y rápido, camina solo; si quieres hacer un viaje
+          largo, camina en compañía. Pero lo importante es quién camina contigo”.
+        </blockquote>
+        <p>
+          Calló un momento y remató:
+        </p>
+        <blockquote>
+          “Es mejor caminar solo que caminar con un tonto”.
+        </blockquote>
+        <p>
+        Me miró para ver si entendía. No me estaba llamando tonto. Me estaba diciendo que mucha unión es solo miedo a
+        la soledad.
+        </p>
+        <p>
+        “Antes de unirte”, dijo, “aprende a sentarte solo. Si no sabes estar solo, estar acompañado será una gran molestia”.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 9</span>
+        <h3>La noche en que casi no dormimos</h3>
+        <p>
+          Esa misma noche me hizo hacer algo idiota y decisivo. “Veinticuatro horas”, dijo. “Sin leer, sin teléfono,
+          sin música, sin pantallas. Siéntate y mira”. Lo hice en mi cuarto del barrio del Puente Seco. A las tres horas quise huir.
+          A las siete quise llorar. A las doce empecé a ver el tráfico real de mi cabeza.
+        </p>
+        <blockquote>
+          “Cuando observes tu mente”, me había dicho, “tú mismo certificarás: este es un loco”.
+        </blockquote>
+        <p>
+        Volví a verla al día siguiente con la cara rota. Sonrió como si aquello fuera apenas el principio.
+        </p>
+        <blockquote>
+          “Ahora ya sabes lo básico. Un ser humano puede simplemente ser. Si quieres conscientemente, puedes
+          evolucionar esta noche. No hay línea arriba”.
+        </blockquote>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 10</span>
+        <h3>Krishnamurti en el andén</h3>
+        <p>
+          Nos despedíamos en la estación del Puerto Interior cuando salió el nombre de Krishnamurti. Lucía dijo:
+        </p>
+        <blockquote>
+          “La repetición mata. Si conviertes la verdad en método, ya la perdiste”.
+        </blockquote>
+        <p>
+          El tren tardaba. Hablamos de quietud. No de pasividad. Quietud como agua que deja de agitar barro. Luego
+          saltó a Chomsky y a la lingüística, como si no hubiera distancia entre una cosa y otra.
+        </p>
+        <blockquote>
+          “El lenguaje te da estructura”, dijo. “Pero no te da verdad. Te da una máquina potentísima para ordenar el
+          mundo y también para perderte dentro de él”.
+        </blockquote>
+        <p>
+          Entonces formulé por primera vez la hipótesis absurda:
+        </p>
+        <blockquote>
+          “¿Y si los pensamientos vienen de otro planeta?”
+        </blockquote>
+        <p>
+          Lucía no se rió. Dijo:
+        </p>
+        <blockquote>
+          “Puede ser. Cuando el sistema nervioso madura, quizá sintoniza. Y quizá el lenguaje sea solo un sistema
+          relativo para traducir señales”.
+        </blockquote>
+        <p>
+          Ahí apareció el planeta <strong>Amor</strong>.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 11</span>
+        <h3>Aceptación incondicional</h3>
+        <p>
+          El gran hallazgo no fue astronómico. Fue lingüístico. Durante una discusión en Puerto Claro, en una pensión
+          barata sobre el muelle, Lucía golpeó la mesa y dijo:
+        </p>
+        <blockquote>
+          “No me gusta ‘amor incondicional’. Ha dado demasiada culpa. Prefiero ‘aceptación incondicional’”.
+        </blockquote>
+        <p>
+          La dejé hablar. Habló rápido, sin adornos.
+        </p>
+        <blockquote>
+          “No te sientas mal por no poder amar. Pero no intentes cambiar a nadie que no esté en apuros. Esa es la
+          diferencia entre cuidar y adoctrinar. No te tomes nada personalmente. Perdona la ignorancia ajena. Tu
+          contexto puede estar tan incompleto como el suyo. Eso es paciencia”.
+        </blockquote>
+        <p>
+          Comprendí entonces el nudo del conflicto humano. La división empieza cuando una parte no puede aceptar la
+          existencia de la otra sin odio. Sin esa claridad no hay comunidad. Y sin comunidad consciente no hay viaje
+          largo.
+        </p>
+        <p>
+          Días después, en una comida montada por <strong>Tadeo Luján</strong> y <strong>Nicolás Spinelli</strong>,
+          entendí que la teoría necesitaba cuerpos. Aquellos dos capibaras humanos, de paso firme y mirada decidida,
+          levantaban caterings como si estuvieran organizando treguas. Discutían por la sal, por la temperatura del
+          vino, por el orden de salida de los platos, pero al minuto ya estaban otra vez hombro con hombro. “Para un
+          viaje corto, solo”, dijo Tadeo al oírnos. “Para uno largo, con quien sepa servir sin hacerse el héroe”,
+          remató Nicolás. Lucía me miró y supe que aquel comentario iba también por nosotros.
+        </p>
+      </article>
+
+      <article class="chapter">
+        <span class="tag">Capítulo 12</span>
+        <h3>La nave</h3>
+        <p>
+          No alcanzamos el panhumanismo noético completo. Habría sido demasiado limpio para nosotros. Pero sí se ganó
+          mayoría democrática y financiera para la expedición. Algunos trajeron dinero. Otros planos. Otros votos.
+          Otros paciencia. Lucía y yo trajimos un mapa hecho de libros, discusiones y noches sin dormir.
+        </p>
+        <p>
+          Ahora escribo esto desde la nave. Lucía duerme en la litera de arriba. Afuera no hay paisaje. Solo una negrura
+          inmensa. No sabemos el resultado. Sabemos que todo lo manifestado en el plano físico fue antes pensamiento, y
+          que el pensamiento quizá no sea más que sonido cargado de significado. También sabemos esto: absolutamente
+          todo da fruto. Cosecharás acciones de tus palabras y de tus pensamientos.
+        </p>
+        <p>
+        Si lees este cuaderno, ya formas parte de la pequeña comunidad que se dirige al planeta Amor. No por creerme.
+        Por colaborar. Por sentarte alguna vez a solas. Por dejar de culpar al suplente interior. Por unirte
+        conscientemente. <strong>Amor Vincit Omnia.</strong> No como estampita. Como tarea.
+        </p>
+      </article>
+    </section>
+
+    <section class="closing">
+      <h2>Estado de misión</h2>
+      <p>
+        La especie puede quedarse en compulsión, abrirse a la consciencia o madurar hasta una quietud que no se vende.
+        El relato termina aquí, pero el viaje no. La nave sigue. Nosotros seguimos. Y el planeta Amor, si existe, solo
+        se dejará tocar por gente humilde.
+      </p>
+      <div class="trail">
+        <a href="./index.html">Volver al índice de relatos</a>
+        <a href="../constelaciones/index.html">Ir a constelaciones</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

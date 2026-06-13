@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leer sin obedecer · lectura espiritual sin dogma</title>
+  <style>
+    :root {
+      --bg: #ece4d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #665952;
+      --line: rgba(82, 64, 54, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(115, 130, 74, 0.15), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1280px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .table-shell, .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+    }
+    .hero-main, .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .hero-wide { grid-column: 1 / -1; }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.7rem, 7vw, 4.9rem);
+      line-height: 0.92;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero-copy, .panel p, .closing p, td, li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.24rem;
+      line-height: 1.16;
+    }
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+    .note a, .related-link {
+      color: inherit;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .table-shell { overflow: hidden; }
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      line-height: 1.42;
+    }
+    th, td {
+      padding: 11px 10px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+    th {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--paper-strong);
+    }
+    td strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1180px) {
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr {
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper-strong);
+        overflow: hidden;
+      }
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px 10px 146px;
+        position: relative;
+      }
+      td:last-child { border-bottom: 0; }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        width: 118px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    }
+    @media (max-width: 980px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../es/relatos/index.html">Relatos</a>
+    <a href="../en/lectura-espiritual/spiritual-reading-without-dogma.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow">Lectura espiritual · dogma · criterio</span>
+        <h1>Leer sin obedecer</h1>
+        <p class="hero-copy">
+          La pregunta no es si hay que leer o dejar de leer, sino <strong>qué tipo de relación</strong> estableces con
+          lo leído. Un libro puede ser un dispositivo de liberación, un arma de distinción elitista o una fábrica de
+          reflejos dogmáticos. La lectura espiritual importa, sí, pero solo cuando no sustituye la percepción directa,
+          ni convierte la autoridad escrita en prótesis permanente del juicio.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Núcleo</span>
+          <strong>El problema nunca fue el libro: fue la obediencia.</strong>
+          <p>La lectura ayuda cuando afina la mirada. Estorba cuando entrega al lector una realidad ya masticada y le ahorra la indagación.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Contradicción aparente</span>
+          <strong>Un maestro puede desconfiar de los libros y otro recomendar libros, sin que eso sea incoherente.</strong>
+          <p>Lo decisivo no es el objeto `libro`, sino la función que cumple en una psique concreta y en un momento concreto.</p>
+        </aside>
+      </div>
+      <aside class="note hero-wide">
+        <span class="badge">Interés conectado</span>
+        <strong>Esta pieza prolonga la lógica de la anterior: no elegir entre polos, sino sostener la tensión con criterio.</strong>
+        <p>
+          Si quieres el marco previo sobre contradicción fértil, umbral y colapso creador, mira
+          <a class="related-link" href="../janus-fitzgerald/definicion-y-posibilidad.html">Definición y posibilidad</a>.
+        </p>
+      </aside>
+    </section>
+
+    <div class="section-label">Tres escenas</div>
+    <section class="panel">
+      <h2>La contradicción solo es superficial</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>Krishnamurti</strong>
+          <p>Desconfía de la literatura espiritual cuando el lector la usa como depósito de dogma y como sustituto de observación viva.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Acharya Prashant</strong>
+          <p>Defiende leer textos espirituales cuando estos funcionan como catalizadores de discernimiento y no como catecismos recitados.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Alejandro y Aristóteles</strong>
+          <p>La anécdota clásica dramatiza otra posibilidad del libro: convertir el conocimiento en privilegio exclusivo, no en vía de comprensión.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Tabla de lectura</div>
+    <section class="table-shell">
+      <h2>No toda lectura espiritual es la misma</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Escena</th>
+            <th>Gesto visible</th>
+            <th>Riesgo si se lee mal</th>
+            <th>Valor si se lee bien</th>
+            <th>Lectura janusiana</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Escena"><strong>Krishnamurti frente al libro</strong></td>
+            <td data-label="Gesto">Rechazar libros espirituales cuando consolidan segunda mano psicológica.</td>
+            <td data-label="Riesgo">Vivir citando la verdad en lugar de verla.</td>
+            <td data-label="Valor">Forzar al lector a observar, meditar y pensar sin apoyarse en frases heredadas.</td>
+            <td data-label="Janusiana">No es una guerra contra el texto, sino contra la dependencia del texto.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Acharya Prashant frente al libro</strong></td>
+            <td data-label="Gesto">Recomendar lecturas, traducir y comentar tradición espiritual.</td>
+            <td data-label="Riesgo">Confundir acumulación de referencias con transformación interior.</td>
+            <td data-label="Valor">Recibir el libro adecuado, en el momento adecuado, con una interpretación que abra y no cierre.</td>
+            <td data-label="Janusiana">El libro puede ser cadena o llave; la diferencia está en la relación que estableces con él.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Osho, Rumi, Gibran, tradición</strong></td>
+            <td data-label="Gesto">Leer voces heterogéneas que no forman un sistema único.</td>
+            <td data-label="Riesgo">Consumir espiritualidad como estética emocional o colección de frases bellas.</td>
+            <td data-label="Valor">Dejar que textos distintos resquebrajen certezas distintas.</td>
+            <td data-label="Janusiana">La pluralidad ayuda cuando rompe rigidez; intoxica cuando solo multiplica decoración mental.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Alejandro escribiendo a Aristóteles</strong></td>
+            <td data-label="Gesto">Querer que el conocimiento elevado permanezca restringido para conservar superioridad.</td>
+            <td data-label="Riesgo">Usar la lectura como mecanismo de casta y no como vía de comprensión.</td>
+            <td data-label="Valor">Recordar que el saber tiene dimensión política: quién lo abre, quién lo cierra y para qué.</td>
+            <td data-label="Janusiana">El libro puede universalizar inteligencia o blindar jerarquías.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Respuesta atribuida a Aristóteles</strong></td>
+            <td data-label="Gesto">Publicar sin volver automáticamente accesible lo publicado.</td>
+            <td data-label="Riesgo">Creer que exposición equivale a comprensión.</td>
+            <td data-label="Valor">Mostrar que un texto exige método, preparación y maduración del lector.</td>
+            <td data-label="Janusiana">La apertura del saber no anula el trabajo interior requerido para recibirlo.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Lector espiritual contemporáneo</strong></td>
+            <td data-label="Gesto">Buscar orientación en libros, vídeos, maestros y citas.</td>
+            <td data-label="Riesgo">Delegar la experiencia en una biblioteca y llamar a eso búsqueda.</td>
+            <td data-label="Valor">Usar textos como instrumentos de indagación y después soltarlos cuando ya cumplieron su función.</td>
+            <td data-label="Janusiana">Leer y dudar; recibir y filtrar; estudiar y observar.</td>
+          </tr>
+          <tr>
+            <td data-label="Escena"><strong>Lectura espiritual madura</strong></td>
+            <td data-label="Gesto">Leer sin rendirse, contemplar sin despreciar la tradición.</td>
+            <td data-label="Riesgo">Quedar atrapado entre literalismo y antiintelectualismo.</td>
+            <td data-label="Valor">Construir una mente capaz de aprender de un texto sin quedar colonizada por él.</td>
+            <td data-label="Janusiana">La contradicción fecunda consiste en afirmar: `leer sí; obedecer no`.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>Versión útil del problema</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Versión ingenua</strong>
+          <p>Oponer brutalmente `libros malos` contra `libros buenos`, o `experiencia pura` contra `tradición escrita`.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Versión madura</strong>
+          <p>Entender que la lectura puede nutrir la percepción o sustituirla; puede liberar o domesticar; puede democratizar o elitizar el saber.</p>
+        </article>
+      </div>
+      <ul>
+        <li>La lectura espiritual importa cuando despierta observación, no cuando fabrica obediencia.</li>
+        <li>Un mismo libro puede intoxicar a una mente y abrir otra.</li>
+        <li>La postura más fuerte no es iconoclasta ni devota: es discriminativa.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

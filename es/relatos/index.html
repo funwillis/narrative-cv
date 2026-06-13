@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatos · Índice narrativo</title>
+  <style>
+    :root {
+      --bg: #efe6d9;
+      --paper: #fffaf3;
+      --ink: #211a17;
+      --muted: #6a5e57;
+      --line: #dbcab6;
+      --accent: #8d5b3f;
+      --accent-soft: #f0dfcf;
+      --lake: #356d7c;
+      --shadow: rgba(60, 35, 10, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      background: linear-gradient(180deg, #f3eadf 0%, var(--bg) 100%);
+      color: var(--ink);
+      font: 18px/1.6 Georgia, "Times New Roman", serif;
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 40px var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: 0 6px 18px rgba(60, 35, 10, 0.08);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 72px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 2.8rem; line-height: 1.04; margin-bottom: 12px; }
+    h2 { font-size: 1.8rem; margin-bottom: 14px; }
+    h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .lead { max-width: 70ch; color: var(--muted); }
+    .shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 10px 34px var(--shadow);
+      margin-bottom: 24px;
+    }
+    .pill-row, .meta-row, .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill, .mini-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .stats, .facet-grid, .story-grid {
+      display: grid;
+      gap: 16px;
+    }
+    .stats {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      margin-top: 18px;
+    }
+    .stat, .facet, .story-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255, 250, 243, 0.82);
+    }
+    .stat strong { display: block; font-size: 1.5rem; margin-bottom: 4px; }
+    .facet-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .facet p, .story-card p { color: var(--muted); font-size: 0.96rem; }
+    .story-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .story-card {
+      background:
+        radial-gradient(circle at top right, rgba(53, 109, 124, 0.08), transparent 28%),
+        rgba(255, 250, 243, 0.92);
+    }
+    .story-card .meta-row { margin: 10px 0 14px; }
+    .story-card strong {
+      color: var(--lake);
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .story-card a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 14px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      box-shadow: 0 6px 18px rgba(60, 35, 10, 0.08);
+    }
+    @media (max-width: 700px) {
+      h1 { font-size: 2.2rem; }
+      main { padding: 22px 14px 56px; }
+      .shell { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">🏠 Ir a la raíz</a>
+    <a href="../constelaciones/index.html">🧭 Constelaciones</a>
+    <a href="#catalogo">📚 Índice de relatos</a>
+    <a href="../../en/stories/index.html">🌍 English</a>
+  </div>
+  <main>
+    <section class="shell">
+      <h1>Relatos</h1>
+      <p class="lead">
+        Esta sección no prolonga las infografías: se aparta de ellas. Aquí las ideas dejan de entrar como esquema y
+        pasan a entrar como destino, herida, deseo, romance, comunidad y transformación. La prosa debe ser legible y
+        rápida, sí, pero esto es literatura: una historia cohesiva capaz de conmover antes de concluir.
+      </p>
+      <div class="pill-row" style="margin-top: 18px;">
+        <span class="pill">HTML estático</span>
+        <span class="pill">Bilingüe</span>
+        <span class="pill">Ficción histórica</span>
+        <span class="pill">Amor cósmico</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>1</strong><span>Relato publicado</span></div>
+        <div class="stat"><strong>10 min</strong><span>Lectura inicial</span></div>
+        <div class="stat"><strong>3</strong><span>Índices de acceso</span></div>
+        <div class="stat"><strong>2</strong><span>Idiomas paralelos</span></div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexado por extensión</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Larga</h3>
+          <p>Lectura sostenida, alrededor de diez minutos, pensada para producir inmersión, vínculo y transformación.</p>
+          <div class="mini-links" style="margin-top: 12px;">
+            <span class="pill">Un amor de otro planeta</span>
+          </div>
+        </article>
+        <article class="facet">
+          <h3>Media</h3>
+          <p>Reservado para relatos futuros de recorrido concentrado, entre intuición y escena.</p>
+        </article>
+        <article class="facet">
+          <h3>Breve</h3>
+          <p>Reservado para piezas cortas, aforísticas o de una sola situación decisiva.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexado por temática</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Panhumanismo noético</h3>
+          <p>Historias donde la conciencia individual desemboca en una propuesta de especie, cooperación, cuidado y destino compartido.</p>
+        </article>
+        <article class="facet">
+          <h3>Lenguaje, símbolo y verdad</h3>
+          <p>Relatos donde palabra, sonido, memoria, pensamiento y realidad se examinan como sistemas relativos.</p>
+        </article>
+        <article class="facet">
+          <h3>Amor cósmico</h3>
+          <p>La antítesis del horror cósmico: el universo no como amenaza muda, sino como apertura, paciencia y comunidad.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell">
+      <h2>Indexado por estilo narrativo</h2>
+      <div class="facet-grid">
+        <article class="facet">
+          <h3>Diario de a bordo</h3>
+          <p>La reflexión entra en primera persona, con trayecto, destino y percepción situada.</p>
+        </article>
+        <article class="facet">
+          <h3>Novela breve condensada</h3>
+          <p>Frases limpias, ritmo continuo y casi ninguna retórica sobrante: hechos, diálogos y decisiones, no humo literario.</p>
+        </article>
+        <article class="facet">
+          <h3>Romance de transformación</h3>
+          <p>Amor, conflicto moral y cambio interior dentro de una aventura que avanza con tensión y esperanza.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" id="catalogo">
+      <h2>Catálogo</h2>
+      <div class="story-grid">
+        <article class="story-card">
+          <strong>Relato inaugural</strong>
+          <h3>Un amor de otro planeta</h3>
+          <div class="meta-row">
+            <span class="pill">10 min</span>
+            <span class="pill">Diario de a bordo</span>
+            <span class="pill">Panhumanismo noético</span>
+          </div>
+          <p>
+            El narrador conoce a una mujer en una biblioteca, pierde pie leyendo `El Aleph` y empieza con ella un
+            viaje que mezcla romance, filosofía y conspiración civilizatoria. Platón, Jesucristo, San Agustín, Jung y
+            Krishnamurti aparecen como estaciones vivas de una misma mutación: pasar de la compulsión a la consciencia
+            y de la consciencia a la quietud suficiente para embarcarse hacia el planeta `Amor`.
+          </p>
+          <a href="./un-amor-de-otro-planeta.html">Abrir relato</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

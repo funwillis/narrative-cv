@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termodinámica de la especie</title>
+  <style>
+    :root {
+      --bg: #eee3d5;
+      --paper: rgba(255, 249, 242, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #201917;
+      --muted: #685b54;
+      --line: rgba(84, 66, 56, 0.16);
+      --ember: #b86543;
+      --lake: #356d7c;
+      --moss: #74834d;
+      --plum: #765566;
+      --gold: #c29a48;
+      --night: #231a17;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(118, 85, 102, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 52%, #dec9b4 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .panel,
+    .note,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -52px -88px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(194, 154, 72, 0.24), rgba(194, 154, 72, 0));
+      pointer-events: none;
+    }
+
+    h1, h2, h3, p, ul { margin: 0; }
+
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.7rem, 7vw, 4.9rem);
+      line-height: 0.92;
+    }
+
+    h2 {
+      font-size: 2rem;
+      line-height: 1.04;
+      margin-bottom: 10px;
+    }
+
+    .hero-copy,
+    .panel p,
+    .note p,
+    td,
+    li,
+    .closing p {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side,
+    .stack {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note strong,
+    .mini-card strong,
+    .phase strong,
+    td strong {
+      display: block;
+      color: var(--ink);
+    }
+
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+
+    .note strong {
+      margin-top: 10px;
+      font-size: 1.26rem;
+      line-height: 1.16;
+    }
+
+    .note p {
+      margin-top: 10px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .grid-3,
+    .grid-2,
+    .phase-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .phase-grid { grid-template-columns: repeat(5, 1fr); }
+
+    .mini-card,
+    .phase {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+
+    .mini-card strong {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .phase {
+      position: relative;
+      min-height: 174px;
+    }
+
+    .phase::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.2rem;
+    }
+
+    .phase:last-child::after {
+      content: "";
+    }
+
+    .tone-ember { border-top: 4px solid var(--ember); }
+    .tone-lake { border-top: 4px solid var(--lake); }
+    .tone-moss { border-top: 4px solid var(--moss); }
+    .tone-plum { border-top: 4px solid var(--plum); }
+    .tone-gold { border-top: 4px solid var(--gold); }
+
+    .table-shell {
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      line-height: 1.46;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--paper-strong);
+    }
+
+    td strong {
+      margin-bottom: 6px;
+    }
+
+    .quote-line {
+      border-left: 4px solid var(--gold);
+      padding-left: 16px;
+      margin-top: 14px;
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.08rem;
+      line-height: 1.45;
+    }
+
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1180px) {
+      .phase-grid { grid-template-columns: 1fr; }
+      .phase::after { content: ""; }
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr {
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper-strong);
+        overflow: hidden;
+      }
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px 10px 148px;
+        position: relative;
+      }
+      td:last-child { border-bottom: 0; }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        width: 120px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../es/relatos/index.html">Relatos</a>
+    <a href="../en/termodinamica-de-la-especie/species-thermodynamics.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Historia · símbolo · muerte · ruido</span>
+        <h1>Termodinámica de la especie</h1>
+        <p class="hero-copy">
+          La tesis es áspera pero simple: <strong>la especie se mueve por tensiones simbólicas</strong>. La vida no es
+          quietud plena sino vibración, traducción de energía en necesidades, máscaras, instituciones, teologías,
+          mercados y relatos. Platón, Wilde, Borges, Dostoievski, Krishnamurti, Taleb o la crítica del
+          tecnofeudalismo no aparecen aquí como museo de autores, sino como estaciones de una misma intuición:
+          el humano busca forma, se apega a la forma, sufre por la forma y tarde o temprano es empujado de nuevo
+          hacia algún tipo de equilibrio.
+        </p>
+        <p class="hero-copy">
+          Ese equilibrio nunca es perfecto en vida. Siempre hay accidente, exceso, orgullo, herida, azar o sesgo
+          retrospectivo. Solo en la muerte cesa del todo la tensión biográfica. Antes de eso, todo carácter es una
+          termodinámica parcial: una gestión provisional entre compulsión, conciencia y quietud.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Trinidad operativa</span>
+          <strong>Consciencia, compulsión y quietud no son moralina: son regímenes energéticos del individuo.</strong>
+          <p>Cuando domina la compulsión, el símbolo gobierna al cuerpo. Cuando aparece conciencia, el símbolo se vuelve visible. Cuando asoma quietud, el símbolo pierde tiranía.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Aforismo base</span>
+          <strong>Nombrar no es conocer.</strong>
+          <p>El lenguaje organiza cooperación y memoria, pero también fabrica mentira útil. Una palabra ordena; un sonido vibra; el silencio desarma el teatro.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Mapa de valores tensionados</div>
+    <section class="panel">
+      <h2>El motor antropológico no es la paz, sino la diferencia de potencial</h2>
+      <div class="grid-3">
+        <article class="mini-card tone-ember">
+          <strong>Humildad vs. ambición</strong>
+          <p>Sin ambición no se construye mundo; sin humildad ese mundo degenera en teatro narcisista, culto del rendimiento o tecnofascismo de eficiencia sin alma.</p>
+        </article>
+        <article class="mini-card tone-lake">
+          <strong>Inocencia vs. experiencia</strong>
+          <p>La inocencia ve fresco; la experiencia estabiliza; juntas producen criterio. Separadas, una cae en ingenuidad y la otra en cinismo retrospectivo.</p>
+        </article>
+        <article class="mini-card tone-moss">
+          <strong>Deber vs. amor</strong>
+          <p>El dharma no es obedecer por reflejo, sino sostener una forma de cuidado que no dependa solo del gusto o de la pereza del momento.</p>
+        </article>
+        <article class="mini-card tone-plum">
+          <strong>Palabra vs. sonido</strong>
+          <p>La palabra pertenece a la convención social; el sonido, a la naturaleza. Cuando la mente se pega al vocabulario, confunde símbolo con realidad.</p>
+        </article>
+        <article class="mini-card tone-gold">
+          <strong>Sociedad vs. individuo</strong>
+          <p>La sociedad es conversación sedimentada. El individuo aparece cuando puede soportar silencio suficiente como para no ser solo eco de la multitud.</p>
+        </article>
+        <article class="mini-card tone-ember">
+          <strong>Placer vs. carácter</strong>
+          <p>Wilde y Bowie muestran una posibilidad cultural real: vivir entre estilo, exceso y seducción. El problema no es actuar, sino quedar subordinado por el hábito.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Diagrama de proceso</div>
+    <section class="panel">
+      <h2>Cómo la energía acaba convirtiéndose en historia, religión y mercado</h2>
+      <div class="phase-grid">
+        <article class="phase tone-gold">
+          <span class="badge">1 · Impulso</span>
+          <strong>Vida como vibración</strong>
+          <p>El organismo recibe energía y necesita orientarla. Hambre, miedo, deseo, dolor y curiosidad son traducciones primarias de esa carga.</p>
+        </article>
+        <article class="phase tone-ember">
+          <span class="badge">2 · Forma</span>
+          <strong>Jobs to be done con piel cultural</strong>
+          <p>La necesidad desnuda se viste de rito, oficio, ideología, lujo, ascética o consumo. El trabajo es estable; la skin histórica cambia.</p>
+        </article>
+        <article class="phase tone-lake">
+          <span class="badge">3 · Símbolo</span>
+          <strong>Palabras, imágenes, teologías</strong>
+          <p>El humano no vive solo en materia: vive en relatos que dan permiso, culpa, prestigio o sentido. Ahí nacen religión, nación, clase y marca.</p>
+        </article>
+        <article class="phase tone-plum">
+          <span class="badge">4 · Institución</span>
+          <strong>Orden, archivo y ruido</strong>
+          <p>Los símbolos se endurecen: escuelas, iglesias, algoritmos, burocracias, medios y plataformas. La conversación social se vuelve estructura.</p>
+        </article>
+        <article class="phase tone-moss">
+          <span class="badge">5 · Equilibrio</span>
+          <strong>Ajuste, crisis y muerte</strong>
+          <p>Todo sistema busca balance local, pero nunca lo cierra del todo. En vida hay oscilación; con la muerte, la biografía deja de tensar el campo.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Correcciones del mapa</div>
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Sesgo retrospectivo: el retrovisor falsifica el camino</h2>
+        <p>
+          Taleb lo formula con crueldad útil: miramos atrás y el pasado empieza a parecer menos azaroso de lo que fue.
+          Así nace la ilusión de dos planetas: el caótico que vivimos y el ordenado que recordamos. La especie necesita
+          relatos para comprimir incertidumbre, pero luego olvida que eran compresión, no realidad completa.
+        </p>
+        <div class="quote-line">
+          La historia recordada parece destino; la historia vivida fue fricción, niebla y accidente.
+        </div>
+      </article>
+      <article class="panel">
+        <h2>Ergodicidad, dicho sin gimnasia matemática</h2>
+        <p>
+          Llamar ergódica a la vida, aquí, solo significa esto: <strong>el promedio abstracto no siempre coincide con la
+          trayectoria concreta de un individuo</strong>. La especie puede aprender “en promedio”, mientras una persona
+          particular se rompe por el camino. Hay equilibrio de conjunto, sí, pero no garantía de justicia biográfica.
+        </p>
+        <div class="quote-line">
+          La civilización acumula correcciones lentas; el individuo paga con una sola vida.
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label">Trayectorias individuales</div>
+    <section class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Figura</th>
+            <th>Símbolo dominante</th>
+            <th>Tensión biográfica</th>
+            <th>Corrección o aprendizaje</th>
+            <th>Lectura termodinámica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Figura"><strong>Oscar Wilde</strong></td>
+            <td data-label="Símbolo dominante">Estilo, ingenio, placer, prestigio, máscara social.</td>
+            <td data-label="Tensión biográfica">El ruido brillante de la época victoriana ofrece exceso, salón, ironía y teatralidad como modo de existencia.</td>
+            <td data-label="Corrección o aprendizaje">`De Profundis` muestra la lenta decantación: sufrimiento, humillación y pérdida fuerzan una visión menos decorativa del yo.</td>
+            <td data-label="Lectura termodinámica">Mucho voltaje estético, poca disipación interior. La crisis actúa como enfriamiento brutal del personaje.</td>
+          </tr>
+          <tr>
+            <td data-label="Figura"><strong>David Bowie</strong></td>
+            <td data-label="Símbolo dominante">Metamorfosis, performance, identidad cambiante, seducción de superficie.</td>
+            <td data-label="Tensión biográfica">La reinvención libera de la fijación, pero también puede convertir la persona en maquinaria de estilo continuo.</td>
+            <td data-label="Corrección o aprendizaje">La flexibilidad es fértil si no acaba siendo esclavitud al personaje más reciente.</td>
+            <td data-label="Lectura termodinámica">Gran plasticidad simbólica: ventaja adaptativa y riesgo de disiparse en pura imagen.</td>
+          </tr>
+          <tr>
+            <td data-label="Figura"><strong>Dostoievski</strong></td>
+            <td data-label="Símbolo dominante">Culpa, fe, sufrimiento, libertad, subsuelo.</td>
+            <td data-label="Tensión biográfica">No deja que la psicología se vuelva cosmética: mete al sujeto en contradicción real y coste moral.</td>
+            <td data-label="Corrección o aprendizaje">La humillación y la fractura sirven como barro para el arte y como prueba del carácter.</td>
+            <td data-label="Lectura termodinámica">Alta presión interior que no se anestesia; por eso ilumina la mecánica del autoengaño.</td>
+          </tr>
+          <tr>
+            <td data-label="Figura"><strong>Krishnamurti</strong></td>
+            <td data-label="Símbolo dominante">Atención, libertad, final del pasado psicológico.</td>
+            <td data-label="Tensión biográfica">Se enfrenta a la repetición, a la autoridad y a la comodidad espiritual del método convertido en hábito.</td>
+            <td data-label="Corrección o aprendizaje">Morir cada día al residuo mental, sin convertir esa frase en una nueva consigna automática.</td>
+            <td data-label="Lectura termodinámica">Reducir ruido sin matar sensibilidad: menos fricción simbólica, más percepción directa.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Palabra, sonido y silencio</div>
+    <section class="grid-2">
+      <article class="panel">
+        <h2>La sociedad como conversación</h2>
+        <p>
+          Bajo esta lectura, lo social no es una sustancia mística sino una conversación mantenida: habla, rumor,
+          jerga, protocolo, moralina, identidad grupal. Si el grupo necesita ciertos ruidos para reconocerse, quien no
+          los emite queda fuera. Ser “social”, entonces, puede significar poco más que dominar el ruido correcto.
+        </p>
+        <p style="margin-top: 12px;">
+          Por eso el silencio no es simple mutismo: es una reducción de dependencia respecto a la multitud. No vuelve a
+          nadie antisocial por fuerza; lo vuelve menos colonizable por la conversación.
+        </p>
+      </article>
+      <article class="panel">
+        <h2>Sonido real, palabra inventada</h2>
+        <p>
+          La intuición atribuida aquí a la tradición yóguica es afilada: el sonido pertenece más al orden natural que
+          la palabra. La palabra es convención mental; el sonido, vibración efectiva. Cuando la mente solo opera con
+          etiquetas, ya no ve forma ni presencia: ve nomenclatura.
+        </p>
+        <p style="margin-top: 12px;">
+          La escena de Matsyendranath y Gorakhnath resume la pedagogía: el agua turbia no se aclara a golpes. A veces
+          la transmisión consiste en esperar hasta que el fondo deje de agitarse.
+        </p>
+      </article>
+    </section>
+
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>Exégesis mínima de la especie</h2>
+      <p>
+        La historia humana puede leerse como una física blanda de tensiones: energía que se vuelve necesidad; necesidad
+        que se disfraza de símbolo; símbolo que se congela en institución; institución que produce orden y accidente al
+        mismo tiempo. La muerte iguala por completo; la vida solo ensaya equilibrios parciales.
+      </p>
+      <ul>
+        <li><strong>Platón</strong> recuerda que la técnica y la escritura ya traían ambivalencia desde el inicio.</li>
+        <li><strong>Borges</strong> recuerda que toda palabra arrastra un universo y por eso nunca es inocente.</li>
+        <li><strong>Taleb</strong> pincha la fantasía de que el pasado estaba más ordenado de lo que estuvo.</li>
+        <li><strong>Krishnamurti</strong> y la vía del silencio recuerdan que no toda complejidad exige más palabras.</li>
+        <li><strong>Tecnofascismo</strong> y <strong>tecnofeudalismo</strong> nombran versiones nuevas del mismo viejo problema: símbolos centralizados que administran deseo, atención y dependencia.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
