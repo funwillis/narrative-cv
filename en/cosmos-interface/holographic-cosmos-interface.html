@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holographic cosmos and interiority as interface</title>
+  <style>
+    :root {
+      --bg: #e9e3da;
+      --paper: rgba(252, 249, 244, 0.92);
+      --paper-strong: #fffaf4;
+      --ink: #1d1818;
+      --muted: #685b56;
+      --line: rgba(82, 68, 60, 0.16);
+      --night: #18161d;
+      --space: #243041;
+      --glow: #5ca0c7;
+      --ember: #b96d46;
+      --moss: #76854d;
+      --plum: #72566b;
+      --gold: #c99d4d;
+      --shadow: 0 24px 58px rgba(34, 25, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255,255,255,0.58), transparent 24%),
+        radial-gradient(circle at 88% 14%, rgba(92, 160, 199, 0.18), transparent 22%),
+        linear-gradient(180deg, #f1eadf 0%, #e8dbc9 52%, #dcc8b7 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    main {
+      width: min(1340px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    h1, h2, h3, p, ul { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing,
+    .diagram-shell {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -64px -92px auto;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(92, 160, 199, 0.22), rgba(92, 160, 199, 0));
+      pointer-events: none;
+    }
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note,
+    .mini-card,
+    .axis-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+    .note.dark {
+      background: linear-gradient(160deg, #171720 0%, #2f3947 100%);
+      color: #f8f6f1;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .note strong,
+    .mini-card strong,
+    .axis-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.18rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .section-card,
+    .closing,
+    .diagram-shell,
+    .table-shell {
+      padding: 26px;
+    }
+    .section-card h2,
+    .diagram-shell h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .diagram-layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .space-board {
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(92,160,199,0.18), transparent 18%),
+        radial-gradient(circle at 68% 64%, rgba(185,109,70,0.16), transparent 22%),
+        linear-gradient(180deg, #151822 0%, #1d2531 100%);
+      padding: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .orbit { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 2; }
+    .beam { fill: none; stroke: rgba(92,160,199,0.42); stroke-width: 2.5; stroke-dasharray: 7 8; }
+    .brain, .eye, .node {
+      fill: rgba(255,250,244,0.94);
+      stroke: rgba(255,255,255,0.2);
+      stroke-width: 2;
+    }
+    .digital {
+      fill: rgba(255,250,244,0.12);
+      stroke: rgba(255,255,255,0.12);
+      stroke-width: 2;
+    }
+    .space-label {
+      font: 700 18px/1.2 "Iowan Old Style", Georgia, serif;
+      fill: #fff9f2;
+      text-anchor: middle;
+    }
+    .small-label {
+      font: 600 12px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      fill: rgba(255,250,244,0.82);
+      text-anchor: middle;
+    }
+    .small-label.dark {
+      fill: #2b2624;
+    }
+    .table-shell { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 1260px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1080px) {
+      .hero,
+      .diagram-layout,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../termodinamica-de-la-especie/species-thermodynamics.html">Related piece</a>
+    <a href="../../cosmos-interfaz/cosmos-holografico-interioridad-interfaz.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Cosmos · interface · absurdity · adulthood</span>
+        <h1>Holographic cosmos, interiority as interface</h1>
+        <p class="hero-copy">
+          The thesis here is blunt and deliberately anti-plush: <strong>the cosmos may be a holographic reality and
+          our interiority an interface</strong>. “Where am I?” Perhaps the question is already crooked. Light bounces,
+          enters your eyes, and “you see me” in your brain. What absolutely distinguishes your mind from digital
+          space, dream space, or the imaginary? Very little, except that we have learned to manipulate the macroscopic
+          world with relative efficiency. That gives pragmatic power. It does not give epistemic closure.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Core</span>
+          <strong>We know very little. We navigate some layers of reality fairly well and mistake that for understanding it.</strong>
+          <p>Mathematics and physics appear here not as “false,” but as tremendously powerful pragmatic tools unable to close the mystery of being.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Integration</span>
+          <strong>Camus brings the sobriety of the absurd; Krishnamurti freedom from fear; Perls psychic hygiene; Luri adult obligation.</strong>
+          <p>The result is neither optimistic nor despairing: it is an ethic of hard lucidity, with few ornaments and quite a lot of responsibility.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Diagram</div>
+    <section class="diagram-shell">
+      <h2>Where am I? There is the trick</h2>
+      <div class="diagram-layout">
+        <div class="space-board">
+          <svg viewBox="0 0 820 500" role="img" aria-label="Holographic cosmos and inner interface">
+            <ellipse class="orbit" cx="410" cy="250" rx="310" ry="160" />
+            <ellipse class="orbit" cx="410" cy="250" rx="220" ry="110" />
+            <path class="beam" d="M 134 186 C 224 186, 266 202, 324 232" />
+            <path class="beam" d="M 686 314 C 604 314, 546 300, 494 270" />
+            <circle class="digital" cx="134" cy="186" r="56" />
+            <text class="space-label" x="134" y="178">macro</text>
+            <text class="small-label" x="134" y="198">world</text>
+            <circle class="digital" cx="686" cy="314" r="56" />
+            <text class="space-label" x="686" y="306">digital /</text>
+            <text class="small-label" x="686" y="326">dream space</text>
+            <ellipse class="eye" cx="330" cy="250" rx="92" ry="56" />
+            <circle class="node" cx="330" cy="250" r="22" />
+            <text class="small-label dark" x="330" y="246">light</text>
+            <text class="small-label dark" x="330" y="262">eye</text>
+            <path class="brain" d="M 448 164 C 512 146, 576 182, 586 238 C 594 286, 568 336, 518 352 C 488 362, 456 354, 434 336 C 420 344, 400 344, 384 334 C 346 310, 336 262, 352 222 C 368 182, 406 158, 448 164 Z" />
+            <text class="space-label" x="470" y="244">brain</text>
+            <text class="small-label dark" x="470" y="264">the “image” appears here</text>
+            <rect class="digital" x="314" y="388" rx="24" ry="24" width="304" height="66" />
+            <text class="space-label" x="466" y="420">interiority = interface</text>
+            <text class="small-label" x="466" y="440">an operative pointer, not final truth</text>
+          </svg>
+        </div>
+
+        <div class="grid-2">
+          <article class="axis-card">
+            <span class="badge">Ontological thesis</span>
+            <strong>Reality may be more abstract than common sense tolerates.</strong>
+            <p>What we call inside, outside, image, self, or world may be functional cuts rather than ultimate divisions of being.</p>
+          </article>
+          <article class="axis-card">
+            <span class="badge">Epistemic thesis</span>
+            <strong>Technical success does not equal final understanding.</strong>
+            <p>Gödel enters here as an anti-triumphalist reminder: formal systems do not fully close upon themselves. Reason serves; it does not reign absolutely.</p>
+          </article>
+          <article class="axis-card">
+            <span class="badge">Existential thesis</span>
+            <strong>Life does not come with preloaded meaning.</strong>
+            <p>The premise that it “must have one” may be an a priori bias. You may give it meaning, but there is no metaphysical obligation to find it written in the clouds.</p>
+          </article>
+          <article class="axis-card">
+            <span class="badge">Ethical thesis</span>
+            <strong>Absurdity does not mean everything goes.</strong>
+            <p>Precisely because there is no cosmic guarantee, the adult must think better, act with less narcissism, and protect those who cannot yet bear the world.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">Constellation</div>
+    <section class="section-card">
+      <h2>Camus, Krishnamurti, Perls, Luri</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Camus</strong>
+          <p>The absurd is not solved with comforting stories. It is inhabited. There is no guaranteed redemption, so living asks for sobriety without hysteria.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Krishnamurti</strong>
+          <p>First and last freedom consists in looking without screens at the fact of death, social judgment, fear, and the desire for consolation.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Fritz Perls</strong>
+          <p>Mental health appears as responsibility in contact: not compulsively unloading one’s chaos onto others, not invading another’s freedom, not hiding in theatrics.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Gregorio Luri, in this reading</strong>
+          <p>The moral duty to be intelligent becomes adulthood: someone has to assume the burden of thinking better, transmitting a world, setting limits, and not leaving the child alone before the void.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Consequences table</div>
+    <section class="table-shell">
+      <h2>If this view is true, or even half true</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Axis</th>
+            <th>Diagnosis</th>
+            <th>Risk</th>
+            <th>Resulting discipline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Knowledge</strong></td>
+            <td>We know almost nothing ultimately; we only operate some scales fairly well.</td>
+            <td>Mistaking technical power for ontological wisdom.</td>
+            <td>Intellectual humility without fairground anti-intellectualism.</td>
+          </tr>
+          <tr>
+            <td><strong>Meaning</strong></td>
+            <td>Life carries no obligatory meaning.</td>
+            <td>Falling into hysterical nihilism or plastic spirituality.</td>
+            <td>Giving meaning without demanding cosmic applause.</td>
+          </tr>
+          <tr>
+            <td><strong>Death</strong></td>
+            <td>Death and social judgment are inevitable.</td>
+            <td>Living shrunk by fear or overcompensating with excess.</td>
+            <td>A sober freedom: less fear, less display, less melodrama.</td>
+          </tr>
+          <tr>
+            <td><strong>Psyche</strong></td>
+            <td>Interiority works as a practical interface, not as a sacred throne.</td>
+            <td>Idolizing the self or deregulating it completely.</td>
+            <td>Self-observation, regulation, respect for the other, healthy contact.</td>
+          </tr>
+          <tr>
+            <td><strong>Injustice</strong></td>
+            <td>Human atrocity is not a passing anomaly; it is a constant possibility of the species.</td>
+            <td>Political naivety or total cynicism.</td>
+            <td>Tragic lucidity: watch, contain, educate, civilize, without childish fantasies.</td>
+          </tr>
+          <tr>
+            <td><strong>Childhood</strong></td>
+            <td>Children suffer when adults abdicate their role.</td>
+            <td>Leaving the child trapped in the Telemachus complex: without a worthy reference, mature authority, or habitable world.</td>
+            <td>Moral duty to be intelligent: an adult must take on the work of thinking better because another depends on it.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Daily practice</div>
+    <section class="section-card">
+      <h2>Maintenance question</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. Threat</strong>
+          <p>What threatens my lucidity today: fear, vanity, dependency, resentment, excess, distraction, or the need for approval?</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. Integration</strong>
+          <p>If I cannot eliminate it, how do I integrate it without letting it colonize my conduct or spill onto others?</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. Elimination</strong>
+          <p>If I can eliminate it, why do I keep decorating it? Adult intelligence sometimes means cutting, not endlessly understanding.</p>
+        </article>
+      </div>
+      <div class="mini-links">
+        <a class="mini-link" href="../perls-krishnamurti/listening-without-screens.html">Continue with Perls and Krishnamurti</a>
+        <a class="mini-link" href="../jnana-yoga-inquiry/infinite-consciousness.html">Continue with the inquiry method</a>
+      </div>
+    </section>
+
+    <div class="section-label">Closing</div>
+    <section class="closing">
+      <h2>An ethic without plush</h2>
+      <p>
+        This piece does not promise comfort. It says something drier: perhaps there is no accessible final ground,
+        perhaps all interiority is interface, perhaps the world is stranger than ordinary conversation can bear.
+        Precisely for that reason adult intelligence matters more, not less. If atrocity always was and will remain
+        human, then the moral duty is not to dream of a clean species: it is to <strong>think better, damage less,
+        sustain the child, and not lie too much to oneself about the cosmos</strong>.
+      </p>
+      <ul>
+        <li>There is no cosmic obligation of meaning.</li>
+        <li>There may still be a human obligation of lucidity.</li>
+        <li>That is where real adulthood begins.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
