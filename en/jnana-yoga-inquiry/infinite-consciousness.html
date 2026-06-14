@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The infinity of consciousness · a method of inquiry inspired by Krishnamurti</title>
+  <style>
+    :root {
+      --bg: #efe7d9;
+      --paper: rgba(255, 251, 245, 0.92);
+      --paper-strong: #fffaf4;
+      --ink: #1f1917;
+      --muted: #685b54;
+      --line: rgba(84, 67, 57, 0.16);
+      --clay: #b86745;
+      --lake: #356d7c;
+      --olive: #74824e;
+      --gold: #c89b4a;
+      --plum: #77586a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255,255,255,0.62), transparent 24%),
+        radial-gradient(circle at 88% 16%, rgba(53, 109, 124, 0.14), transparent 22%),
+        radial-gradient(circle at 76% 82%, rgba(184, 103, 69, 0.12), transparent 24%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 52%, #deccb8 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1340px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    .hero,
+    .section-card,
+    .diagram-shell,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -90px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(119, 88, 106, 0.2), rgba(119, 88, 106, 0));
+      pointer-events: none;
+    }
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.9rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note,
+    .mini-card,
+    .step-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #231b18 0%, #43312d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong,
+    .mini-card strong,
+    .step-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.18rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .section-card,
+    .closing,
+    .diagram-shell,
+    .table-shell {
+      padding: 26px;
+    }
+    .section-card h2,
+    .diagram-shell h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .diagram-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 18px;
+    }
+    .infinity-wrap {
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,250,244,0.9), rgba(250,242,233,0.9));
+      padding: 18px;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .loop-base {
+      fill: none;
+      stroke: rgba(84, 67, 57, 0.14);
+      stroke-width: 54;
+      stroke-linecap: round;
+    }
+    .loop-left {
+      fill: none;
+      stroke: rgba(53, 109, 124, 0.82);
+      stroke-width: 34;
+      stroke-linecap: round;
+    }
+    .loop-right {
+      fill: none;
+      stroke: rgba(184, 103, 69, 0.82);
+      stroke-width: 34;
+      stroke-linecap: round;
+    }
+    .loop-core {
+      fill: #fffaf4;
+      stroke: rgba(84, 67, 57, 0.16);
+      stroke-width: 2;
+    }
+    .node {
+      fill: var(--paper-strong);
+      stroke: rgba(84, 67, 57, 0.18);
+      stroke-width: 2;
+    }
+    .node-label {
+      font: 700 15px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      fill: var(--ink);
+      text-anchor: middle;
+    }
+    .node-sub {
+      font: 500 12px/1.2 "Avenir Next", "Trebuchet MS", sans-serif;
+      fill: var(--muted);
+      text-anchor: middle;
+    }
+    .center-label {
+      font: 700 20px/1.2 "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      fill: var(--ink);
+      text-anchor: middle;
+    }
+    .center-sub {
+      font: 500 12px/1.4 "Avenir Next", "Trebuchet MS", sans-serif;
+      fill: var(--muted);
+      text-anchor: middle;
+    }
+    .step-list {
+      display: grid;
+      gap: 14px;
+    }
+    .step-card .index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(53,109,124,0.12);
+      color: var(--lake);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .table-shell { overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 1180px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1080px) {
+      .hero,
+      .diagram-layout,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../consciousness-panentheism/consciousness-perpetual-exegesis.html">Related piece</a>
+    <a href="../../jnana-yoga-indagacion/infinito-de-la-consciencia.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Jnana yoga · symbols · fact · emotional maturity</span>
+        <h1>The infinity of consciousness</h1>
+        <p class="hero-copy">
+          If the word is not the thing, if the symbol does not exhaust the fact, and if each context alters meaning,
+          then thinking well does not consist in accumulating answers but in <strong>clearing screens</strong>. This
+          method, inspired by Krishnamurti, proposes a reproducible but non-mechanical sequence: listen, observe,
+          inquire, detect projection, return to what is, let emotion ripen, and act without adding unnecessary moral
+          theater. It is not a closed algorithm. It is a living discipline.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Thesis</span>
+          <strong>To develop consciousness is to move through an infinite ribbon where one never “finishes,” yet can always advance.</strong>
+          <p>What matters is not abstract purity, but identifying the present point in the cycle and not lying too much in the next step.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Useful definition</span>
+          <strong>For Krishnamurti, a fact is not an idea or an ideal: it is “what is.”</strong>
+          <p>“An idea is not a fact, it is a fiction”; “begin from facts and not from beliefs and ideals”; “only what is can be transformed.”</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Principles</div>
+    <section class="section-card">
+      <h2>Three bases before the method</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. The word is not the thing</strong>
+          <p>Symbols help, but they also distort. Context, irony, intention, and memory change the meaning of a word even when the word itself does not change.</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. The screen can speak in your voice</strong>
+          <p>Desire, prejudice, fear, wound, pride, or the need to be right can look like lucid thought when they are actually refined defense.</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. Emotional maturity is not hardness</strong>
+          <p>It does not require an iron mind at every moment. It requires enough awareness to notice the impulse before, during, or after, and not glorify compulsion with theatrical guilt.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Central diagram</div>
+    <section class="diagram-shell">
+      <h2>Circular method of inquiry</h2>
+      <p>
+        The shape is an infinity loop because there is no final exit from the process. Each turn either clears perception
+        a little more or reveals a new layer of self-deception. That is how interesting life works.
+      </p>
+      <div class="diagram-layout">
+        <div class="infinity-wrap">
+          <svg viewBox="0 0 820 480" role="img" aria-label="Infinite cycle of consciousness">
+            <path class="loop-base" d="M 140 240 C 140 110, 290 110, 410 240 C 530 370, 680 370, 680 240 C 680 110, 530 110, 410 240 C 290 370, 140 370, 140 240" />
+            <path class="loop-left" d="M 140 240 C 140 110, 290 110, 410 240 C 290 370, 140 370, 140 240" />
+            <path class="loop-right" d="M 410 240 C 530 110, 680 110, 680 240 C 680 370, 530 370, 410 240" />
+            <circle class="node" cx="205" cy="158" r="52" />
+            <text class="node-label" x="205" y="152">Listening</text>
+            <text class="node-sub" x="205" y="170">what is happening?</text>
+            <circle class="node" cx="205" cy="322" r="52" />
+            <text class="node-label" x="205" y="316">Screens</text>
+            <text class="node-sub" x="205" y="334">desire, fear,</text>
+            <text class="node-sub" x="205" y="349">prejudice</text>
+            <circle class="node" cx="615" cy="158" r="52" />
+            <text class="node-label" x="615" y="152">Fact</text>
+            <text class="node-sub" x="615" y="170">what is</text>
+            <circle class="node" cx="615" cy="322" r="52" />
+            <text class="node-label" x="615" y="316">Action</text>
+            <text class="node-sub" x="615" y="334">move without</text>
+            <text class="node-sub" x="615" y="349">residue</text>
+            <ellipse class="loop-core" cx="410" cy="240" rx="100" ry="70" />
+            <text class="center-label" x="410" y="226">Consciousness</text>
+            <text class="center-sub" x="410" y="246">observation +</text>
+            <text class="center-sub" x="410" y="262">inquiry +</text>
+            <text class="center-sub" x="410" y="278">maturation</text>
+          </svg>
+        </div>
+
+        <div class="step-list">
+          <article class="step-card">
+            <span class="index">1</span>
+            <strong>Initial listening</strong>
+            <p>Before any fact or question: <strong>why is this important to me?</strong> Not to build a thesis, but to detect affective charge, interest, threat, or attachment.</p>
+          </article>
+          <article class="step-card">
+            <span class="index">2</span>
+            <strong>Locate symbol and context</strong>
+            <p>What words, images, or narratives am I using? Am I reacting to the thing or to my label for the thing? Irony shows how placement alters meaning.</p>
+          </article>
+          <article class="step-card">
+            <span class="index">3</span>
+            <strong>Mark the screens</strong>
+            <p>Is there desire to be right, fear of losing image, prejudice, wounded memory, comparison, spiritual ambition? If instinctive reaction covers the field, the fact is not yet clear.</p>
+          </article>
+          <article class="step-card">
+            <span class="index">4</span>
+            <strong>Return to what is</strong>
+            <p>Fact here does not mean a cold universal datum. It means what remains when fiction, ideal, and self-justification loosen. <strong>Only what is can be transformed.</strong></p>
+          </article>
+          <article class="step-card">
+            <span class="index">5</span>
+            <strong>Let emotion ripen</strong>
+            <p>Control is not soldierly repression. It is not blindly obeying the impulse and not adding melodramatic guilt afterward. Sustained observation is also training.</p>
+          </article>
+          <article class="step-card">
+            <span class="index">6</span>
+            <strong>Act and re-enter</strong>
+            <p>When the fact clears enough, act simply. Then listen again. Every action generates new context, new symbols, and new possible screens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">Method in table</div>
+    <section class="table-shell">
+      <h2>Reproducible sequence, but not mechanical</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Moment</th>
+            <th>Guiding question</th>
+            <th>Risk of self-deception</th>
+            <th>Clearer output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Importance</strong></td>
+            <td>Why does this matter so much to me?</td>
+            <td>Mistaking importance for truth.</td>
+            <td>Seeing interest, attachment, or threat without condemning it.</td>
+          </tr>
+          <tr>
+            <td><strong>Symbol</strong></td>
+            <td>What word or image am I absolutizing?</td>
+            <td>Forgetting that the word is not the thing.</td>
+            <td>Separating narrative, tone, irony, and perceived fact.</td>
+          </tr>
+          <tr>
+            <td><strong>Screen</strong></td>
+            <td>What desire, fear, or prejudice filters my reading?</td>
+            <td>Calling refined defense “intuition.”</td>
+            <td>Naming the screen without dramatizing it.</td>
+          </tr>
+          <tr>
+            <td><strong>Fact</strong></td>
+            <td>What remains if I drop ideal and justification?</td>
+            <td>Jumping too early into a “deep” conclusion.</td>
+            <td>Staying with what is, even when it does not flatter the ego.</td>
+          </tr>
+          <tr>
+            <td><strong>Emotion</strong></td>
+            <td>Can I observe this without acting compulsively?</td>
+            <td>Repressing and then exploding, or acting and then self-flagellating.</td>
+            <td>Giving time, sustaining presence, postponing automatism.</td>
+          </tr>
+          <tr>
+            <td><strong>Action</strong></td>
+            <td>What simple gesture corresponds to this fact?</td>
+            <td>Waiting for total purity before moving.</td>
+            <td>Advancing with enough honesty and continuing to observe.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Key clarification</div>
+    <section class="section-card">
+      <h2>What “emotional maturity” means here</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>It does not mean</strong>
+          <p>Being invulnerable, never feeling anger, desiring nothing, never erring, or controlling everything with an iron fist.</p>
+        </article>
+        <article class="mini-card">
+          <strong>It does mean</strong>
+          <p>Having enough awareness to recognize the gradient of impulse and not turning a conscious compulsion into double misery: blind act plus ornamental guilt.</p>
+        </article>
+      </div>
+      <div class="mini-links">
+        <a class="mini-link" href="../perls-krishnamurti/listening-without-screens.html">Continue with listening and screens</a>
+        <a class="mini-link" href="../consciousness-panentheism/consciousness-perpetual-exegesis.html">Continue with duality and balance</a>
+      </div>
+    </section>
+
+    <div class="section-label">Closing</div>
+    <section class="closing">
+      <h2>Life as a lucid loop</h2>
+      <p>
+        This is simple and difficult at once. Simple because the movement is always similar: listen, observe, inquire,
+        see the screen, return to fact, act. Difficult because the real quality of each turn depends on the emotional
+        maturity of the one who inquires. But that is precisely the grace of it: perfection is not needed to begin;
+        <strong>enough presence not to keep lying with so much enthusiasm</strong> is enough.
+      </p>
+      <ul>
+        <li>Consciousness does not eliminate conflict once and for all.</li>
+        <li>Consciousness improves the position from which you cross conflict.</li>
+        <li>That is life: an infinite ribbon in which you can still advance.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

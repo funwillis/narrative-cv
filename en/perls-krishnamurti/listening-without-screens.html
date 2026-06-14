@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listening without screens · Fritz Perls and Krishnamurti</title>
+  <style>
+    :root {
+      --bg: #efe7da;
+      --paper: rgba(255, 251, 245, 0.92);
+      --paper-strong: #fffaf4;
+      --ink: #201917;
+      --muted: #695b54;
+      --line: rgba(84, 67, 57, 0.16);
+      --rust: #b76745;
+      --lake: #356d7c;
+      --olive: #74824e;
+      --gold: #c99b4c;
+      --plum: #745768;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.62), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(53, 109, 124, 0.14), transparent 22%),
+        radial-gradient(circle at 78% 76%, rgba(183, 103, 69, 0.12), transparent 24%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 52%, #decbb8 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -90px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(116, 87, 104, 0.2), rgba(116, 87, 104, 0));
+      pointer-events: none;
+    }
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li,
+    blockquote {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .note,
+    .mini-card,
+    .quote-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #231b18 0%, #43312d 100%);
+      color: #fff8f1;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .note strong,
+    .mini-card strong,
+    .quote-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.18rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+    .section-card h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    blockquote {
+      margin: 12px 0 0;
+      padding-left: 14px;
+      border-left: 3px solid rgba(53, 109, 124, 0.28);
+      font-size: 1rem;
+    }
+    .quote-meta {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(201, 155, 76, 0.14);
+      color: #8b6732;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      min-width: 1320px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../consciousness-panentheism/consciousness-perpetual-exegesis.html">Related piece</a>
+    <a href="../../perls-krishnamurti/escuchar-sin-pantallas.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Gestalt · attention · contact · fertile solitude</span>
+        <h1>Listening without screens</h1>
+        <p class="hero-copy">
+          Fritz Perls and Jiddu Krishnamurti do not speak from the same tradition, yet they touch the same nerve:
+          <strong>perception breaks down when the self talks too much</strong>. Perls denounces the inability to listen
+          without invading; Krishnamurti denounces the screens of desire, fear, prejudice, and idea. One works on
+          <strong>contact</strong>; the other on <strong>bare attention</strong>. Together they demand the same thing:
+          learning to be present without colonizing what we hear with our projections.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Integration</span>
+          <strong>Perls adds body, responsibility, and contact. Krishnamurti adds silence, observation, and disidentification.</strong>
+          <p>They do not compete. They correct each other. The Gestalt side prevents floating abstraction; the Krishnamurti side prevents psychology from becoming a technique of the ego.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Key example</span>
+          <strong>Talking without listening is invasion. Thinking through screens is distortion.</strong>
+          <p>Mature listening requires both affective presence and perceptual cleanliness: contact without swallowing, attention without prejudice.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Three convergences</div>
+    <section class="section-card">
+      <h2>Where they meet</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. Listening is not waiting for your turn</strong>
+          <p>Perls notes that almost nobody listens without talking. Krishnamurti goes further: even silence is not enough if we keep hearing through prior conclusions.</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. The self interferes</strong>
+          <p>For Perls, neurosis interrupts real contact. For Krishnamurti, the self inserts itself as a screen of desire, fear, ambition, or prejudice.</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. Solitude is not deprivation</strong>
+          <p>In both, fertile solitude appears: not resentful isolation, but the space where one stops begging for confirmation and begins to see.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Core quotations</div>
+    <section class="section-card">
+      <h2>Two traditions, one discomfort</h2>
+      <div class="grid-2">
+        <article class="quote-card">
+          <span class="badge">Fritz Perls</span>
+          <strong>Listening and solitude as maturation</strong>
+          <blockquote>“Very few listen without speaking.”</blockquote>
+          <blockquote>“To mature means to take responsibility for your life, to be alone.”</blockquote>
+          <blockquote>“Solitude is actually the place where one can connect with the feeling of belonging to the human.”</blockquote>
+          <div class="quote-meta">From the material supplied by the user</div>
+        </article>
+        <article class="quote-card">
+          <span class="badge">J. Krishnamurti</span>
+          <strong>Listening without projection or prejudice</strong>
+          <blockquote>“If you listen through the screen of your desires, then you are listening to your own voice.”</blockquote>
+          <blockquote>“The screen of our own thoughts, conclusions, and prejudices always comes in.”</blockquote>
+          <blockquote>“To commune with the true, solitude is indispensable; not isolation, but freedom from all influence and opinion.”</blockquote>
+          <div class="quote-meta">The Book of Life · Jan 2 and 3; Dec 12</div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Comparative table</div>
+    <section class="table-shell">
+      <h2>Comparative quotation table</h2>
+      <p>
+        The aim is not to force them into sameness. It is to mark partial affinities: Perls speaks from existential and
+        therapeutic contact; Krishnamurti from radical observation of the mind.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Theme</th>
+            <th>Fritz Perls</th>
+            <th>J. Krishnamurti</th>
+            <th>Operative integration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Real listening</strong></td>
+            <td>“Very few listen without speaking.”</td>
+            <td>“Listening matters only when we are not projecting our own desires.”</td>
+            <td>Failure to listen is not only verbal interruption; it is also silent invasion through projection.</td>
+          </tr>
+          <tr>
+            <td><strong>Screens</strong></td>
+            <td>“Don’t think so much… feel.”</td>
+            <td>“The screen of our own thoughts, conclusions, and prejudices always comes in.”</td>
+            <td>Perls dismantles hyper-intellectualization; Krishnamurti dismantles thought as a distorting filter.</td>
+          </tr>
+          <tr>
+            <td><strong>Contact</strong></td>
+            <td>Gestalt therapy brings to the front what the person avoids feeling and saying in the present.</td>
+            <td>“Only when you listen without idea, without thought, are you directly in contact.”</td>
+            <td>True contact requires emotional presence and perception not colonized by labels.</td>
+          </tr>
+          <tr>
+            <td><strong>Responsibility</strong></td>
+            <td>“To mature means to take responsibility for your life, to be alone.”</td>
+            <td>“You must listen to yourself and not to the speaker.”</td>
+            <td>Maturity begins when one stops asking for saviors and becomes responsible for one’s own observation.</td>
+          </tr>
+          <tr>
+            <td><strong>Solitude</strong></td>
+            <td>“Solitude is actually the place where one can connect with the feeling of belonging to the human.”</td>
+            <td>“To commune with the true, solitude is indispensable; not isolation [...]”.</td>
+            <td>Being alone does not break the human bond; it cleans the dependencies that degrade it.</td>
+          </tr>
+          <tr>
+            <td><strong>Inner silence</strong></td>
+            <td>Listening to oneself and naming honestly what one feels restores presence.</td>
+            <td>“To listen to anything, your mind must be quiet.”</td>
+            <td>Useful silence is not dumb muteness; it is the suspension of egocentric noise so the fact can appear.</td>
+          </tr>
+          <tr>
+            <td><strong>Aim</strong></td>
+            <td>To integrate emotion, awareness, and conduct so as to live more authentically.</td>
+            <td>“The very act of listening brings its own freedom.”</td>
+            <td>Listening stops being a social technique and becomes a transformation in one’s way of being in the world.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Synthetic reading</div>
+    <section class="section-card">
+      <h2>Short formula of the integration</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Perls would say</strong>
+          <p>Stop hiding behind discourse, dependency, and perfectionism. Feel, take responsibility, and bear solitude without melodrama.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Krishnamurti would add</strong>
+          <p>Fine, but also observe how desire, fear, and prejudice keep creating screens even when you are quiet and seem attentive.</p>
+        </article>
+      </div>
+      <div class="mini-links">
+        <a class="mini-link" href="../consciousness-panentheism/consciousness-perpetual-exegesis.html">Continue with consciousness and duality</a>
+        <a class="mini-link" href="../lectura-espiritual/spiritual-reading-without-dogma.html">Open related reading piece</a>
+      </div>
+    </section>
+
+    <div class="section-label">Closing</div>
+    <section class="closing">
+      <h2>Listening well is a small revolution</h2>
+      <p>
+        The useful integration between them does not consist in founding a new sect with two elegant surnames. It
+        consists in keeping a double discipline: <strong>honest contact</strong> and <strong>unscreened perception</strong>.
+        Perls helps one stop fleeing oneself. Krishnamurti helps one stop turning that “self” into yet another idol.
+      </p>
+      <ul>
+        <li>Talking less is not enough: one must also project less.</li>
+        <li>Feeling more is not enough: one must also look without conceptual cosmetics.</li>
+        <li>Mature solitude does not impoverish relation; it refines it.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
