@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consciousness as perpetual exegesis · Krishnamurti and Spinoza</title>
+  <style>
+    :root {
+      --bg: #f0e8da;
+      --paper: rgba(255, 251, 245, 0.92);
+      --paper-strong: #fffaf4;
+      --ink: #1f1917;
+      --muted: #665952;
+      --line: rgba(84, 67, 57, 0.16);
+      --ember: #b76543;
+      --moss: #74814d;
+      --lake: #356d7c;
+      --gold: #c89a48;
+      --plum: #75586a;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.62), transparent 24%),
+        radial-gradient(circle at 88% 14%, rgba(53, 109, 124, 0.14), transparent 20%),
+        radial-gradient(circle at 72% 78%, rgba(183, 101, 67, 0.12), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 52%, #deccb8 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .chip-link,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -90px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(117, 88, 106, 0.2), rgba(117, 88, 106, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5.1rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .note {
+      border-radius: 28px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.8);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #231b18 0%, #43312d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.3rem;
+      line-height: 1.15;
+    }
+
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+      line-height: 1.5;
+    }
+
+    .chip-row,
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip-row {
+      margin-top: 18px;
+    }
+
+    .chip-link,
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+
+    .section-card h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .mini-card,
+    .axis-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+
+    .mini-card strong,
+    .axis-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .axis-card .pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(200, 154, 72, 0.14);
+      color: #8b6630;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1480px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .quote-line {
+      margin-top: 16px;
+      padding-left: 16px;
+      border-left: 3px solid rgba(117, 88, 106, 0.34);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.15rem;
+      line-height: 1.45;
+    }
+
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">Go to root</a>
+    <a href="../constellations/index.html">Idea constellations</a>
+    <a href="../stories/index.html">Stories</a>
+    <a href="../../consciencia-panenteismo/consciencia-exegesis-perpetua.html">Español</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Consciousness · panentheism · freedom · conatus</span>
+        <h1>Consciousness as perpetual exegesis</h1>
+        <p class="hero-copy">
+          Consciousness can be read as the <strong>living interpretation of any duality in context</strong>.
+          Even the subtlest ones: attachment, opinion, discrepancy, image, memory, interiority, and exteriority. None
+          of them compels war. Each can be worked into balance through observation, negotiation, disidentification,
+          proportion, and right relation. As long as there is a <strong>proper conatus</strong>, that negotiation
+          between the intimate and the external is exactly what life is.
+        </p>
+        <div class="chip-row">
+          <span class="badge">Krishnamurti · yogic path</span>
+          <span class="badge">Spinoza · geometric path</span>
+          <span class="badge">Agnosticism with twin roots</span>
+        </div>
+        <p class="quote-line">
+          If the human being is part of nature and nature is part of the cosmos, then every real identity is already
+          inscribed in something larger. Freedom does not consist in denying that belonging, but in inhabiting it
+          without blindness.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Central thesis</span>
+          <strong>Panentheism here is not dogma: it is interiority + exteriority, the psychological God + God in the rest of things.</strong>
+          <p>“God” works as a symbol for life, order, conatus, humanity, or any name capable of pointing beyond the self without erasing it.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Comparative fusion</span>
+          <strong>Krishnamurti purifies the observer; Spinoza explains the structure of the effort to persevere.</strong>
+          <p>One clears perception of symbol and image. The other orders affects, causes, power, and necessity. Together they form a discipline of lucidity.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Four axes</div>
+    <section class="section-card">
+      <h2>From duality to operative balance</h2>
+      <div class="grid-4">
+        <article class="axis-card">
+          <div class="pair">Attachment → observation</div>
+          <strong>The attached mind mistakes possession for truth.</strong>
+          <p>Krishnamurti loosens it by seeing without a defensive center. Spinoza repositions it by distinguishing sad passion from active joy.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">Opinion → examination</div>
+          <strong>Fixed opinion crystallizes the symbol.</strong>
+          <p>Mature consciousness interprets opinion as a transitional datum, not as a sacred identity.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">Discrepancy → negotiation</div>
+          <strong>Conflict does not force metaphysical war.</strong>
+          <p>Once the self-image loosens, discrepancy can become adjustment, proportion, pact, or intelligent silence.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">Interiority ↔ exteriority</div>
+          <strong>Human life is a continuous negotiation between inside and outside.</strong>
+          <p>That exchange is never solved once and for all. As long as conatus endures, so does the exegesis of existence.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Conceptual architecture</div>
+    <section class="section-card">
+      <h2>The two seeds of thought</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Krishnamurti · first and last freedom</strong>
+          <p>First freedom breaks with authority, habit, fear, and image. Last freedom is not license for the self, but perception without division between observer and observed.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Spinoza · conatus, affects, and beatitude</strong>
+          <p>Freedom is not arbitrary indeterminacy, but understanding necessity, increasing the power to act, and moving from passive bondage to lucid activity.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Agnostic panentheism</strong>
+          <p>Interiority does not exhaust reality. The psychic and the rest of the world form a continuity of levels: human, nature, cosmos.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Transitive law of belonging</strong>
+          <p>If A belongs to B and B belongs to C, A cannot be cleanly thought outside C. The separate self is useful as function, but false as absolute.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Comparative table</div>
+    <section class="table-shell">
+      <h2>Krishnamurti and Spinoza on freedom</h2>
+      <p>
+        The table crosses Krishnamurti's <strong>first freedom</strong> and <strong>last freedom</strong> with the
+        core concepts of <strong>the Ethics</strong>: conatus, affects, adequate ideas, power, necessity, and
+        beatitude.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Axis</th>
+            <th>Krishnamurti · first freedom</th>
+            <th>Krishnamurti · last freedom</th>
+            <th>Spinoza · Ethics</th>
+            <th>Convergence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Initial problem</strong><br />Conditioning</td>
+            <td>Breaking from fear, tradition, internalized authority, and psychological obedience.</td>
+            <td>Total fall of the subject/object split; the end of the center that protects itself.</td>
+            <td>Bondage: the individual suffers affects whose causes are not understood and is dragged by them.</td>
+            <td>Lack of freedom begins as inner heteronomy, not merely external coercion.</td>
+          </tr>
+          <tr>
+            <td><strong>Symbols</strong><br />Word and image</td>
+            <td>Radical suspicion toward symbol, label, ideal, and self-image.</td>
+            <td>Perception is no longer mediated by symbol as a psychological wall.</td>
+            <td>Inadequate ideas confuse signs, imaginations, and partial affections with knowledge.</td>
+            <td>Both distrust representation when it substitutes itself for the real.</td>
+          </tr>
+          <tr>
+            <td><strong>Facts</strong><br />What counts as truth</td>
+            <td>Fact is “what is” before distortion by judgment or escape.</td>
+            <td>Fact and observation coincide without self-centered friction.</td>
+            <td>Truth is what is grasped through causes and necessary connections.</td>
+            <td>Truth requires the abandonment of compensatory projections.</td>
+          </tr>
+          <tr>
+            <td><strong>Image</strong><br />Psychological self</td>
+            <td>Self-image is the nucleus of hurt and conflict.</td>
+            <td>Without image there is direct relation, not refined narcissism.</td>
+            <td>The imaginary self swells when sad passions dominate and the mind mistakes itself for an absolutely free cause.</td>
+            <td>Liberation requires lowering the fiction of the sovereign ego.</td>
+          </tr>
+          <tr>
+            <td><strong>Motor</strong><br />Vital impulse</td>
+            <td>Psychic energy disperses while conflict, comparison, and becoming persist.</td>
+            <td>Energy remains whole when inner contradiction ceases.</td>
+            <td>Conatus: each thing strives to persevere in its being and increase its power.</td>
+            <td>Life is not dead stillness, but unfragmented intensity.</td>
+          </tr>
+          <tr>
+            <td><strong>Affects</strong><br />Pain and joy</td>
+            <td>Seeing fear and pleasure without choice prevents them from ruling in the shadows.</td>
+            <td>No ascetic suppression, but total understanding of affective movement.</td>
+            <td>Sadness reduces power; joy increases it. Active affects arise from adequate knowledge.</td>
+            <td>Understanding transforms affective energy better than repression.</td>
+          </tr>
+          <tr>
+            <td><strong>Method</strong><br />Practice</td>
+            <td>Choiceless awareness, direct attention, end of spiritual authority.</td>
+            <td>Silence without accumulative method; freedom not produced by psychological time.</td>
+            <td>Geometric order, rigorous definition, deduction of causes, and cartography of affects.</td>
+            <td>One path is yogic and the other mathematical, but both are disciplines of disillusionment.</td>
+          </tr>
+          <tr>
+            <td><strong>Time</strong><br />Process</td>
+            <td>First freedom begins by seeing conditioning now.</td>
+            <td>Truth does not arrive as the gradual product of psychological time.</td>
+            <td>The mind becomes freer as it acquires adequate ideas and understands necessity.</td>
+            <td>Krishnamurti strikes the instant; Spinoza stabilizes understanding.</td>
+          </tr>
+          <tr>
+            <td><strong>God</strong><br />Name of the whole</td>
+            <td>Not a confessional God, but the sacred when the observer's fragmentation ceases.</td>
+            <td>The silent mind enters into relation with the immeasurable.</td>
+            <td>God or Nature: infinite substance of which every mode participates.</td>
+            <td>In agnostic terms, “God” can name order, life, totality, or exceeding reality.</td>
+          </tr>
+          <tr>
+            <td><strong>Freedom</strong><br />Strong sense</td>
+            <td>Freedom from falsity, psychological compulsion, and inner obedience.</td>
+            <td>Freedom as undivided perception and love without an accumulative center.</td>
+            <td>Freedom as activity according to one's understood nature, not arbitrariness.</td>
+            <td>To be free is to stop being the toy of blind mechanism.</td>
+          </tr>
+          <tr>
+            <td><strong>Ethical result</strong><br />Good life</td>
+            <td>Nonviolent relation to facts, without cynicism or self-deception.</td>
+            <td>Compassion, intelligence, and order without doctrinal imposition.</td>
+            <td>Fortitude, generosity, active joy, and intellectual beatitude.</td>
+            <td>Ethics culminates when lucidity and power no longer oppose each other.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Final synthesis</div>
+    <section class="closing">
+      <h2>High eclecticism, not a jumble</h2>
+      <p>
+        This fusion does not need to mix everything indiscriminately. It works because each thinker covers what the
+        other lacks. Krishnamurti prevents idolatry of symbols and systems. Spinoza prevents intuition from floating
+        without conceptual architecture. Between them emerges a strong agnostic path: consciousness as the perpetual
+        exegesis of dualities, life as the negotiation between interiority and exteriority, and the cosmos as the
+        larger scale of every belonging.
+      </p>
+      <ul>
+        <li>The human being is part of nature.</li>
+        <li>Nature is part of the cosmos.</li>
+        <li>Therefore every real consciousness participates in an order wider than its own psychological drama.</li>
+      </ul>
+      <div class="mini-links">
+        <a class="mini-link" href="../constellations/index.html">Return to constellations</a>
+        <a class="mini-link" href="../semiotica-no-dualidad/naming-is-not-knowing-table.html">Open related piece</a>
+        <a class="mini-link" href="../termodinamica-de-la-especie/species-thermodynamics.html">Continue through the long scale</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
