@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diez maestros de filosofía oral · técnicas, semejanzas y legado</title>
+  <style>
+    :root {
+      --bg: #ece4d7;
+      --paper: rgba(255, 250, 244, 0.9);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a18;
+      --muted: #665952;
+      --line: rgba(82, 64, 54, 0.16);
+      --lake: #356d7c;
+      --olive: #73824a;
+      --ember: #b86443;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(115, 130, 74, 0.16), transparent 22%),
+        linear-gradient(180deg, #f4ede2 0%, #eadbc7 50%, #dfccb7 100%);
+    }
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    .project-nav a {
+      flex: 1 1 0;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+    .hero, .panel, .table-shell, .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 28px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+    .hero-main, .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+    .hero-wide { grid-column: 1 / -1; }
+    h1, h2, h3, p, ul { margin: 0; }
+    .eyebrow, .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+    h1, h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.7rem, 7vw, 4.8rem);
+      line-height: 0.92;
+    }
+    h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+    .hero-copy, .panel p, .closing p, td, li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+    .note {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.76);
+    }
+    .note.dark {
+      background: linear-gradient(155deg, #221a17 0%, #43332d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    .note strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.24rem;
+      line-height: 1.16;
+    }
+    .note p {
+      margin-top: 10px;
+      color: inherit;
+      opacity: 0.92;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+    .grid-4, .grid-3, .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+    .mini-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .mini-card span {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(53, 109, 124, 0.1);
+      color: var(--lake);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .table-shell { overflow: hidden; }
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      line-height: 1.42;
+    }
+    th, td {
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+    th {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--paper-strong);
+    }
+    td strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+    .key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--ember);
+      flex: 0 0 auto;
+    }
+    .dot.lake { background: var(--lake); }
+    .dot.olive { background: var(--olive); }
+    .dot.ink { background: var(--ink); }
+    .closing ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 1180px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr {
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--paper-strong);
+        overflow: hidden;
+      }
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px 10px 136px;
+        position: relative;
+      }
+      td:last-child { border-bottom: 0; }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 10px;
+        width: 110px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+    }
+    @media (max-width: 860px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      body { padding-top: 82px; }
+      main { width: min(1320px, calc(100vw - 18px)); }
+      .hero, .panel, .table-shell, .closing { padding: 22px; border-radius: 28px; }
+      .project-nav {
+        width: calc(100vw - 16px);
+        top: 10px;
+        gap: 6px;
+        padding: 6px;
+      }
+      .project-nav a {
+        padding: 9px 10px;
+        font-size: 12px;
+      }
+      .grid-4 { grid-template-columns: 1fr; }
+      td {
+        padding: 40px 14px 10px;
+      }
+      td::before {
+        width: auto;
+        top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">🏠 Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">🧭 Constelaciones</a>
+    <a href="../en/oral-philosophy/oral-masters-and-techniques.html">🌍 English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow">Infografía narrativa · pedagogía oral</span>
+        <h1>Diez maestros de filosofía oral</h1>
+        <p class="hero-copy">
+          La filosofía oral no es un bloque uniforme. Unos enseñan preguntando, otros narrando, otros
+          descolocando, otros guardando silencio hasta que el alumno se oiga a sí mismo. Pero casi todos comparten
+          una apuesta dura: la verdad no se entrega como paquete; se provoca, se ejercita y a veces se padece.
+        </p>
+      </div>
+      <div class="hero-side">
+        <div class="note dark">
+          <span class="badge">Tesis central</span>
+          <strong>Sócrates, Jesús y Krishnamurti no “explican” solamente: ponen al oyente a trabajar en directo.</strong>
+          <p>
+            La diferencia está en la herramienta dominante: refutación dialógica, parábola performativa o indagación
+            compartida sin autoridad interiorizada.
+          </p>
+        </div>
+        <div class="note">
+          <span class="badge">Criterio de lectura</span>
+          <p>
+            La tabla usa columnas cortas para evitar scroll horizontal. En <strong>Herederos</strong> no aparecen solo
+            alumnos literales, sino también discípulos cercanos o transmisores decisivos del estilo.
+          </p>
+        </div>
+      </div>
+      <div class="hero-wide">
+        <div class="section-label">Técnicas recurrentes</div>
+        <div class="grid-4">
+          <article class="mini-card">
+            <span>Pregunta</span>
+            <strong>Mayéutica y refutación</strong>
+            <p>Se desmonta una certeza verbal para que el alumno descubra su ignorancia operativa y empiece a pensar.</p>
+          </article>
+          <article class="mini-card">
+            <span>Imagen</span>
+            <strong>Parábola y ejemplo vivo</strong>
+            <p>La idea entra por una escena recordable. No demuestra como un silogismo; reordena la percepción.</p>
+          </article>
+          <article class="mini-card">
+            <span>Choque</span>
+            <strong>Paradoja y ruptura</strong>
+            <p>Se fuerza un cortocircuito mental para quebrar automatismos conceptuales y abrir atención desnuda.</p>
+          </article>
+          <article class="mini-card">
+            <span>Presencia</span>
+            <strong>Silencio e indagación</strong>
+            <p>La enseñanza ocurre en la calidad de atención compartida, no solo en el contenido de las frases.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-label">Parecidos clave</div>
+    <section class="panel">
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. Maestro y alumno hacen algo juntos</strong>
+          <p>En los mejores casos no hay simple transferencia de datos, sino ejercicio común: examinar, escuchar, recordar, mirar.</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. El lenguaje se usa contra su propia inercia</strong>
+          <p>Pregunta, aforismo, paradoja o parábola: el habla deja de ser relleno social y se vuelve bisturí cognitivo.</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. El rechazo forma parte del método</strong>
+          <p>Cuando una enseñanza toca identidad, deseo o prestigio, la resistencia no es accidente: es señal de que ha rozado nervio.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Diferencias dominantes</div>
+    <section class="panel">
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Sócrates</strong>
+          <p><span class="key"><span class="dot lake"></span>Herramienta</span> diálogo refutativo.</p>
+          <p><span class="key"><span class="dot olive"></span>Meta</span> limpiar falsa certeza y obligar a definir mejor.</p>
+          <p><span class="key"><span class="dot"></span>Riesgo</span> humillación intelectual o cansancio dialéctico.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Jesús</strong>
+          <p><span class="key"><span class="dot lake"></span>Herramienta</span> parábola, inversión moral y gesto simbólico.</p>
+          <p><span class="key"><span class="dot olive"></span>Meta</span> convertir la escucha en decisión existencial y comunitaria.</p>
+          <p><span class="key"><span class="dot"></span>Riesgo</span> leer la imagen como consigna plana y matar su ambigüedad fértil.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Krishnamurti</strong>
+          <p><span class="key"><span class="dot lake"></span>Herramienta</span> indagación en tiempo real sobre pensamiento, miedo y observación.</p>
+          <p><span class="key"><span class="dot olive"></span>Meta</span> ver sin mediación psicológica ni obediencia interior.</p>
+          <p><span class="key"><span class="dot"></span>Riesgo</span> fatiga cognitiva, vértigo o rechazo ante la falta de sistema cerrado.</p>
+        </article>
+        <article class="mini-card">
+          <strong>La familia común</strong>
+          <p><span class="key"><span class="dot ink"></span>Rasgo</span> oralidad de alta exigencia: el oyente no consume; comparece.</p>
+          <p><span class="key"><span class="dot ink"></span>Rasgo</span> verdad como transformación del ver, no solo como contenido correcto.</p>
+          <p><span class="key"><span class="dot ink"></span>Rasgo</span> el método se parece más a una práctica que a una lección magistral.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Tabla comparativa cronológica</div>
+    <section class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Oralista</th>
+            <th>Estilo</th>
+            <th>Núcleo</th>
+            <th>Herederos</th>
+            <th>Legado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Oralista"><strong>Confucio</strong>551-479 a. C.</td>
+            <td data-label="Estilo"><strong>Conversación ejemplar</strong>Aforismo, pregunta breve y corrección ética situada.</td>
+            <td data-label="Núcleo">Formar carácter, rito y discernimiento relacional más que especulación abstracta.</td>
+            <td data-label="Herederos">Yan Hui, Zengzi, Mencio.</td>
+            <td data-label="Legado">Pedagogía moral del ejemplo, civilidad y aprendizaje continuo en Asia oriental.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Buda</strong>siglos V-IV a. C.</td>
+            <td data-label="Estilo"><strong>Diálogo diagnóstico</strong>Símil, parábola, silencio estratégico y ajuste al interlocutor.</td>
+            <td data-label="Núcleo">Detectar sufrimiento, apego e ilusión para reeducar atención y conducta.</td>
+            <td data-label="Herederos">Ananda, Sariputta, Mahakashyapa.</td>
+            <td data-label="Legado">Comunidades monásticas, meditación y pedagogía de la observación mental.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Sócrates</strong>470-399 a. C.</td>
+            <td data-label="Estilo"><strong>Mayéutica</strong>Elenchos, ironía y examen público de definiciones.</td>
+            <td data-label="Núcleo">Hacer visible la falsa certeza para que nazca pensamiento más honesto.</td>
+            <td data-label="Herederos">Platón, Jenofonte, Antístenes.</td>
+            <td data-label="Legado">La filosofía como vida examinada y diálogo crítico sin garantía de comodidad.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Jesús</strong>c. 4 a. C.-30 d. C.</td>
+            <td data-label="Estilo"><strong>Parábola performativa</strong>Imagen, inversión y pregunta que devuelve responsabilidad.</td>
+            <td data-label="Núcleo">Desplazar la mirada moral: del cumplimiento externo a la conversión del corazón.</td>
+            <td data-label="Herederos">Pedro, Juan, María Magdalena.</td>
+            <td data-label="Legado">Predicación narrativa, ética del prójimo y fuerza pedagógica del símbolo encarnado.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Epicteto</strong>50-135</td>
+            <td data-label="Estilo"><strong>Diatriba estoica</strong>Exhortación oral, réplica imaginaria y disciplina práctica.</td>
+            <td data-label="Núcleo">Separar lo que depende de uno de lo que no depende para gobernarse.</td>
+            <td data-label="Herederos">Arriano, Marco Aurelio, estoicos tardíos.</td>
+            <td data-label="Legado">Filosofía como entrenamiento diario del juicio y de la libertad interior.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Plotino</strong>204-270</td>
+            <td data-label="Estilo"><strong>Seminario contemplativo</strong>Explicación oral densa, ascenso dialéctico e interioridad.</td>
+            <td data-label="Núcleo">Guiar de lo múltiple a lo uno mediante depuración de atención y concepto.</td>
+            <td data-label="Herederos">Porfirio, Amelio.</td>
+            <td data-label="Legado">Neoplatonismo, mística filosófica e introspección metafísica occidental.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Bodhidharma</strong>siglos V-VI</td>
+            <td data-label="Estilo"><strong>Ruptura Chan</strong>Choque verbal, gesto seco y antiintelectualismo táctico.</td>
+            <td data-label="Núcleo">Cortar apego a escrituras y conceptos para apuntar a la mente misma.</td>
+            <td data-label="Herederos">Huike, tradición Chan/Zen.</td>
+            <td data-label="Legado">La idea de “señalar directamente” sin depender del andamiaje doctrinal.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Meister Eckhart</strong>c. 1260-1328</td>
+            <td data-label="Estilo"><strong>Sermón apofático</strong>Paradoja, negación y giro interior.</td>
+            <td data-label="Núcleo">Vaciar imágenes de Dios y del yo para abrir una interioridad no posesiva.</td>
+            <td data-label="Herederos">Tauler, Suso, mística renana.</td>
+            <td data-label="Legado">Teología negativa de gran potencia pedagógica y existencial.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>Ramana Maharshi</strong>1879-1950</td>
+            <td data-label="Estilo"><strong>Autoindagación silenciosa</strong>“¿Quién soy yo?” y enseñanza por presencia.</td>
+            <td data-label="Núcleo">Revertir la atención sobre el propio sujeto hasta erosionar la identificación mental.</td>
+            <td data-label="Herederos">Muruganar, Ganapati Muni, Ashram de Tiruvannamalai.</td>
+            <td data-label="Legado">Modelo moderno de no dualidad sobria, minimalista y poco clerical.</td>
+          </tr>
+          <tr>
+            <td data-label="Oralista"><strong>J. Krishnamurti</strong>1895-1986</td>
+            <td data-label="Estilo"><strong>Indagación compartida</strong>Observación en vivo, desmontaje del observador y no-autoridad.</td>
+            <td data-label="Núcleo">Ver cómo opera el pensamiento mientras opera, sin método fijo convertido en refugio.</td>
+            <td data-label="Herederos">Pupul Jayakar, Mary Lutyens, diálogo con David Bohm.</td>
+            <td data-label="Legado">Pedagogía de la atención sin gurú, escuelas experimentales y crítica radical del condicionamiento.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Lectura rápida del mapa</div>
+    <section class="closing">
+      <h2>Qué se repite y qué cambia</h2>
+      <p>
+        Si se mira el conjunto, la oralidad filosófica fuerte no transmite solo doctrinas: fabrica situaciones de
+        examen. Lo que cambia es la proporción entre concepto, imagen, presencia, disciplina y descolocación.
+      </p>
+      <ul>
+        <li>Sócrates aprieta por definición.</li>
+        <li>Jesús desplaza la conciencia con relato e inversión.</li>
+        <li>Epicteto ejercita voluntad y juicio.</li>
+        <li>Bodhidharma y Ramana adelgazan lenguaje hasta el umbral del silencio.</li>
+        <li>Krishnamurti vuelve la escena entera en laboratorio de consciencia compartida.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

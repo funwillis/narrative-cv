@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casualidad, causalidad y sincronicidad · De Schopenhauer a Jung</title>
+  <style>
+    :root {
+      --bg: #f1eadf;
+      --paper: rgba(255, 252, 246, 0.92);
+      --paper-strong: #fffaf3;
+      --ink: #1f1916;
+      --muted: #685d56;
+      --line: rgba(89, 71, 59, 0.16);
+      --rust: #b96f43;
+      --deep: #335c68;
+      --sage: #788052;
+      --wine: #7a5b66;
+      --gold: #c99c53;
+      --night: #231c19;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.7), transparent 22%),
+        radial-gradient(circle at 88% 16%, rgba(51, 92, 104, 0.14), transparent 22%),
+        radial-gradient(circle at 74% 78%, rgba(185, 111, 67, 0.12), transparent 24%),
+        linear-gradient(180deg, #f6efe4 0%, #e8dbc7 52%, #dcc8b2 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p, ul { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -100px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(122, 91, 102, 0.2), rgba(122, 91, 102, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .badge,
+    .pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    .pair {
+      padding: 6px 10px;
+      background: rgba(201, 156, 83, 0.16);
+      color: #87672d;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.7rem, 7vw, 4.9rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side,
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-side { align-content: start; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .note,
+    .mini-card,
+    .axis-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.84);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #251d1a 0%, #46342f 100%);
+      color: #fff8f1;
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .note strong,
+    .mini-card strong,
+    .axis-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+
+    .section-card h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chain-step,
+    .chain-arrow {
+      border-radius: 999px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.88);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .chain-arrow {
+      color: var(--muted);
+      background: rgba(201, 156, 83, 0.1);
+    }
+
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1240px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .quote-line {
+      margin-top: 18px;
+      padding-left: 16px;
+      border-left: 3px solid rgba(51, 92, 104, 0.3);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.14rem;
+      line-height: 1.45;
+    }
+
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../schopenhauer-perls-cosmos/lucidez-del-pesimismo-y-gestalt-cosmica.html">Pieza relacionada</a>
+    <a href="../en/chance-causality-synchronicity/chance-causality-synchronicity.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Causalidad · símbolo · destino vivido</span>
+        <h1>Casualidad, causalidad y sincronicidad</h1>
+        <p class="hero-copy">
+          Schopenhauer niega el azar absoluto: lo que llamamos casualidad suele ser una trama causal demasiado lejana,
+          múltiple o invisible para el observador. Jung no destruye ese marco; introduce una capa distinta. Algunas
+          coincidencias no se viven primero como mecanismo, sino como significado. Esta pieza intenta unir ambos gestos
+          sin hacer trampa mística ni rebajar la experiencia simbólica a una avería estadística.
+        </p>
+        <div class="mini-links">
+          <span class="pair">Schopenhauer</span>
+          <span class="pair">Jung</span>
+          <span class="pair">Sincronicidad</span>
+          <span class="pair">Karma / Logos / Providencia</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <article class="note dark">
+          <span class="badge">Tesis central</span>
+          <strong>La casualidad sería la cara opaca de la causalidad; la sincronicidad, su cara significativa.</strong>
+          <p>Primero no vemos la red. Luego, a veces, no solo la intuimos: la sentimos como pauta que nos toca.</p>
+        </article>
+        <article class="note">
+          <span class="badge">Antídoto</span>
+          <strong>Ni azar puro ni delirio de señales.</strong>
+          <p>Schopenhauer disciplina el pensamiento contra el “porque sí”. Jung disciplina la experiencia contra el
+            reduccionismo seco. Juntos sirven mejor que separados.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">1. Schopenhauer y el azar absurdo</div>
+    <section class="section-card">
+      <h2>Por qué el azar absoluto le parece absurdo</h2>
+      <p>
+        Para Schopenhauer, admitir un acontecimiento sin razón suficiente equivaldría a romper la inteligibilidad del
+        mundo. No se trata solo de que ignoremos una causa; se trata de que algo ocurriera sin pertenecer a ninguna
+        cadena de dependencia. Eso sería un fenómeno sin suelo, una aparición sin anclaje, una exención arbitraria del
+        tejido entero de la experiencia.
+      </p>
+      <div class="chain">
+        <span class="chain-step">Fenómeno observado</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Causa próxima ausente</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Aparece la “casualidad”</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Pero persiste una red causal más larga</span>
+      </div>
+      <div class="grid-3" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">No dice</span>
+          <strong>“Todo es fácil de explicar”.</strong>
+          <p>Dice algo más áspero: aunque no podamos reconstruir la serie, el hecho no queda huérfano.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Sí dice</span>
+          <strong>“La casualidad es ignorancia situada”.</strong>
+          <p>Dos cadenas se cruzan y el observador llama azar a su propia ceguera local.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Consecuencia</span>
+          <strong>El mundo no admite acontecimientos exentos.</strong>
+          <p>Si el azar absoluto existiera, el universo dejaría de ser legible incluso en principio.</p>
+        </article>
+      </div>
+      <p class="quote-line">
+        El “azar absurdo” no sería caos creativo, sino un agujero lógico: un hecho que ocurre sin deber nada a nada.
+      </p>
+    </section>
+
+    <div class="section-label">2. Jung y la capa del sentido</div>
+    <section class="section-card">
+      <h2>La coincidencia significativa no tiene por qué ser una superstición</h2>
+      <p>
+        Jung propone que algunas coincidencias merecen atención no porque prueben una magia barata, sino porque se
+        presentan como ensamblajes de sentido. El nexo no se deja reducir del todo a una causa lineal visible, pero
+        tampoco se siente como ruido indiferente. Algo en la psique reconoce una pauta y la vida aparece brevemente
+        como texto, no solo como mecanismo.
+      </p>
+      <div class="grid-2" style="margin-top: 18px;">
+        <article class="axis-card">
+          <span class="badge">Lectura fuerte</span>
+          <strong>La sincronicidad no contradice la causalidad: desborda su formato más simple.</strong>
+          <p>Lo significativo puede ser la forma subjetiva en que una red profunda se vuelve legible antes de que pueda
+            demostrarse de modo lineal.</p>
+        </article>
+        <article class="axis-card">
+          <span class="badge">Cautela</span>
+          <strong>No toda pauta sentida es una verdad descubierta.</strong>
+          <p>Sin disciplina crítica, la sincronicidad degenera en apofenia: la mente fabrica mensaje donde solo había
+            coincidencia pobre o deseo disfrazado.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">3. Punto de unión</div>
+    <section class="section-card">
+      <h2>¿Reconocer significado es reconocer una causa lejana desde el inconsciente?</h2>
+      <p>
+        Esa hipótesis tiene bastante nervio. Desde un marco schopenhaueriano, podría decirse que el inconsciente
+        detecta regularidades, ecos y retornos que la conciencia despierta todavía no puede componer. Desde un marco
+        junguiano, ese reconocimiento no aparece primero como argumento, sino como relieve afectivo: “esto me concierne
+        de un modo no trivial”.
+      </p>
+      <div class="grid-4" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">1</span>
+          <strong>Acontecimiento externo</strong>
+          <p>Un encuentro, una repetición, una imagen, una frase, una pérdida o una decisión.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">2</span>
+          <strong>Resonancia inconsciente</strong>
+          <p>Algo antiguo, latente o no verbal reconoce una pauta antes que el yo narrador.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">3</span>
+          <strong>Experiencia de significado</strong>
+          <p>La coincidencia deja de sentirse neutral y adquiere densidad biográfica.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">4</span>
+          <strong>Trabajo crítico</strong>
+          <p>Solo después conviene preguntar si eso revela estructura, deseo, sesgo o mezcla de las tres cosas.</p>
+        </article>
+      </div>
+      <p class="quote-line">
+        Jung aporta sentido vivido; Schopenhauer impide que el sentido se convierta en barra libre metafísica.
+      </p>
+    </section>
+
+    <div class="section-label">4. Génesis y depósito causal</div>
+    <section class="section-card">
+      <h2>Si no hay azar absoluto, todo exige algún origen</h2>
+      <p>
+        En este marco sí hay génesis, aunque no siempre tenga la forma ingenua de un “primer fotograma”. Génesis aquí
+        significa procedencia, acumulación, suelo de emergencia. A veces el origen es próximo y legible; otras, es un
+        depósito remoto de hábitos, símbolos, traumas, instituciones, deseos, imitaciones y decisiones heredadas.
+      </p>
+      <div class="grid-3" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">Nivel 1</span>
+          <strong>Causa próxima</strong>
+          <p>El detonante inmediato: una acción, una conversación, una renuncia, una enfermedad, una carta.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Nivel 2</span>
+          <strong>Causa configuradora</strong>
+          <p>Hábitos, carácter, memoria afectiva, educación, símbolos y estilos de atención que preparan el terreno.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Nivel 3</span>
+          <strong>Fondo civilizatorio</strong>
+          <p>Lenguaje, mitos, herencias familiares, economía moral, religión, técnica y memética compartida.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">5. Nombres del mismo problema</div>
+    <section class="table-shell">
+      <h2>Tabla comparativa del depósito causal-significativo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tradición o marco</th>
+            <th>Nombre</th>
+            <th>Núcleo de la idea</th>
+            <th>Qué se acumula o conserva</th>
+            <th>Cómo conversa con Schopenhauer y Jung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Schopenhauer</strong>Filosofía moderna</td>
+            <td>Razón suficiente</td>
+            <td>Nada aparece sin fundamento, aunque la cadena sea opaca.</td>
+            <td>Relaciones causales entre fenómenos.</td>
+            <td>La casualidad es ignorancia parcial de una red más extensa.</td>
+          </tr>
+          <tr>
+            <td><strong>Jung</strong>Psicología profunda</td>
+            <td>Sincronicidad</td>
+            <td>Coincidencia significativa vivida como pauta entre psique y mundo.</td>
+            <td>Sentido biográfico y resonancia simbólica.</td>
+            <td>La conexión aparece primero como significado antes que como mecanismo demostrable.</td>
+          </tr>
+          <tr>
+            <td><strong>Hinduismo</strong>Tradición kármica</td>
+            <td>Sanchita karma</td>
+            <td>Reserva acumulada de acciones e impresiones todavía no agotadas.</td>
+            <td>Potencial causal latente.</td>
+            <td>Versión moral-metafísica de las causas lejanas que maduran después.</td>
+          </tr>
+          <tr>
+            <td><strong>Budismo</strong>Psicología del condicionamiento</td>
+            <td>Karma / samskaras</td>
+            <td>Los actos dejan huellas que inclinan percepción, reacción y destino.</td>
+            <td>Tendencias mentales y hábitos reactivos.</td>
+            <td>Reduce el “azar” al entrelazado de condiciones, no a un capricho cósmico.</td>
+          </tr>
+          <tr>
+            <td><strong>Vedanta / Yoga</strong>Antropología sutil</td>
+            <td>Vasanas</td>
+            <td>Inclinaciones latentes que orientan deseo, atención y repetición.</td>
+            <td>Impulsos impresos en la vida psíquica.</td>
+            <td>Se parecen a causas remotas que el yo no vigila del todo, pero que acaban aflorando.</td>
+          </tr>
+          <tr>
+            <td><strong>Estoicismo</strong>Cosmología ética</td>
+            <td>Logos / sympatheia</td>
+            <td>El cosmos mantiene una coherencia interna entre partes distantes.</td>
+            <td>Orden racional y afinidad estructural.</td>
+            <td>Ofrece una versión antigua del universo trabado donde nada cae completamente fuera.</td>
+          </tr>
+          <tr>
+            <td><strong>Cristianismo clásico</strong>Teología histórica</td>
+            <td>Providencia</td>
+            <td>Los hechos entran en un orden superior no siempre visible para el sujeto.</td>
+            <td>Sentido total del proceso vital e histórico.</td>
+            <td>Se acerca a Jung por el sentido y a Schopenhauer por la negativa al puro absurdo.</td>
+          </tr>
+          <tr>
+            <td><strong>Taoísmo</strong>Ontología del fluir</td>
+            <td>Tao</td>
+            <td>Hay un orden subyacente que no siempre se deja capturar por conceptos rígidos.</td>
+            <td>Ritmo, pauta, proporción del devenir.</td>
+            <td>Corrige la obsesión por la causa lineal sin glorificar un caos sin ley.</td>
+          </tr>
+          <tr>
+            <td><strong>Hermetismo</strong>Tradición simbólica</td>
+            <td>Correspondencia</td>
+            <td>Los planos distintos guardan analogías y resonancias.</td>
+            <td>Patrones de semejanza estructural.</td>
+            <td>Pariente clásico de la intuición sincrónica, aunque más proclive a la sobrelectura.</td>
+          </tr>
+          <tr>
+            <td><strong>Biología cultural</strong>Evolución simbólica</td>
+            <td>Memoria memética</td>
+            <td>Ideas, marcos y hábitos se replican y condicionan futuras decisiones.</td>
+            <td>Patrones culturales transmisibles.</td>
+            <td>Naturaliza parte del destino: muchas repeticiones no son magia, sino herencia simbólica.</td>
+          </tr>
+          <tr>
+            <td><strong>Psicología contemporánea</strong>Campo narrativo</td>
+            <td>Memoria autobiográfica implícita</td>
+            <td>La vida se organiza por relevancias, no solo por cronología explícita.</td>
+            <td>Sesgos, saliencias y guiones personales.</td>
+            <td>Explica cómo ciertos hechos “saltan” como significativos sin dejar de tener historia causal.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">6. Cierre</div>
+    <section class="closing">
+      <h2>Ni ruido puro ni providencia de feria</h2>
+      <p>
+        La lectura más fértil no consiste en elegir entre mecanicismo seco y superstición sentimental. Consiste en
+        admitir que muchas cosas parecen casuales porque sus causas están demasiado lejos y que, entre esas tramas
+        remotas, algunas irrumpen en la experiencia bajo forma de significado. No todo mensaje es verdad. No todo
+        encuentro es destino. Pero tampoco toda densidad biográfica es un error estadístico con buena prensa.
+      </p>
+      <ul>
+        <li>Schopenhauer sirve para negar el “porque sí” como principio último.</li>
+        <li>Jung sirve para recordar que la vida humana no se agota en cadenas eficientes sin relieve.</li>
+        <li>La idea de génesis reaparece como depósito causal, simbólico y civilizatorio.</li>
+      </ul>
+      <p class="quote-line">
+        Cuando algo parece casual, puede que solo no veamos todavía la arquitectura; cuando además parece significativo,
+        quizá la arquitectura ya está rozando la conciencia.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

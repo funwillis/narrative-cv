@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucidez del pesimismo y gestalt cósmica · Schopenhauer, Perls y Krishnamurti</title>
+  <style>
+    :root {
+      --bg: #efe6da;
+      --paper: rgba(255, 251, 246, 0.92);
+      --paper-strong: #fffaf5;
+      --ink: #201917;
+      --muted: #675a54;
+      --line: rgba(83, 67, 56, 0.16);
+      --ember: #b86845;
+      --lake: #326977;
+      --olive: #75804c;
+      --plum: #715768;
+      --gold: #c99a49;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255,255,255,0.64), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(50, 105, 119, 0.13), transparent 22%),
+        radial-gradient(circle at 74% 76%, rgba(184, 104, 69, 0.12), transparent 24%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 52%, #decbb8 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p, ul { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -90px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(113, 87, 104, 0.2), rgba(113, 87, 104, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .badge,
+    .pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    .pair {
+      padding: 6px 10px;
+      background: rgba(201, 154, 73, 0.14);
+      color: #8d6730;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side,
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-side { align-content: start; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .note,
+    .mini-card,
+    .axis-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #231b18 0%, #43312d 100%);
+      color: #fff8f1;
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .note strong,
+    .mini-card strong,
+    .axis-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.14rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+
+    .section-card h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1380px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .quote-line {
+      margin-top: 18px;
+      padding-left: 16px;
+      border-left: 3px solid rgba(50, 105, 119, 0.28);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.15rem;
+      line-height: 1.45;
+    }
+
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../consciencia-panenteismo/consciencia-exegesis-perpetua.html">Pieza relacionada</a>
+    <a href="../en/schopenhauer-perls-cosmos/pessimistic-lucidity-and-cosmic-gestalt.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Schopenhauer · Gestalt · noética · órganos yóguicos</span>
+        <h1>Lucidez del pesimismo y gestalt cósmica</h1>
+        <p class="hero-copy">
+          Esta pieza propone una lectura cruzada: <strong>Schopenhauer aporta un mapa crudo de los vínculos
+          afectivos</strong>; Perls devuelve cuerpo, contacto y responsabilidad; Krishnamurti corta la idolatría del
+          símbolo; la taxonomía yóguica ordena los canales por los que la experiencia entra, se procesa y sale. El
+          resultado no es un nuevo catecismo, sino una idea operativa: <strong>la vida organiza percepción, acción,
+          memoria, deseo y descanso bajo una misma fuerza innombrable</strong>, aunque luego cada cultura la decore con
+          mil etiquetas y la llame dharma, voluntad, energía, naturaleza o misterio.
+        </p>
+        <p class="quote-line">
+          El pesimismo lúcido no tiene por qué acabar en nihilismo. Puede funcionar como higiene: ver que el vínculo
+          humano oscila entre odio, indiferencia y afecto, y que la conciencia madura empieza cuando deja de mentirse
+          sobre esa oscilación.
+        </p>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Tesis fuerte</span>
+          <strong>El dharma, leído en frío, es la coordinación entre órganos, energía, atención y periodo refractario.</strong>
+          <p>No magia moral. No consigna exótica. Un patrón de organización repetido en lo fisiológico, lo psíquico y lo colectivo.</p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Salvedad</span>
+          <strong>Aquí hay integración conceptual, no cita literal fingida ni diagnóstico psiquiátrico repartido al azar.</strong>
+          <p>Los milagros, visiones y fenómenos paranormales admiten lecturas místicas, interesadas, simbólicas o clínicas. La prudencia no mata el misterio; le quita el maquillaje fraudulento.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label">Mapa afectivo</div>
+    <section class="section-card">
+      <h2>Cuatro salidas del vínculo cuando la semejanza manda</h2>
+      <div class="grid-4">
+        <article class="axis-card">
+          <div class="pair">Semejanza alta → afecto</div>
+          <strong>El otro todavía cuenta como prolongación sensible de uno mismo.</strong>
+          <p>La compasión o el cuidado aparecen cuando la distancia no ha roto por completo el hilo de semejanza.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">Distancia neutra → indiferencia</div>
+          <strong>El otro existe, pero no entra de verdad en mi campo vital.</strong>
+          <p>No hay odio ni amor: simplemente no hay suficiente carga como para movilizar atención o responsabilidad.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">Amenaza o comparación → odio</div>
+          <strong>La energía se vuelve rechazo, defensa, rivalidad o resentimiento.</strong>
+          <p>Perls diría que el contacto se envenena; Krishnamurti diría que la imagen y la comparación ocupan toda la escena.</p>
+        </article>
+        <article class="axis-card">
+          <div class="pair">No semejanza → malicia</div>
+          <strong>Cuando el otro deja de sentirse semejante, su mal puede volverse alivio comparativo.</strong>
+          <p>Ese regocijo en el mal ajeno es una señal sucia pero reveladora: el yo protege su posición degradando la realidad del otro.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Taxonomía de órganos</div>
+    <section class="section-card">
+      <h2>La conciencia no cae del cielo: necesita puertas, instrumentos y taller interno</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <span class="badge">Fisiológicos</span>
+          <strong>El cuerpo denso sostiene la escena.</strong>
+          <p>Corazón, pulmones, cerebro, músculos, intestinos. Sin soporte biológico no hay mística, atención ni pensamiento: solo fantasía verbal de alguien que olvida que come, duerme y se fatiga.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Jnanendriyas</span>
+          <strong>Los sentidos abren el mundo.</strong>
+          <p>Ojos, oídos, nariz, lengua, piel. Son puertas de entrada. Krishnamurti insistiría en que el problema no es percibir, sino añadir demasiado rápido el símbolo a lo percibido.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Karmendriyas</span>
+          <strong>La acción devuelve forma al entorno.</strong>
+          <p>Habla, manos, pies, genitalidad, excreción. El organismo no solo recibe: actúa, descarga, expresa, manipula y altera el campo.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Antahkarana</span>
+          <strong>La experiencia se cocina por dentro.</strong>
+          <p>Manas, buddhi, ahamkara y chitta convierten el dato en historia, decisión, identidad y hábito. Ahí nace tanto la lucidez como la neurosis.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Tabla de integración</div>
+    <section class="table-shell">
+      <h2>Manual mínimo para leer cuerpo, mente y cosmos sin hacerse trampas</h2>
+      <p>
+        La tabla cruza la taxonomía yóguica con Perls, Krishnamurti y una lectura sistémica de la energía.
+        <strong>No pretende demostrar metafísica</strong>; pretende ordenar la experiencia sin desintegrarla.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Capa</th>
+            <th>Órgano o conjunto</th>
+            <th>Función</th>
+            <th>Desorden típico</th>
+            <th>Corrección gestáltica</th>
+            <th>Corrección krishnamurtiana</th>
+            <th>Ritmo y periodo refractario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Fisiológica</strong></td>
+            <td>Corazón, pulmones, cerebro, músculos, intestinos</td>
+            <td>Sostén biológico, metabolismo, respiración, tono, descanso, recuperación.</td>
+            <td>Agotamiento, saturación, hiperactivación, cuerpo convertido en simple vehículo del ego mental.</td>
+            <td>Volver al aquí y ahora del cuerpo: respiración, postura, tensión, hambre, cansancio real.</td>
+            <td>Ver el hecho antes del ideal: no fantasear iluminación cuando el cuerpo está roto o sobreexcitado.</td>
+            <td>Todo sistema necesita descarga y reposo. Sin refracción no hay renovación, solo compulsión.</td>
+          </tr>
+          <tr>
+            <td><strong>Perceptiva</strong></td>
+            <td>Ojos, oídos, nariz, lengua, piel</td>
+            <td>Entrada de información y contacto inicial con el mundo.</td>
+            <td>Proyección, prejuicio, selección narcisista de estímulos, sobrelectura paranoide o mística.</td>
+            <td>Sentir antes de interpretar: recuperar textura, tono, volumen, gesto, temperatura.</td>
+            <td>La palabra no es la cosa. La percepción madura suspende la reacción automática del símbolo.</td>
+            <td>La atención también se fatiga: alterna foco, reposo y reapertura.</td>
+          </tr>
+          <tr>
+            <td><strong>Activa</strong></td>
+            <td>Habla, manos, pies, genitales, ano</td>
+            <td>Expresión, manipulación, desplazamiento, vínculo, descarga y eliminación.</td>
+            <td>Actuar para tapar vacío, hablar para no escuchar, descargar sin integrar.</td>
+            <td>Responsabilidad por el acto: reconocer qué hago, para qué y contra quién.</td>
+            <td>Observar si la acción nace del miedo, del deseo, de la imagen o de una percepción directa.</td>
+            <td>La acción sana alterna impulso y pausa. La que no frena se vuelve violencia del sistema sobre sí mismo.</td>
+          </tr>
+          <tr>
+            <td><strong>Interna</strong></td>
+            <td>Manas, buddhi, ahamkara, chitta</td>
+            <td>Procesamiento, discernimiento, identidad, memoria, hábito.</td>
+            <td>Rumia, orgullo espiritual, relato paranoide, apropiación del símbolo, repetición samskárica.</td>
+            <td>Nombrar honestamente la figura dominante del momento y asumirla sin teatro.</td>
+            <td>Ver que el observador también es parte de lo observado; ahí se afloja la tiranía del centro.</td>
+            <td>La psique necesita digestión y vacío. Sin intervalo, la memoria se vuelve jaula autorreferente.</td>
+          </tr>
+          <tr>
+            <td><strong>Colectiva</strong></td>
+            <td>Instituciones, medios, rituales, lenguaje compartido</td>
+            <td>Coordinar grandes grupos, repartir sentido, modular cooperación y conflicto.</td>
+            <td>Histeria mimética, sectarismo, propaganda, paranoia identitaria, milagro convertido en negocio.</td>
+            <td>Traer el conflicto de fondo al presente concreto del campo y de la responsabilidad mutua.</td>
+            <td>Negarse a obedecer símbolos colectivos cuando sustituyen la observación viva.</td>
+            <td>Las sociedades también alternan expansión, saturación, colapso parcial y recomposición.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">Escalas de energía</div>
+    <section class="section-card">
+      <h2>Periodo refractario: del músculo a la civilización</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <strong>1. Escala individual</strong>
+          <p>El organismo no puede permanecer en excitación máxima sin pagar un precio. Dormir, digerir, callar, entristecerse y parar no son fallos del sistema: son parte de su inteligencia básica.</p>
+        </article>
+        <article class="mini-card">
+          <strong>2. Escala psíquica</strong>
+          <p>Después de un pico afectivo o cognitivo llega una zona refractaria. Si se la niega, aparece irritación, confusión, omnipotencia o colapso. Perls lo leería como mala autorregulación; Krishnamurti, como continuidad del ruido.</p>
+        </article>
+        <article class="mini-card">
+          <strong>3. Escala colectiva</strong>
+          <p>Los sistemas sociales alternan expansión, rigidez, crisis y redistribución. La historia no avanza como flecha limpia: pulsa, se congestiona, descarga y vuelve a empezar con nuevas máscaras.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Hermenéutica prudente</div>
+    <section class="section-card">
+      <h2>Milagros, psicosis y agnosticismo noético</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Fenómenos extraordinarios</strong>
+          <p>Visiones, curaciones, voces, sincronías o prodigios pueden ser experiencia simbólica intensa, traducción interesada, manipulación narrativa, fenómeno clínico o mezcla de varias capas. Lo serio no es negar por reflejo ni tragar entero: es sostener la indeterminación sin infantilizarla.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Agnosticismo noético</strong>
+          <p>Lo único mínimamente firme es que hay vida, fuerza, proceso, algo que comparece y excede nuestras palabras. También cabe que todo sea accidente. El agnosticismo noético no resuelve el misterio: aprende a vivir dentro de él sin rellenarlo con dogma automático.</p>
+        </article>
+      </div>
+      <p class="quote-line">
+        La gestalt cósmica no consiste en saber qué es el universo. Consiste en ver que cada parte participa en una
+        forma mayor que todavía no entiende, y actuar con la decencia intelectual de no fingir que ya cerró el mapa.
+      </p>
+      <div class="mini-links">
+        <a class="mini-link" href="../consciencia-panenteismo/consciencia-exegesis-perpetua.html">Seguir con consciencia y panenteísmo</a>
+        <a class="mini-link" href="../perls-krishnamurti/escuchar-sin-pantallas.html">Volver a Perls y Krishnamurti</a>
+      </div>
+    </section>
+
+    <div class="section-label">Cierre</div>
+    <section class="closing">
+      <h2>El pesimismo útil no adora la tristeza: afina la percepción</h2>
+      <p>
+        Si el vínculo humano puede caer en odio, indiferencia, afecto o regocijo maligno; si el cuerpo impone ritmo;
+        si la mente inventa pantallas; si la cultura bautiza con mil nombres una fuerza que apenas comprende, entonces
+        la tarea no es decorar la confusión. La tarea es <strong>mirar mejor, actuar con menos autoengaño y dejar
+        espacio al periodo refractario</strong> en cada escala.
+      </p>
+      <ul>
+        <li>Schopenhauer enfría las ilusiones sobre la bondad espontánea.</li>
+        <li>Perls obliga a volver al cuerpo y al contacto real.</li>
+        <li>Krishnamurti desarma el fetiche del símbolo y del observador soberano.</li>
+        <li>La taxonomía yóguica recuerda que la conciencia necesita órganos, no solo metáforas.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
