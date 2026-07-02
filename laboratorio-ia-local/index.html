@@ -29,7 +29,6 @@
 
     body {
       margin: 0;
-      padding-top: 92px;
       color: var(--ink);
       font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
       background:
@@ -40,44 +39,36 @@
 
     h1, h2, h3, p { margin: 0; }
 
-    .project-nav {
-      position: fixed;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      width: min(980px, calc(100vw - 24px));
-      padding: 8px;
+    .page-header {
+      width: min(1260px, calc(100vw - 28px));
+      margin: 18px auto 14px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 8px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: rgba(255, 250, 244, .86);
       backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
+      padding: 8px;
     }
 
-    .project-nav a,
     .language button,
     .copy,
     .route-card {
       font: inherit;
     }
 
-    .project-nav a {
-      flex: 1 1 0;
-      justify-content: center;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 10px 14px;
       border-radius: 999px;
       font-size: 14px;
       font-weight: 750;
-      text-decoration: none;
       color: var(--ink);
-      border: 1px solid var(--line);
-      background: var(--paper);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
 
     main {
@@ -148,7 +139,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 22px;
+      margin: 0;
     }
 
     .language button {
@@ -434,7 +425,6 @@
     }
 
     @media (max-width: 1080px) {
-      body { padding-top: 82px; }
       .hero,
       .grid-3,
       .grid-2,
@@ -446,17 +436,15 @@
     }
 
     @media (max-width: 680px) {
-      body { padding-top: 0; }
       main { width: min(100vw - 20px, 1260px); margin-top: 12px; }
-      .project-nav {
-        position: static;
-        transform: none;
+      .page-header {
         width: min(100vw - 20px, 980px);
         margin: 10px auto 14px;
         border-radius: 24px;
         flex-wrap: wrap;
       }
-      .project-nav a { flex: 1 1 42%; }
+      .brand { flex: 1 1 100%; justify-content: center; }
+      .language { flex: 1 1 100%; justify-content: center; }
       .hero { grid-template-columns: 1fr; border-radius: 28px; padding: 22px; }
       .routes { grid-template-columns: 1fr; }
       .stack-head { grid-template-columns: 1fr; }
@@ -475,11 +463,14 @@
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 2.8 7.5 7 9 4.2-1.5 7-4.5 7-9V6z"></path><path d="m9 12 2 2 4-5"></path></symbol>
   </svg>
 
-  <nav class="project-nav" aria-label="Project navigation">
-    <a href="../index.html" data-i18n="navHome">Raiz del proyecto</a>
-    <a href="#itineraries" data-i18n="navRoutes">Itinerarios</a>
-    <a href="#commands" data-i18n="navCommands">Comandos</a>
-  </nav>
+  <header class="page-header" aria-label="Language selector">
+    <div class="brand" data-i18n="headerBrand">Laboratorio IA local</div>
+    <div class="language" aria-label="Language selector">
+      <button type="button" data-lang="ca" aria-pressed="false"><span aria-hidden="true">🏴</span> Català</button>
+      <button type="button" data-lang="es" aria-pressed="true"><span aria-hidden="true">🇪🇸</span> Castellano</button>
+      <button type="button" data-lang="en" aria-pressed="false"><span aria-hidden="true">🇬🇧</span> English</button>
+    </div>
+  </header>
 
   <main>
     <section class="hero">
@@ -487,11 +478,6 @@
         <div class="eyebrow" data-i18n="eyebrow">Guia de laboratorio IA local para Mac</div>
         <h1 data-i18n="title">Montar ecosistemas de IA para aprender con control</h1>
         <p class="hero-copy" data-i18n="lead">El objetivo no es tener el modelo mas potente ni ganar una carrera de productividad. Es aprender a pensar con herramientas: medir recursos, decidir que delegas, entender que ocurre en tu maquina y construir proyectos propios con paciencia.</p>
-        <div class="language" aria-label="Language selector">
-          <button type="button" data-lang="ca" aria-pressed="false">Català</button>
-          <button type="button" data-lang="es" aria-pressed="true">Castellano</button>
-          <button type="button" data-lang="en" aria-pressed="false">English</button>
-        </div>
       </div>
 
       <aside class="hero-side">
@@ -637,7 +623,7 @@ open http://localhost:3000</code></pre></div></div>
   <script>
     const translations = {
       es: {
-        navHome: 'Raiz del proyecto', navRoutes: 'Itinerarios', navCommands: 'Comandos',
+        headerBrand: 'Laboratorio IA local',
         eyebrow: 'Guia de laboratorio IA local para Mac',
         title: 'Montar ecosistemas de IA para aprender con control',
         lead: 'El objetivo no es tener el modelo mas potente ni ganar una carrera de productividad. Es aprender a pensar con herramientas: medir recursos, decidir que delegas, entender que ocurre en tu maquina y construir proyectos propios con paciencia.',
@@ -669,7 +655,7 @@ open http://localhost:3000</code></pre></div></div>
         footer: 'Guia pensada para explorar capacidades con calma: probar, observar, comparar, guardar aprendizajes y construir proyectos propios.', copied: 'Copiado', select: 'Selecciona'
       },
       ca: {
-        navHome: 'Arrel del projecte', navRoutes: 'Itineraris', navCommands: 'Ordres',
+        headerBrand: "Laboratori d'IA local",
         eyebrow: "Guia de laboratori d'IA local per a Mac",
         title: "Muntar ecosistemes d'IA per aprendre amb control",
         lead: "L'objectiu no es tenir el model mes potent ni guanyar una cursa de productivitat. Es aprendre a pensar amb eines: mesurar recursos, decidir que delegues, entendre que passa a la teva maquina i construir projectes propis amb paciencia.",
@@ -701,7 +687,7 @@ open http://localhost:3000</code></pre></div></div>
         footer: "Guia pensada per explorar capacitats amb calma: provar, observar, comparar, guardar aprenentatges i construir projectes propis.", copied: "Copiat", select: "Selecciona"
       },
       en: {
-        navHome: 'Project root', navRoutes: 'Routes', navCommands: 'Commands',
+        headerBrand: 'Local AI lab',
         eyebrow: 'Local AI lab guide for Mac',
         title: 'Build AI ecosystems to learn with control',
         lead: 'The goal is not to run the most powerful model or win a productivity race. It is to learn how to think with tools: measure resources, choose what to delegate, understand what happens on your machine, and patiently build projects of your own.',
