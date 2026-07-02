@@ -44,7 +44,7 @@
       margin: 18px auto 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       gap: 8px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -60,17 +60,6 @@
       font: inherit;
     }
 
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 750;
-      color: var(--ink);
-    }
-
     main {
       width: min(1260px, calc(100vw - 28px));
       margin: 0 auto 44px;
@@ -80,8 +69,7 @@
     .panel,
     .card,
     .route-card,
-    .stack,
-    .notice {
+    .stack {
       background: var(--paper);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
@@ -219,26 +207,22 @@
 
     .grid-3,
     .grid-2,
-    .routes,
-    .notices {
+    .routes {
       display: grid;
       gap: 14px;
     }
 
     .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid-2,
-    .notices { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
     .routes { grid-template-columns: repeat(4, 1fr); }
 
     .card,
-    .notice,
     .route-card {
       border-radius: var(--radius);
       padding: 18px;
     }
 
     .card h3,
-    .notice h3,
     .route-card h3 {
       display: flex;
       gap: 10px;
@@ -248,15 +232,10 @@
     }
 
     .card p,
-    .notice p,
     .route-card p {
       margin-top: 10px;
       color: var(--muted);
       line-height: 1.52;
-    }
-
-    .notice {
-      border-left: 7px solid var(--accent);
     }
 
     .filters {
@@ -428,7 +407,6 @@
       .hero,
       .grid-3,
       .grid-2,
-      .notices,
       .stack-body {
         grid-template-columns: 1fr;
       }
@@ -443,7 +421,6 @@
         border-radius: 24px;
         flex-wrap: wrap;
       }
-      .brand { flex: 1 1 100%; justify-content: center; }
       .language { flex: 1 1 100%; justify-content: center; }
       .hero { grid-template-columns: 1fr; border-radius: 28px; padding: 22px; }
       .routes { grid-template-columns: 1fr; }
@@ -464,9 +441,8 @@
   </svg>
 
   <header class="page-header" aria-label="Language selector">
-    <div class="brand" data-i18n="headerBrand">Laboratorio IA local</div>
     <div class="language" aria-label="Language selector">
-      <button type="button" data-lang="ca" aria-pressed="false"><span aria-hidden="true">🏴</span> Català</button>
+      <button type="button" data-lang="ca" aria-pressed="false"><span aria-hidden="true">🤖</span> Català</button>
       <button type="button" data-lang="es" aria-pressed="true"><span aria-hidden="true">🇪🇸</span> Castellano</button>
       <button type="button" data-lang="en" aria-pressed="false"><span aria-hidden="true">🇬🇧</span> English</button>
     </div>
@@ -508,14 +484,8 @@
         <article class="card"><h3><span class="icon" style="--accent: var(--moss); --soft: #e7efe2;"><svg><use href="#i-agent"></use></svg></span><span data-i18n="p1Title">La IA no sustituye tu voluntad</span></h3><p data-i18n="p1Text">Un modelo puede proponer, resumir o ejecutar pasos, pero tu decides el objetivo.</p></article>
         <article class="card"><h3><span class="icon" style="--accent: var(--gold); --soft: #f8efd8;"><svg><use href="#i-lab"></use></svg></span><span data-i18n="p2Title">La lentitud enseña</span></h3><p data-i18n="p2Text">Cuando un modelo tarda, pregunta que esperas, que podria fallar y como sabras si el resultado sirve.</p></article>
         <article class="card"><h3><span class="icon" style="--accent: var(--plum); --soft: #ede9f0;"><svg><use href="#i-git"></use></svg></span><span data-i18n="p3Title">Git es memoria del proyecto</span></h3><p data-i18n="p3Text">Git guarda versiones y ayuda a revisar lo que cambia antes de aceptarlo.</p></article>
-      </div>
-    </section>
-
-    <section id="notices">
-      <h2 class="section-title"><span class="icon" style="--accent: var(--danger); --soft: #f7e2e3;"><svg><use href="#i-shield"></use></svg></span><span data-i18n="noticesTitle">Avisos antes de elegir ruta</span></h2>
-      <div class="notices">
-        <article class="notice" style="--accent: var(--danger);"><h3><span data-i18n="securityTitle">Seguridad y privacidad</span></h3><p data-i18n="securityText">No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.</p></article>
-        <article class="notice" style="--accent: var(--gold);"><h3><span data-i18n="commandsDisclaimerTitle">Comandos de ejemplo</span></h3><p data-i18n="commandsDisclaimerText">Los comandos son una ruta posible para practicar. En macOS muchas herramientas tambien se instalan desde la web oficial del proyecto: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.</p></article>
+        <article class="card"><h3><span class="icon" style="--accent: var(--danger); --soft: #f7e2e3;"><svg><use href="#i-shield"></use></svg></span><span data-i18n="securityTitle">Seguridad y privacidad</span></h3><p data-i18n="securityText">No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.</p></article>
+        <article class="card"><h3><span class="icon" style="--accent: var(--clay); --soft: #f3e7d9;"><svg><use href="#i-terminal"></use></svg></span><span data-i18n="commandsDisclaimerTitle">Comandos de ejemplo</span></h3><p data-i18n="commandsDisclaimerText">Los comandos son una ruta posible para practicar. En macOS muchas herramientas tambien se instalan desde la web oficial del proyecto: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.</p></article>
       </div>
     </section>
 
@@ -623,7 +593,6 @@ open http://localhost:3000</code></pre></div></div>
   <script>
     const translations = {
       es: {
-        headerBrand: 'Laboratorio IA local',
         eyebrow: 'Guia de laboratorio IA local para Mac',
         title: 'Montar ecosistemas de IA para aprender con control',
         lead: 'El objetivo no es tener el modelo mas potente ni ganar una carrera de productividad. Es aprender a pensar con herramientas: medir recursos, decidir que delegas, entender que ocurre en tu maquina y construir proyectos propios con paciencia.',
@@ -632,7 +601,7 @@ open http://localhost:3000</code></pre></div></div>
         p1Title: 'La IA no sustituye tu voluntad', p1Text: 'Un modelo puede proponer, resumir o ejecutar pasos, pero tu decides el objetivo.',
         p2Title: 'La lentitud enseña', p2Text: 'Cuando un modelo tarda, pregunta que esperas, que podria fallar y como sabras si el resultado sirve.',
         p3Title: 'Git es memoria del proyecto', p3Text: 'Git guarda versiones y ayuda a revisar lo que cambia antes de aceptarlo.',
-        noticesTitle: 'Avisos antes de elegir ruta', securityTitle: 'Seguridad y privacidad', securityText: 'No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.',
+        securityTitle: 'Seguridad y privacidad', securityText: 'No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.',
         commandsDisclaimerTitle: 'Comandos de ejemplo', commandsDisclaimerText: 'Los comandos son una ruta posible para practicar. En macOS muchas herramientas tambien se instalan desde la web oficial del proyecto: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.',
         routesTitle: 'Elige un itinerario de pruebas', filterAll: 'Todos', filterChat: 'Chat local', filterCode: 'Codigo + Git', filterAgent: 'Agentes', filterFull: 'Laboratorio completo',
         routeChatTitle: 'LM Studio', routeChatText: 'Chat visual con Gemma o Ministral 3B para empezar sin pelear con Docker.',
@@ -655,7 +624,6 @@ open http://localhost:3000</code></pre></div></div>
         footer: 'Guia pensada para explorar capacidades con calma: probar, observar, comparar, guardar aprendizajes y construir proyectos propios.', copied: 'Copiado', select: 'Selecciona'
       },
       ca: {
-        headerBrand: "Laboratori d'IA local",
         eyebrow: "Guia de laboratori d'IA local per a Mac",
         title: "Muntar ecosistemes d'IA per aprendre amb control",
         lead: "L'objectiu no es tenir el model mes potent ni guanyar una cursa de productivitat. Es aprendre a pensar amb eines: mesurar recursos, decidir que delegues, entendre que passa a la teva maquina i construir projectes propis amb paciencia.",
@@ -664,7 +632,7 @@ open http://localhost:3000</code></pre></div></div>
         p1Title: "La IA no substitueix la teva voluntat", p1Text: "Un model pot proposar, resumir o executar passos, pero tu decideixes l'objectiu.",
         p2Title: "La lentitud ensenya", p2Text: "Quan un model triga, pregunta't que esperes, que podria fallar i com sabras si el resultat serveix.",
         p3Title: "Git es memoria del projecte", p3Text: "Git desa versions i ajuda a revisar que canvia abans d'acceptar-ho.",
-        noticesTitle: "Avisos abans de triar ruta", securityTitle: "Seguretat i privadesa", securityText: "No enganxis contrasenyes, claus API, tokens ni dades privades en eines que no entens. Local no vol dir automaticament segur.",
+        securityTitle: "Seguretat i privadesa", securityText: "No enganxis contrasenyes, claus API, tokens ni dades privades en eines que no entens. Local no vol dir automaticament segur.",
         commandsDisclaimerTitle: "Ordres d'exemple", commandsDisclaimerText: "Les ordres son una ruta possible per practicar. A macOS moltes eines tambe s'instal·len des del web oficial del projecte: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.",
         routesTitle: "Tria un itinerari de proves", filterAll: "Tots", filterChat: "Xat local", filterCode: "Codi + Git", filterAgent: "Agents", filterFull: "Laboratori complet",
         routeChatTitle: "LM Studio", routeChatText: "Xat visual amb Gemma o Ministral 3B per comencar sense barallar-se amb Docker.",
@@ -687,7 +655,6 @@ open http://localhost:3000</code></pre></div></div>
         footer: "Guia pensada per explorar capacitats amb calma: provar, observar, comparar, guardar aprenentatges i construir projectes propis.", copied: "Copiat", select: "Selecciona"
       },
       en: {
-        headerBrand: 'Local AI lab',
         eyebrow: 'Local AI lab guide for Mac',
         title: 'Build AI ecosystems to learn with control',
         lead: 'The goal is not to run the most powerful model or win a productivity race. It is to learn how to think with tools: measure resources, choose what to delegate, understand what happens on your machine, and patiently build projects of your own.',
@@ -696,7 +663,7 @@ open http://localhost:3000</code></pre></div></div>
         p1Title: 'AI does not replace your will', p1Text: 'A model can suggest, summarize, or run steps, but you decide the objective.',
         p2Title: 'Slowness teaches', p2Text: 'When a model takes time, ask what you expect, what may fail, and how you will know whether the result is useful.',
         p3Title: 'Git is project memory', p3Text: 'Git stores versions and helps you review what changed before accepting it.',
-        noticesTitle: 'Read this before choosing a route', securityTitle: 'Security and privacy', securityText: 'Do not paste passwords, API keys, tokens, or private data into tools you do not understand. Local does not automatically mean safe.',
+        securityTitle: 'Security and privacy', securityText: 'Do not paste passwords, API keys, tokens, or private data into tools you do not understand. Local does not automatically mean safe.',
         commandsDisclaimerTitle: 'Example commands', commandsDisclaimerText: 'The commands are one possible practice path. On macOS many tools can also be installed from the official project website: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.',
         routesTitle: 'Choose a test route', filterAll: 'All', filterChat: 'Local chat', filterCode: 'Code + Git', filterAgent: 'Agents', filterFull: 'Full lab',
         routeChatTitle: 'LM Studio', routeChatText: 'Visual chat with Gemma or Ministral 3B, a gentle start without wrestling Docker.',
