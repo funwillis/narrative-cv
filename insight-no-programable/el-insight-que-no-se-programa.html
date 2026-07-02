@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El insight que no se programa · Krishnamurti, filosofía occidental y Gestalt</title>
+  <style>
+    :root {
+      --bg: #efe6d9;
+      --paper: rgba(255, 250, 244, 0.92);
+      --paper-strong: #fffaf4;
+      --ink: #211a18;
+      --muted: #6b5d56;
+      --line: rgba(86, 67, 56, 0.16);
+      --rust: #b46b49;
+      --lake: #366a79;
+      --olive: #717d4d;
+      --gold: #c69b4c;
+      --plum: #6e5566;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.64), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(54, 106, 121, 0.15), transparent 22%),
+        radial-gradient(circle at 78% 78%, rgba(180, 107, 73, 0.12), transparent 24%),
+        linear-gradient(180deg, #f4ecdf 0%, #e8d8c7 54%, #dcc8b4 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .jump a,
+    .mini-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p, ul { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -88px;
+      bottom: -100px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110, 85, 102, 0.2), rgba(110, 85, 102, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .badge,
+    .quote-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.8);
+      font-size: 12px;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.9rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy,
+    .section-card p,
+    .section-card li,
+    .closing p,
+    td,
+    blockquote {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 68ch;
+      font-size: 1.05rem;
+    }
+
+    .hero-side,
+    .grid-2,
+    .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-side { align-content: start; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .note,
+    .mini-card,
+    .quote-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.82);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #231b18 0%, #43322d 100%);
+      color: #fff8f1;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .note strong,
+    .mini-card strong,
+    .quote-card strong,
+    td strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.18rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+
+    .section-card h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .jump {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .jump a,
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .quote-card blockquote {
+      margin: 12px 0 0;
+      padding-left: 14px;
+      border-left: 3px solid rgba(54, 106, 121, 0.28);
+      font-size: 1rem;
+    }
+
+    .quote-meta {
+      margin-top: 12px;
+      color: #8a6732;
+      background: rgba(198, 155, 76, 0.14);
+    }
+
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1180px;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .closing {
+      background:
+        radial-gradient(circle at top right, rgba(54, 106, 121, 0.12), transparent 28%),
+        var(--paper);
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body { padding-top: 118px; }
+      .project-nav {
+        width: calc(100vw - 20px);
+        flex-wrap: wrap;
+      }
+      .project-nav a { flex: 1 1 calc(50% - 8px); }
+      .hero,
+      .section-card,
+      .table-shell,
+      .closing {
+        border-radius: 28px;
+      }
+      .hero,
+      .section-card,
+      .closing,
+      .table-shell {
+        padding: 22px;
+      }
+      h1 { font-size: clamp(2.4rem, 13vw, 4rem); }
+      main { width: min(1320px, calc(100vw - 18px)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="#mapa">Mapa comparativo</a>
+    <a href="../en/unprogrammable-insight/unprogrammable-insight.html">English</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Krishnamurti · filosofía occidental · Gestalt</span>
+        <h1>El insight que no se programa</h1>
+        <p class="hero-copy">
+          La máquina puede repetir una verdad formulada. Puede archivarla, recombinarla y devolverla con elegancia. Lo
+          que no puede hacer, en el sentido fuerte de Krishnamurti, es <strong>ver</strong> que el apego corrompe y que
+          esa corrupción no se resuelve con más doctrina, sino con una percepción viva. La inteligencia humana aparece
+          aquí no como almacenamiento superior, sino como capacidad de desidentificación, contacto y transformación.
+        </p>
+        <div class="jump">
+          <a href="#topologia">Topología del problema</a>
+          <a href="#mapa">Puente con Occidente</a>
+          <a href="#gestalt">Lectura gestáltica</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <aside class="note dark">
+          <span class="badge">Idea-fuerza</span>
+          <strong>El ordenador repite una verdad programada. La mente humana puede tener insight sobre ella.</strong>
+          <p>
+            En esa diferencia no entra solo la potencia de cálculo. Entra la posibilidad de ver un hecho sin quedar
+            esclavizado por el hábito, el miedo o la pertenencia.
+          </p>
+        </aside>
+        <aside class="note">
+          <span class="badge">Tesis visual</span>
+          <strong>Repetición no es comprensión. Comprensión no es mera opinión. Insight es contacto transformador.</strong>
+          <p>
+            La filosofía occidental lo rozó con nombres distintos: noesis, juicio, intuición moral, presencia
+            encarnada. Perls lo baja al suelo: awareness, contacto y responsabilidad en el aquí y ahora.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="section-label" id="topologia">Topología del problema</div>
+    <section class="section-card">
+      <h2>Tres niveles que conviene no mezclar</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <span class="badge">1. Máquina</span>
+          <strong>Procesa símbolos y devuelve consistencia formal.</strong>
+          <p>Puede decir que el apego produce conflicto porque alguien lo escribió, lo etiquetó o lo modeló. Su verdad es operativa, no existencial.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">2. Yo apegado</span>
+          <strong>También repite, aunque se crea espontáneo.</strong>
+          <p>El humano sin insight recita ideas ajenas, se justifica, se defiende y llama pensamiento propio a la costumbre emocional de su biografía.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">3. Mente lúcida</span>
+          <strong>Ve el hecho y queda afectada por lo visto.</strong>
+          <p>Insight significa que la percepción desarma el mecanismo. No se limita a describir la cárcel: pierde interés en seguir habitándola.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Núcleo krishnamurtiano</div>
+    <section class="section-card">
+      <h2>La inteligencia como visión y no como almacenamiento</h2>
+      <div class="grid-2">
+        <article class="quote-card">
+          <span class="badge">Krishnamurti</span>
+          <strong>La diferencia decisiva no es hablar de verdad, sino verla</strong>
+          <blockquote>
+            El ordenador puede decir todo esto y repetirlo porque ha sido programado así. La mente humana puede ir más
+            allá del apego y ver la verdad de que el apego implica corrupción.
+          </blockquote>
+          <div class="quote-meta">Fragmento base aportado por Bernat</div>
+        </article>
+        <article class="quote-card">
+          <span class="badge">Lectura operativa</span>
+          <strong>Insight no es acumular tesis correctas</strong>
+          <blockquote>
+            Si la percepción no altera la relación con el deseo, el miedo, la posesión o la imagen, seguimos en el
+            reino de la explicación elegante.
+          </blockquote>
+          <blockquote>
+            La mente verdaderamente humana no es la que contiene más frases sabias, sino la que puede quedar desnuda
+            ante un hecho sin huir de él.
+          </blockquote>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label" id="mapa">Puente con Occidente</div>
+    <section class="table-shell">
+      <h2>Cómo dialoga esta idea con la filosofía occidental</h2>
+      <p>
+        No se trata de fingir equivalencias perfectas. Se trata de reconocer una familia de intuiciones: la verdad no
+        se reduce a repetir fórmulas; exige un modo de presencia, juicio o visión que reorganiza al sujeto.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Autor / línea</th>
+            <th>Problema central</th>
+            <th>Afinidad con Krishnamurti</th>
+            <th>Matiz importante</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sócrates y Platón</strong></td>
+            <td>Distinguir entre doxa repetida y conocimiento que transforma el alma.</td>
+            <td>La verdad no vale por su recitación, sino porque reordena la vida del que la ve.</td>
+            <td>Platón conserva una metafísica fuerte; Krishnamurti sospecha de todo sistema que se vuelva refugio mental.</td>
+          </tr>
+          <tr>
+            <td><strong>Aristóteles</strong></td>
+            <td>La inteligencia práctica no es receta fija, sino discernimiento en situación.</td>
+            <td>Como la <em>phronesis</em>, el insight no es dato inerte: es juicio vivo ante lo real.</td>
+            <td>Aristóteles valora hábito y formación del carácter; Krishnamurti subraya la ruptura con el condicionamiento.</td>
+          </tr>
+          <tr>
+            <td><strong>Spinoza</strong></td>
+            <td>Pasar de la pasión que nos arrastra al conocimiento que aumenta potencia y libertad.</td>
+            <td>El apego como servidumbre afectiva recuerda la esclavitud pasional spinozista.</td>
+            <td>Spinoza confía más en el orden racional; Krishnamurti empuja hacia una percepción inmediata no sistemática.</td>
+          </tr>
+          <tr>
+            <td><strong>Kant</strong></td>
+            <td>No basta usar el entendimiento técnicamente: importa la autonomía del juicio.</td>
+            <td>La dignidad humana aparece cuando no delega del todo su orientación en mecanismos externos.</td>
+            <td>Kant formaliza la razón; Krishnamurti la despsicologiza y pide ver el hecho antes que normarlo.</td>
+          </tr>
+          <tr>
+            <td><strong>Fenomenología</strong></td>
+            <td>Volver a la experiencia misma antes de cubrirla con teorías.</td>
+            <td>La invitación a ver sin pantalla conecta con Husserl, Merleau-Ponty y la primacía del aparecer.</td>
+            <td>Krishnamurti radicaliza esto en clave ética y afectiva: mirar sin residuo de posesión ni defensa.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label" id="gestalt">Lectura gestáltica</div>
+    <section class="section-card">
+      <h2>Lo que Fritz Perls añade: cuerpo, contacto y responsabilidad</h2>
+      <div class="grid-3">
+        <article class="mini-card">
+          <span class="badge">Awareness</span>
+          <strong>Insight no es teoría sobre uno mismo; es darse cuenta.</strong>
+          <p>Perls desconfiaría del sujeto que explica impecablemente su neurosis mientras sigue idénticamente capturado por ella. El criterio es vivencial, no retórico.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Contacto</span>
+          <strong>El apego distorsiona la frontera entre yo y mundo.</strong>
+          <p>Cuando necesito poseer, agradar o controlar, ya no contacto: manipulo. El apego rompe la percepción porque convierte al otro y a mí en función de una carencia.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Responsabilidad</span>
+          <strong>Madurar es dejar de pedir sustitutos.</strong>
+          <p>La computadora puede ser un asistente. El problema empieza cuando la usamos como coartada para no mirar, no elegir y no sostener la angustia de pensar por cuenta propia.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Patologías del no-insight</div>
+    <section class="section-card">
+      <h2>Perls ayuda a nombrar cómo se falsifica la inteligencia</h2>
+      <div class="grid-2">
+        <article class="mini-card">
+          <strong>Introyección</strong>
+          <p>Tragarse ideas hechas y vivirlas como si fueran propias. Aquí el humano se parece mucho a la máquina: repite sin metabolizar.</p>
+          <strong>Proyección</strong>
+          <p>Atribuir fuera lo que no tolero ver dentro. El apego se vende como amor, virtud o necesidad histórica.</p>
+        </article>
+        <article class="mini-card">
+          <strong>Confluencia</strong>
+          <p>Confundir unión con fusión. Donde hay apego, muchas veces no hay encuentro sino miedo a separarse.</p>
+          <strong>Retroflexión</strong>
+          <p>La energía que no sale en acto lúcido vuelve como tensión, culpa o autoagresión. La inteligencia queda ocupada administrando defensas.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">Cierre práctico</div>
+    <section class="closing">
+      <h2>Una fórmula sobria para esta pieza</h2>
+      <p>
+        Desde Occidente podríamos decirlo así: la verdad no se agota en proposiciones correctas; exige juicio,
+        presencia y transformación del sujeto. Desde Perls: no hay insight si no hay awareness en el cuerpo, en la
+        emoción y en la frontera de contacto. Desde Krishnamurti: no hay inteligencia mientras la mente siga mirando a
+        través de la pantalla del apego.
+      </p>
+      <p style="margin-top: 14px;">
+        La máquina puede ayudarnos a ordenar el mapa. Pero el paso decisivo sigue siendo humano: ver sin refugio,
+        sostener lo visto y dejar que esa visión cambie la vida.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

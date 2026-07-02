@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dominar un lenguaje · precisión, símbolo y realidad</title>
+  <style>
+    :root {
+      --bg: #efe4d4;
+      --paper: rgba(255, 251, 245, 0.92);
+      --paper-strong: #fff9f1;
+      --ink: #201917;
+      --muted: #6f625a;
+      --line: rgba(96, 74, 60, 0.16);
+      --clay: #b56a43;
+      --teal: #3f6970;
+      --sage: #7a8451;
+      --wine: #7d5b67;
+      --gold: #c69b59;
+      --night: #251d1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.66), transparent 22%),
+        radial-gradient(circle at 84% 14%, rgba(63, 105, 112, 0.14), transparent 22%),
+        radial-gradient(circle at 78% 78%, rgba(181, 106, 67, 0.12), transparent 24%),
+        linear-gradient(180deg, #f6efe6 0%, #e7d8c4 52%, #d9c3aa 100%);
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .mini-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    h1, h2, h3, p, ul { margin: 0; }
+    h1, h2 { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+
+    .hero,
+    .section-card,
+    .table-shell,
+    .closing {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      border-radius: 34px;
+    }
+
+    .hero {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -100px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 155, 89, 0.24), rgba(198, 155, 89, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow,
+    .badge,
+    .pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 250, 244, 0.82);
+      font-size: 12px;
+    }
+
+    .pair {
+      padding: 6px 10px;
+      background: rgba(198, 155, 89, 0.16);
+      color: #87672d;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 10ch;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy,
+    .section-card p,
+    .closing p,
+    td,
+    li {
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 70ch;
+      font-size: 1.04rem;
+    }
+
+    .hero-side,
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-side { align-content: start; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .note,
+    .mini-card,
+    .axis-card {
+      border-radius: 26px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.84);
+    }
+
+    .note.dark {
+      background: linear-gradient(155deg, #251d1a 0%, #46342f 100%);
+      color: #fff8f1;
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .note strong,
+    .mini-card strong,
+    .axis-card strong {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+      line-height: 1.16;
+      color: var(--ink);
+    }
+
+    .note.dark strong,
+    .note.dark p {
+      color: inherit;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 4px 14px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(82, 64, 54, 0.34);
+    }
+
+    .section-card,
+    .closing {
+      padding: 26px;
+    }
+
+    .section-card h2,
+    .table-shell h2,
+    .closing h2 {
+      font-size: 2rem;
+      line-height: 1.03;
+      margin-bottom: 10px;
+    }
+
+    .chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chain-step,
+    .chain-arrow {
+      border-radius: 999px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 244, 0.88);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .chain-arrow {
+      color: var(--muted);
+      background: rgba(198, 155, 89, 0.1);
+    }
+
+    .table-shell {
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1120px;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: var(--paper-strong);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    td strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .mini-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    .quote-line {
+      margin-top: 18px;
+      padding-left: 16px;
+      border-left: 3px solid rgba(63, 105, 112, 0.3);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.14rem;
+      line-height: 1.45;
+    }
+
+    .closing ul {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../es/index.html">Ir a la raíz</a>
+    <a href="../es/constelaciones/index.html">Constelaciones de ideas</a>
+    <a href="../lectura-espiritual/leer-sin-obedecer.html">Pieza relacionada</a>
+    <a href="../en/language-mastery/mastering-a-language.html">English</a>
+  </div>
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Lenguaje · precisión · atención</span>
+        <h1>Dominar un lenguaje</h1>
+        <p class="hero-copy">
+          Dominar un lenguaje no es hablar mucho, sonar culto ni acumular palabras finas como abalorios de LinkedIn.
+          Es otra cosa: discriminar con precisión, detectar ambigüedad, cambiar de registro cuando toca, escribir sin
+          ruido innecesario y, sobre todo, no confundir nunca el símbolo con el hecho. Dijkstra recuerda que el rigor
+          formal no es un castigo, sino un privilegio contra la tontería. Krishnamurti recuerda que la palabra no es la
+          cosa. Juntos dibujan una tesis sobria: el buen lenguaje estrecha el margen del disparate, pero no reemplaza a
+          la realidad que intenta señalar.
+        </p>
+        <div class="mini-links">
+          <span class="pair">Dijkstra</span>
+          <span class="pair">Krishnamurti</span>
+          <span class="pair">Formalismo</span>
+          <span class="pair">Percepción</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <article class="note dark">
+          <span class="badge">Tesis central</span>
+          <strong>Dominar un lenguaje es pensar con más nitidez sin arrodillarse ante las palabras.</strong>
+          <p>Ni verborrea emotiva ni fetichismo técnico: precisión suficiente para no decir estupideces, humildad
+            suficiente para no adorar el mapa.</p>
+        </article>
+        <article class="note">
+          <span class="badge">Definición operativa</span>
+          <strong>Un lenguaje dominado reduce fricción, error y autoengaño.</strong>
+          <p>Sirve para describir, preguntar, dudar, refinar y coordinar mejor. Cuando falla, multiplica niebla,
+            pose y malentendido.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">1. Qué significa de verdad</div>
+    <section class="section-card">
+      <h2>Dominio no es brillo verbal: es capacidad de distinción</h2>
+      <p>
+        El dominio real aparece cuando una persona puede usar el lenguaje como instrumento de discriminación fina.
+        Sabe nombrar sin inflar, resumir sin mutilar, matizar sin volverse gelatinosa y formalizar cuando hace falta.
+        No depende de un único registro: puede hablar con precisión humana en conversación corriente, y con precisión
+        técnica cuando el problema exige reglas más estrechas.
+      </p>
+      <div class="grid-4" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">1</span>
+          <strong>Distinguir</strong>
+          <p>No meter en el mismo saco cosa, opinión, metáfora, hipótesis, recuerdo y dato.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">2</span>
+          <strong>Comprimir</strong>
+          <p>Decir mucho con poco, sin que la brevedad destruya la estructura de lo que importa.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">3</span>
+          <strong>Cambiar de registro</strong>
+          <p>Hablar distinto con una niña, un colega, un lector culto o una máquina sin traicionar el contenido.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">4</span>
+          <strong>Formalizar</strong>
+          <p>Saber cuándo conviene estrechar el lenguaje con definiciones, sintaxis o reglas explícitas.</p>
+        </article>
+      </div>
+      <p class="quote-line">
+        Cuanto mejor dominas un lenguaje, menos dependes del truco, del relleno y del equívoco sentimental.
+      </p>
+    </section>
+
+    <div class="section-label">2. Dijkstra contra la niebla</div>
+    <section class="section-card">
+      <h2>Por qué el rigor formal no empobrece: protege</h2>
+      <p>
+        En <em>EWD 667</em>, Dijkstra se burla con razón de la fantasía de que lo “natural” simplifica automáticamente
+        el pensamiento técnico. Su golpe más fino es este: las lenguas naturales permiten demasiada holgura para que la
+        tontería no sea obvia. Por eso los lenguajes formales no deben verse como una condena, sino como un filtro:
+        pocas reglas simples bastan para expulsar montones de nonsense que en el habla corriente pasan por profundos.
+      </p>
+      <div class="chain">
+        <span class="chain-step">Problema complejo</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Definiciones claras</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Sintaxis controlada</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-step">Menos error invisible</span>
+      </div>
+      <div class="grid-3" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">Dijkstra ve</span>
+          <strong>La holgura verbal como riesgo.</strong>
+          <p>Cuanta más elasticidad tiene una frase, más fácil es esconder confusión bajo estilo convincente.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Dijkstra corrige</span>
+          <strong>La nostalgia de la comodidad.</strong>
+          <p>Un interfaz más “natural” puede repartir mejor el trabajo o puede doblarlo para ambos lados. Muchas veces
+            lo segundo.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Dijkstra defiende</span>
+          <strong>La estrechez útil.</strong>
+          <p>Un lenguaje más estrecho obliga a pensar mejor antes de actuar. Molesta, sí. También evita estupideces
+            caras.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">3. Krishnamurti contra la idolatría</div>
+    <section class="section-card">
+      <h2>La palabra sirve; la palabra no manda</h2>
+      <p>
+        Krishnamurti ataca el otro vicio: creer que, porque hemos nombrado algo, ya lo hemos comprendido. Su martillo es
+        sencillo y brutal: la palabra no es la cosa; una idea no es un hecho; solo lo que es puede ser transformado.
+        Si Dijkstra limpia el canal, Krishnamurti limpia la conciencia del canal. Uno combate la imprecisión; el otro,
+        la hipnosis verbal.
+      </p>
+      <div class="grid-2" style="margin-top: 18px;">
+        <article class="axis-card">
+          <span class="badge">Corrección perceptiva</span>
+          <strong>Nombrar no equivale a ver.</strong>
+          <p>Etiquetar “miedo”, “amor”, “éxito” o “trauma” puede ayudar a orientar la observación, pero también puede
+            sustituirla con un paquete verbal ya masticado.</p>
+        </article>
+        <article class="axis-card">
+          <span class="badge">Corrección psicológica</span>
+          <strong>Mucho discurso interior es ruido autorreferente.</strong>
+          <p>Cuando el lenguaje interno gira sin contacto con el hecho, no aclara: recrea pasado, proyecta futuro y
+            fabrica identidad a granel.</p>
+        </article>
+      </div>
+      <p class="quote-line">
+        El lenguaje maduro apunta mejor porque acepta su límite: señalar no es poseer.
+      </p>
+    </section>
+
+    <div class="section-label">4. Unión fértil</div>
+    <section class="section-card">
+      <h2>Rigor suficiente para no delirar; humildad suficiente para no absolutizar símbolos</h2>
+      <p>
+        Juntar a Dijkstra con Krishnamurti da un criterio bastante decente para casi cualquier oficio intelectual. El
+        primero recuerda que sin forma clara la mente se vuelve barro locuaz. El segundo recuerda que sin atención al
+        hecho la forma clara puede convertirse en ídolo elegante. El dominio pleno no consiste en elegir uno contra
+        otro, sino en sostener la doble disciplina a la vez.
+      </p>
+      <div class="grid-3" style="margin-top: 18px;">
+        <article class="mini-card">
+          <span class="badge">Sin Dijkstra</span>
+          <strong>La sensibilidad se vuelve niebla.</strong>
+          <p>Todo parece profundo porque nada queda suficientemente delimitado como para fallar con claridad.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Sin Krishnamurti</span>
+          <strong>La precisión se vuelve soberbia.</strong>
+          <p>El sistema verbal queda tan pulcro que olvida revisar si aún toca la realidad que pretendía describir.</p>
+        </article>
+        <article class="mini-card">
+          <span class="badge">Con ambos</span>
+          <strong>El lenguaje se vuelve herramienta de lucidez.</strong>
+          <p>Más capacidad de coordinar, pensar y depurar; menos probabilidad de confundir elegancia verbal con verdad.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-label">5. Cómo se reconoce</div>
+    <section class="table-shell">
+      <h2>Señales prácticas de dominio lingüístico</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Plano</th>
+            <th>Uso pobre</th>
+            <th>Uso competente</th>
+            <th>Uso excelente</th>
+            <th>Riesgo típico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Conversación ordinaria</strong>Escucha, respuesta, tono y contexto.</td>
+            <td>Habla por descarga, repite clichés, atropella matices.</td>
+            <td>Se hace entender y ajusta el registro al interlocutor.</td>
+            <td>Piensa mientras habla, escucha de verdad y reformula sin caricaturizar.</td>
+            <td>Confundir fluidez con comprensión.</td>
+          </tr>
+          <tr>
+            <td><strong>Escritura</strong>Estructura, síntesis, progresión.</td>
+            <td>Acumula frases decorativas o abstractas sin arquitectura interna.</td>
+            <td>Ordena ideas con claridad, poda redundancia y deja una tesis verificable.</td>
+            <td>Condensa complejidad sin perder tensión ni precisión semántica.</td>
+            <td>Usar densidad verbal para tapar huecos de pensamiento.</td>
+          </tr>
+          <tr>
+            <td><strong>Lenguaje técnico o formal</strong>Definiciones, reglas, restricciones.</td>
+            <td>Resiste las definiciones y se irrita con la sintaxis exacta.</td>
+            <td>Acepta límites formales cuando mejoran la coordinación y el control del error.</td>
+            <td>Sabe diseñar o elegir el nivel de formalidad justo para el problema.</td>
+            <td>Fetichizar el formalismo y olvidar el mundo al que servía.</td>
+          </tr>
+          <tr>
+            <td><strong>Diálogo interior</strong>Nombrar estados, pensar, revisar.</td>
+            <td>Rumia etiquetas heredadas y guiones de identidad.</td>
+            <td>Usa palabras para aclararse y detectar sesgos.</td>
+            <td>Puede suspender el lenguaje cuando estorba y volver a él cuando ilumina.</td>
+            <td>Confundir la narración propia con el hecho vivo.</td>
+          </tr>
+          <tr>
+            <td><strong>Aprendizaje</strong>Lectura, estudio, transferencia.</td>
+            <td>Memoriza términos sin digestión real.</td>
+            <td>Relaciona conceptos con ejemplos, contraejemplos y usos.</td>
+            <td>Transfiere principios entre dominios sin forzar analogías huecas.</td>
+            <td>Creer que recordar vocabulario equivale a saber.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="section-label">6. Fórmula breve</div>
+    <section class="closing">
+      <h2>Entonces, ¿por qué importa tanto?</h2>
+      <p>
+        Porque casi toda vida adulta transcurre en medio de símbolos: contratos, promesas, instrucciones, noticias,
+        diagnósticos, rezos, código, leyes, relatos íntimos. Quien no domina el lenguaje queda más expuesto a dos
+        tiranías bastante vulgares:
+      </p>
+      <ul>
+        <li>la tiranía de la confusión ajena, cuando otros nombran por él lo que ocurre;</li>
+        <li>la tiranía de su propia confusión, cuando sus palabras internas sustituyen la observación.</li>
+      </ul>
+      <p class="quote-line">
+        Dominar un lenguaje es poder decir mejor, pensar mejor y callar mejor.
+      </p>
+      <div class="mini-links">
+        <a class="mini-link" href="../lectura-espiritual/leer-sin-obedecer.html">Seguir con Leer sin obedecer</a>
+        <a class="mini-link" href="../jnana-yoga-indagacion/infinito-de-la-consciencia.html">Ir a El infinito de la consciencia</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

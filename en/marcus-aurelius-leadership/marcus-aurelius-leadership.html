@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoic leadership: Marcus Aurelius and two kinds of certainty</title>
+  <style>
+    :root {
+      --bg: #efe8da;
+      --paper: rgba(255, 250, 241, 0.9);
+      --paper-strong: #fffaf1;
+      --ink: #211b18;
+      --muted: #675d55;
+      --line: rgba(86, 65, 48, 0.18);
+      --red: #9d463a;
+      --blue: #2f6f86;
+      --gold: #c4933f;
+      --olive: #647747;
+      --violet: #73566f;
+      --night: #231b18;
+      --shadow: 0 24px 58px rgba(48, 31, 20, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(47, 111, 134, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, #f6efe2 0%, var(--bg) 52%, #decdb7 100%);
+      background-size: 46px 46px, auto;
+    }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .micro-nav a,
+    .source-list a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    main {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .card,
+    .certainty,
+    .example,
+    .process,
+    .source-box {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 34px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "M";
+      position: absolute;
+      right: 28px;
+      bottom: -78px;
+      color: rgba(156, 118, 55, 0.1);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 18rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin: 0; }
+
+    h1,
+    h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    .eyebrow,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.78);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 10ch;
+      margin-top: 16px;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      max-width: 64ch;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.56;
+    }
+
+    .micro-nav {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .micro-nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 750;
+    }
+
+    .coin {
+      position: relative;
+      z-index: 1;
+      min-height: 100%;
+      border-radius: 30px;
+      padding: 22px;
+      display: grid;
+      align-content: center;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 250, 241, 0.88) 0 35%, rgba(196, 147, 63, 0.24) 36% 52%, transparent 53%),
+        linear-gradient(150deg, #2b211d 0%, #523c30 100%);
+      color: #fff8ee;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .coin-mark {
+      width: min(270px, 74vw);
+      aspect-ratio: 1;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 12px solid rgba(255, 235, 185, 0.36);
+      outline: 1px solid rgba(255, 255, 255, 0.24);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 34%),
+        radial-gradient(circle, #d8ad5d 0%, #a46f2f 68%, #6f4624 100%);
+      color: #fff8e8;
+      box-shadow: inset 0 18px 35px rgba(255, 255, 255, 0.16), inset 0 -22px 32px rgba(71, 39, 20, 0.34);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(4.4rem, 12vw, 8rem);
+      font-weight: 700;
+    }
+
+    .coin p {
+      max-width: 42ch;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.48;
+      opacity: 0.92;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 4px 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: rgba(86, 65, 48, 0.36);
+    }
+
+    .split,
+    .grid,
+    .examples,
+    .process-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .split { grid-template-columns: 1fr 1fr; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .examples { grid-template-columns: repeat(2, 1fr); }
+    .process-grid { grid-template-columns: repeat(4, 1fr); }
+
+    .certainty,
+    .card,
+    .example,
+    .process,
+    .source-box {
+      border-radius: 28px;
+      padding: 22px;
+    }
+
+    .certainty {
+      min-height: 310px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .certainty.fact {
+      border-top: 7px solid var(--blue);
+    }
+
+    .certainty.mission {
+      border-top: 7px solid var(--red);
+      background:
+        linear-gradient(160deg, rgba(157, 70, 58, 0.1), rgba(255, 250, 241, 0.92) 52%),
+        var(--paper);
+    }
+
+    .certainty h2 {
+      font-size: 2.25rem;
+      line-height: 1;
+    }
+
+    .certainty p,
+    .card p,
+    .example p,
+    .process p,
+    .source-box p {
+      color: var(--muted);
+      line-height: 1.54;
+    }
+
+    .callout {
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255, 250, 241, 0.74);
+      border: 1px solid var(--line);
+      font-weight: 750;
+      line-height: 1.32;
+    }
+
+    .bad { color: var(--blue); }
+    .good { color: var(--red); }
+
+    .card h3,
+    .example h3,
+    .process h3 {
+      font-size: 1.18rem;
+      line-height: 1.18;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      min-height: 220px;
+    }
+
+    .metric {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 3rem;
+      line-height: 0.9;
+      font-weight: 700;
+    }
+
+    .example {
+      position: relative;
+      overflow: hidden;
+      min-height: 270px;
+    }
+
+    .example::after {
+      content: attr(data-year);
+      position: absolute;
+      right: 18px;
+      bottom: 12px;
+      color: rgba(33, 27, 24, 0.08);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 4.3rem;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .example h3 {
+      max-width: 18ch;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.75rem;
+    }
+
+    .process {
+      min-height: 210px;
+      border-top: 6px solid var(--olive);
+    }
+
+    .process:nth-child(2) { border-top-color: var(--blue); }
+    .process:nth-child(3) { border-top-color: var(--gold); }
+    .process:nth-child(4) { border-top-color: var(--red); }
+
+    .closing {
+      margin-top: 18px;
+      padding: 28px;
+      border-radius: 30px;
+      background: linear-gradient(155deg, #231b18 0%, #45332b 100%);
+      color: #fff8ee;
+    }
+
+    .closing h2 {
+      max-width: 15ch;
+      font-size: 2.45rem;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .closing p {
+      max-width: 74ch;
+      color: #f4e9da;
+      line-height: 1.56;
+    }
+
+    .source-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .source-list a {
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      body { padding-top: 120px; }
+      .project-nav { border-radius: 24px; flex-wrap: wrap; }
+      .project-nav a { min-width: 42%; }
+      .hero,
+      .split,
+      .grid,
+      .examples,
+      .process-grid { grid-template-columns: 1fr; }
+      .hero { padding: 24px; }
+      .coin { min-height: 360px; }
+      .card,
+      .certainty,
+      .example,
+      .process { min-height: auto; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding-top: 154px; }
+      main { width: min(100vw - 18px, 1240px); }
+      h1 { font-size: 3.05rem; }
+      .hero,
+      .certainty,
+      .card,
+      .example,
+      .process,
+      .source-box,
+      .closing { border-radius: 22px; padding: 18px; }
+      .project-nav a { font-size: 12px; padding: 9px 10px; }
+      .coin-mark { border-width: 9px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="project-nav">
+    <a href="../index.html">🏠 Root</a>
+    <a href="../constellations/index.html">🧭 Constellations</a>
+    <a href="#examples">🏛️ Examples</a>
+    <a href="../../liderazgo-marco-aurelio/liderazgo-marco-aurelio.html">🌍 Español</a>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Stoic leadership · Marcus Aurelius</span>
+        <h1>Two certainties, one authority</h1>
+        <p class="hero-copy">
+          A leader does not lose authority by admitting he lacks complete certainty about the facts. He loses it by
+          pretending to command the data, the future, or the battlefield, and then being exposed by reality. Strong
+          authority rests on another kind of certainty: clear mission, visible values, and an honest process.
+        </p>
+        <nav class="micro-nav">
+          <a href="#certainties">⚖️ Two certainties</a>
+          <a href="#rule">🧱 Rule of command</a>
+          <a href="#examples">🏛️ Marcus in life</a>
+          <a href="#process">🧭 Process</a>
+        </nav>
+      </div>
+      <aside class="coin" aria-label="Marcus Aurelius">
+        <div class="coin-mark">MA</div>
+        <p>
+          His objective was not to look infallible. It was to protect the empire, hold the frontier, and keep the
+          emperor's ego from becoming an operational risk. Quite modern, for a man in a toga with too many problems.
+        </p>
+      </aside>
+    </section>
+
+    <div class="section-label" id="certainties">The mental map</div>
+    <section class="split">
+      <article class="certainty fact">
+        <span class="tag">Certainty 1 · facts</span>
+        <h2>Reality does not obey rank</h2>
+        <p>
+          Data is incomplete, the front changes, the future signs no guarantees. A good leader asks: “Who has better
+          information than I do?” No sane team expects omniscience from command.
+        </p>
+        <div class="callout bad">
+          Bad posture: “I know exactly what is happening and what will happen.” If you fail, and you will, your confidence becomes theater.
+        </div>
+      </article>
+
+      <article class="certainty mission">
+        <span class="tag">Certainty 2 · mission</span>
+        <h2>Direction must be clear</h2>
+        <p>
+          What is non-negotiable is not perfect prediction, but the objective, the values, and the decision process.
+          The clarity that steadies a team is: “we do not know everything, but we know what we are acting for.”
+        </p>
+        <div class="callout good">
+          Good posture: “with the information we have now, this is the most reasonable step; if better evidence appears, we adjust.”
+        </div>
+      </article>
+    </section>
+
+    <div class="section-label" id="rule">The rule of command</div>
+    <section class="grid">
+      <article class="card">
+        <span class="metric">01</span>
+        <h3>Separate data from duty</h3>
+        <p>
+          Data is investigated. Duty is upheld. If you merge them, you end up defending a failed prediction as if it
+          were a moral virtue. Very human. Still a mess.
+        </p>
+      </article>
+      <article class="card">
+        <span class="metric">02</span>
+        <h3>Invite inconvenient information</h3>
+        <p>
+          Asking generals, officers, messengers, or subordinates does not diminish the leader. It protects him from
+          commanding from a mental model while the real world has gone elsewhere.
+        </p>
+      </article>
+      <article class="card">
+        <span class="metric">03</span>
+        <h3>Own the final decision</h3>
+        <p>
+          Accepting a better strategy is not abdication. It is a free decision to use it. Responsibility remains at
+          the top: “I listened, I chose, and I answer for this action.”
+        </p>
+      </article>
+    </section>
+
+    <div class="section-label" id="examples">Marcus Aurelius in life</div>
+    <section class="examples">
+      <article class="example" data-year="161">
+        <span class="tag">Co-rule</span>
+        <h3>Sharing power did not make him smaller</h3>
+        <p>
+          At the start of his reign, Marcus ruled alongside Lucius Verus. The Parthian war was largely conducted by
+          Verus and capable generals such as Avidius Cassius. The lesson: the emperor did not need to be the best
+          technician in every theater; he needed to keep the system oriented.
+        </p>
+      </article>
+
+      <article class="example" data-year="169">
+        <span class="tag">Danubian frontier</span>
+        <h3>Pompeianus, Pertinax, and distributed intelligence</h3>
+        <p>
+          In the Marcomannic Wars, Marcus worked with strong commanders: Claudius Pompeianus, Pertinax, Paternus,
+          Maximianus. The frontier was not held by imperial pose, but by local information, military discipline, and
+          delegated command.
+        </p>
+      </article>
+
+      <article class="example" data-year="170">
+        <span class="tag">Real cost</span>
+        <h3>Selling property before selling smoke</h3>
+        <p>
+          To finance the war, the historical tradition records that Marcus auctioned imperial property. He did not
+          promise cost-free victory or pretend abundance. The mission was to protect the frontier; the process required
+          paying the price.
+        </p>
+      </article>
+
+      <article class="example" data-year="175">
+        <span class="tag">Political crisis</span>
+        <h3>Avidius Cassius: firmness without hysteria</h3>
+        <p>
+          When Cassius proclaimed himself emperor after rumors of Marcus' death, Marcus did not need to overact
+          invulnerability. According to the preserved tradition, he wanted the chance to show mercy. Authority was not
+          revenge; it was the restoration of order.
+        </p>
+      </article>
+
+      <article class="example" data-year="176">
+        <span class="tag">Triumph</span>
+        <h3>Celebrate victory without mistaking it for omniscience</h3>
+        <p>
+          After campaigns against Germanic and Sarmatian enemies, he celebrated a triumph with Commodus. But hostilities
+          returned. A triumph did not abolish uncertainty: it only marked a stage on a still-living frontier.
+        </p>
+      </article>
+
+      <article class="example" data-year="178">
+        <span class="tag">Final campaigns</span>
+        <h3>The strategy changes, the mission remains</h3>
+        <p>
+          In the second Germanic expedition, operations kept adapting to terrain and field command. If a general saw
+          the next step more clearly, accepting it did not remove authority: authority served Rome, not being right in
+          the meeting.
+        </p>
+      </article>
+    </section>
+
+    <div class="section-label" id="process">How this leader speaks</div>
+    <section class="process-grid">
+      <article class="process">
+        <h3>1. Declare factual uncertainty</h3>
+        <p>“The information is partial. I want to hear any data that contradicts our current map.”</p>
+      </article>
+      <article class="process">
+        <h3>2. Reaffirm the mission</h3>
+        <p>“The objective does not change: protect the frontier, preserve discipline, and avoid needless harm.”</p>
+      </article>
+      <article class="process">
+        <h3>3. Choose with what is available</h3>
+        <p>“With what we know now, this is the most reasonable option. It is not prophecy; it is practical judgment.”</p>
+      </article>
+      <article class="process">
+        <h3>4. Absorb responsibility</h3>
+        <p>“If this strategy works, the credit belongs to the team. If it fails because of my choice, I answer for it.”</p>
+      </article>
+    </section>
+
+    <section class="closing">
+      <h2>Authority without theater</h2>
+      <p>
+        Marcus Aurelius' leadership is useful not because he was a marble saint. It is useful because he governed from
+        a recognizable tension: incomplete facts, external pressure, subordinates closer to the terrain, and a mission
+        that could not wait for the universe to deliver a perfect report. Adult authority does not say “I know
+        everything.” It says: “I know what we are protecting, I listen for better information, and I own the decision.”
+      </p>
+    </section>
+
+    <section class="source-box" aria-label="Sources">
+      <h2>Minimal historical base</h2>
+      <p>
+        This piece uses historical examples cautiously: some details come from ancient sources preserved through
+        literary tradition and should be read as narrative support, not as certified minutes from a command meeting.
+      </p>
+      <div class="source-list">
+        <a href="https://www.britannica.com/biography/Marcus-Aurelius-Roman-emperor">Britannica · Marcus Aurelius</a>
+        <a href="https://en.wikipedia.org/wiki/Marcomannic_Wars">Marcomannic Wars</a>
+        <a href="https://en.wikipedia.org/wiki/Avidius_Cassius">Avidius Cassius</a>
+        <a href="https://en.wikipedia.org/wiki/Meditations">Meditations</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

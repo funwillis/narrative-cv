@@ -47,7 +47,9 @@ entre sí y reconducidas a la raíz.
 - `ocio-negocio/ocio-negocio-infografia.html`
 - `termodinamica-psiquica/sol-lenguaje-y-civilizacion.html`
 - `disyuntivas-tecnologicas/tecnologia-y-advertencia-historica.html`
+- `liderazgo-marco-aurelio/liderazgo-marco-aurelio.html`
 - `frontera-humana-ia/soberania-noetica-frontera-humana.html`
+- `insight-no-programable/el-insight-que-no-se-programa.html`
 - `semiotica-no-dualidad/nombrar-no-es-conocer-tabla.html`
 - `principios-tecnologia-humana/principios-tecnologia-humana.html`
 - `janus-fitzgerald/definicion-y-posibilidad.html`
