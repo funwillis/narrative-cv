@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratorio de IA local / Local AI Lab / Laboratori d'IA local</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #efe5d7;
+      --paper: rgba(255, 250, 244, .92);
+      --paper-strong: #fffaf4;
+      --ink: #1f1a17;
+      --muted: #665a52;
+      --line: rgba(82, 64, 54, .16);
+      --lake: #356d7c;
+      --moss: #71824a;
+      --clay: #b76845;
+      --plum: #7c5767;
+      --gold: #b9912f;
+      --danger: #9f3e45;
+      --night: #241c1a;
+      --shadow: 0 24px 58px rgba(49, 31, 21, .12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-top: 92px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Gill Sans", sans-serif;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, .62), transparent 24%),
+        radial-gradient(circle at 88% 14%, rgba(53, 109, 124, .14), transparent 22%),
+        linear-gradient(180deg, #f4ecdf 0%, #eadcca 50%, #dfccb7 100%);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .project-nav {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(980px, calc(100vw - 24px));
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, .86);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-nav a,
+    .language button,
+    .copy,
+    .route-card {
+      font: inherit;
+    }
+
+    .project-nav a {
+      flex: 1 1 0;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    main {
+      width: min(1260px, calc(100vw - 28px));
+      margin: 0 auto 44px;
+    }
+
+    .hero,
+    .panel,
+    .card,
+    .route-card,
+    .stack,
+    .notice {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      border-radius: 36px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+      gap: 24px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .eyebrow,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      background: rgba(255, 250, 244, .8);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    h1,
+    h2 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    h1 {
+      margin-top: 14px;
+      max-width: 11ch;
+      font-size: clamp(2.7rem, 7vw, 5.2rem);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 66ch;
+      color: var(--muted);
+      line-height: 1.56;
+      font-size: 1.04rem;
+    }
+
+    .language {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .language button {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      color: var(--ink);
+      padding: 9px 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .language button[aria-pressed="true"] {
+      background: var(--night);
+      color: #fff8f1;
+      border-color: var(--night);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .screen {
+      min-height: 310px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: #eef1ea;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .screen svg {
+      width: min(96%, 390px);
+      height: auto;
+      display: block;
+    }
+
+    .panel {
+      border-radius: 28px;
+      padding: 20px;
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .section-title {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 28px 4px 14px;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      line-height: 1.05;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--soft, #f1ece3);
+      color: var(--accent, var(--ink));
+    }
+
+    .icon svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .grid-3,
+    .grid-2,
+    .routes,
+    .notices {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2,
+    .notices { grid-template-columns: repeat(2, 1fr); }
+    .routes { grid-template-columns: repeat(4, 1fr); }
+
+    .card,
+    .notice,
+    .route-card {
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .card h3,
+    .notice h3,
+    .route-card h3 {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 1.04rem;
+      line-height: 1.12;
+    }
+
+    .card p,
+    .notice p,
+    .route-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.52;
+    }
+
+    .notice {
+      border-left: 7px solid var(--accent);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 6px 0 16px;
+    }
+
+    .filter {
+      min-height: 39px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      color: var(--ink);
+      padding: 8px 12px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .filter[aria-pressed="true"] {
+      background: var(--night);
+      color: #fff8f1;
+      border-color: var(--night);
+    }
+
+    .route-card {
+      border-top: 6px solid var(--accent);
+      min-height: 205px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      padding: 4px 8px;
+      font-size: .78rem;
+      font-weight: 780;
+      color: #3a302b;
+    }
+
+    .stack {
+      margin-top: 14px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border-top: 7px solid var(--accent);
+    }
+
+    .stack[hidden] { display: none; }
+
+    .stack-head {
+      padding: 18px;
+      background: var(--soft);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .stack-head h3 {
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: clamp(1.28rem, 2.5vw, 1.9rem);
+      line-height: 1.08;
+    }
+
+    .stack-head p {
+      margin-top: 8px;
+      color: #493f39;
+      line-height: 1.5;
+    }
+
+    .difficulty {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper-strong);
+      padding: 6px 10px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .stack-body {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(380px, 1.1fr);
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .steps,
+    .commands {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step b {
+      display: block;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .78rem;
+      margin-bottom: 4px;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .command {
+      background: #111827;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .command-top {
+      min-height: 38px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: .84rem;
+      font-weight: 850;
+    }
+
+    .copy {
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 8px;
+      background: #2b3a53;
+      color: #fff;
+      padding: 5px 8px;
+      font-size: .78rem;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px 14px 14px;
+      color: #f8fafc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .88rem;
+      line-height: 1.48;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1080px) {
+      body { padding-top: 82px; }
+      .hero,
+      .grid-3,
+      .grid-2,
+      .notices,
+      .stack-body {
+        grid-template-columns: 1fr;
+      }
+      .routes { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 680px) {
+      body { padding-top: 0; }
+      main { width: min(100vw - 20px, 1260px); margin-top: 12px; }
+      .project-nav {
+        position: static;
+        transform: none;
+        width: min(100vw - 20px, 980px);
+        margin: 10px auto 14px;
+        border-radius: 24px;
+        flex-wrap: wrap;
+      }
+      .project-nav a { flex: 1 1 42%; }
+      .hero { grid-template-columns: 1fr; border-radius: 28px; padding: 22px; }
+      .routes { grid-template-columns: 1fr; }
+      .stack-head { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"></path><path d="m7 10 3 2-3 2"></path><path d="M12 15h5"></path></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 6h14v10H8l-3 3z"></path><path d="M8 10h8"></path><path d="M8 13h5"></path></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 9-4 3 4 3"></path><path d="m16 9 4 3-4 3"></path><path d="m14 5-4 14"></path></symbol>
+    <symbol id="i-agent" viewBox="0 0 24 24"><path d="M8 8h8v8H8z"></path><path d="M12 4v4"></path><path d="M12 16v4"></path><path d="M4 12h4"></path><path d="M16 12h4"></path><path d="M9.5 11h.01"></path><path d="M14.5 11h.01"></path></symbol>
+    <symbol id="i-lab" viewBox="0 0 24 24"><path d="M9 3h6"></path><path d="M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"></path><path d="M8 15h8"></path></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><path d="M7 7h.01"></path><path d="M17 17h.01"></path><path d="M7 17h.01"></path><path d="M7 8v9"></path><path d="M8 7c5 0 4 10 9 10"></path></symbol>
+    <symbol id="i-docker" viewBox="0 0 24 24"><path d="M4 13h16"></path><path d="M6 10h3v3H6z"></path><path d="M10 10h3v3h-3z"></path><path d="M14 10h3v3h-3z"></path><path d="M9 7h3v3H9z"></path><path d="M12 18a7 7 0 0 0 7-5"></path><path d="M5 13c0 3 2 5 6 5"></path></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 2.8 7.5 7 9 4.2-1.5 7-4.5 7-9V6z"></path><path d="m9 12 2 2 4-5"></path></symbol>
+  </svg>
+
+  <nav class="project-nav" aria-label="Project navigation">
+    <a href="../index.html" data-i18n="navHome">Raiz del proyecto</a>
+    <a href="#itineraries" data-i18n="navRoutes">Itinerarios</a>
+    <a href="#commands" data-i18n="navCommands">Comandos</a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow" data-i18n="eyebrow">Guia de laboratorio IA local para Mac</div>
+        <h1 data-i18n="title">Montar ecosistemas de IA para aprender con control</h1>
+        <p class="hero-copy" data-i18n="lead">El objetivo no es tener el modelo mas potente ni ganar una carrera de productividad. Es aprender a pensar con herramientas: medir recursos, decidir que delegas, entender que ocurre en tu maquina y construir proyectos propios con paciencia.</p>
+        <div class="language" aria-label="Language selector">
+          <button type="button" data-lang="ca" aria-pressed="false">Català</button>
+          <button type="button" data-lang="es" aria-pressed="true">Castellano</button>
+          <button type="button" data-lang="en" aria-pressed="false">English</button>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="screen">
+          <svg viewBox="0 0 420 360" role="img" aria-label="Local AI lab on a Mac">
+            <rect x="36" y="42" width="348" height="214" rx="14" fill="#fffaf4" stroke="#241c1a" stroke-width="3"></rect>
+            <rect x="56" y="65" width="144" height="88" rx="8" fill="#e5f0f1" stroke="#356d7c" stroke-width="3"></rect>
+            <path d="M73 97l21 14-21 14" fill="none" stroke="#356d7c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M115 129h54" stroke="#356d7c" stroke-width="7" stroke-linecap="round"></path>
+            <rect x="220" y="65" width="132" height="88" rx="8" fill="#ede9f0" stroke="#7c5767" stroke-width="3"></rect>
+            <path d="m255 96-23 18 23 18" fill="none" stroke="#7c5767" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="m317 96 23 18-23 18" fill="none" stroke="#7c5767" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect x="75" y="176" width="112" height="54" rx="10" fill="#e7efe2" stroke="#71824a" stroke-width="3"></rect>
+            <circle cx="131" cy="203" r="18" fill="none" stroke="#71824a" stroke-width="6"></circle>
+            <rect x="214" y="176" width="128" height="54" rx="10" fill="#f3e7d9" stroke="#b76845" stroke-width="3"></rect>
+            <path d="M240 196h76M240 212h48" stroke="#b76845" stroke-width="7" stroke-linecap="round"></path>
+            <path d="M170 256h80l16 46H154z" fill="#fffaf4" stroke="#241c1a" stroke-width="3"></path>
+            <rect x="116" y="300" width="188" height="18" rx="9" fill="#241c1a"></rect>
+          </svg>
+        </div>
+        <div class="panel" data-i18n="heroNote">La espera tambien forma parte del experimento: sirve para ajustar expectativas, no para apagar el cerebro.</div>
+      </aside>
+    </section>
+
+    <section id="principles">
+      <h2 class="section-title"><span class="icon" style="--accent: var(--lake); --soft: #e5f0f1;"><svg><use href="#i-lab"></use></svg></span><span data-i18n="principlesTitle">Antes de instalar nada</span></h2>
+      <div class="grid-3">
+        <article class="card"><h3><span class="icon" style="--accent: var(--moss); --soft: #e7efe2;"><svg><use href="#i-agent"></use></svg></span><span data-i18n="p1Title">La IA no sustituye tu voluntad</span></h3><p data-i18n="p1Text">Un modelo puede proponer, resumir o ejecutar pasos, pero tu decides el objetivo.</p></article>
+        <article class="card"><h3><span class="icon" style="--accent: var(--gold); --soft: #f8efd8;"><svg><use href="#i-lab"></use></svg></span><span data-i18n="p2Title">La lentitud enseña</span></h3><p data-i18n="p2Text">Cuando un modelo tarda, pregunta que esperas, que podria fallar y como sabras si el resultado sirve.</p></article>
+        <article class="card"><h3><span class="icon" style="--accent: var(--plum); --soft: #ede9f0;"><svg><use href="#i-git"></use></svg></span><span data-i18n="p3Title">Git es memoria del proyecto</span></h3><p data-i18n="p3Text">Git guarda versiones y ayuda a revisar lo que cambia antes de aceptarlo.</p></article>
+      </div>
+    </section>
+
+    <section id="notices">
+      <h2 class="section-title"><span class="icon" style="--accent: var(--danger); --soft: #f7e2e3;"><svg><use href="#i-shield"></use></svg></span><span data-i18n="noticesTitle">Avisos antes de elegir ruta</span></h2>
+      <div class="notices">
+        <article class="notice" style="--accent: var(--danger);"><h3><span data-i18n="securityTitle">Seguridad y privacidad</span></h3><p data-i18n="securityText">No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.</p></article>
+        <article class="notice" style="--accent: var(--gold);"><h3><span data-i18n="commandsDisclaimerTitle">Comandos de ejemplo</span></h3><p data-i18n="commandsDisclaimerText">Los comandos son una ruta posible para practicar. En macOS muchas herramientas tambien se instalan desde la web oficial del proyecto: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.</p></article>
+      </div>
+    </section>
+
+    <section id="itineraries">
+      <h2 class="section-title"><span class="icon" style="--accent: var(--moss); --soft: #e7efe2;"><svg><use href="#i-lab"></use></svg></span><span data-i18n="routesTitle">Elige un itinerario de pruebas</span></h2>
+      <div class="filters" role="toolbar" aria-label="Route filters">
+        <button class="filter" data-filter="all" aria-pressed="true" data-i18n="filterAll">Todos</button>
+        <button class="filter" data-filter="chat" aria-pressed="false" data-i18n="filterChat">Chat local</button>
+        <button class="filter" data-filter="code" aria-pressed="false" data-i18n="filterCode">Codigo + Git</button>
+        <button class="filter" data-filter="agent" aria-pressed="false" data-i18n="filterAgent">Agentes</button>
+        <button class="filter" data-filter="full" aria-pressed="false" data-i18n="filterFull">Laboratorio completo</button>
+      </div>
+      <div class="routes">
+        <button class="route-card" data-route="chat" style="--accent: var(--gold);" type="button"><h3><span class="icon" style="--accent: var(--gold); --soft: #f8efd8;"><svg><use href="#i-chat"></use></svg></span><span data-i18n="routeChatTitle">LM Studio</span></h3><p data-i18n="routeChatText">Chat visual con Gemma o Ministral 3B para empezar sin pelear con Docker.</p><div class="tags"><span class="tag" data-i18n="tagEasy">facil</span><span class="tag" data-i18n="tagInterface">interfaz</span></div></button>
+        <button class="route-card" data-route="code" style="--accent: var(--plum);" type="button"><h3><span class="icon" style="--accent: var(--plum); --soft: #ede9f0;"><svg><use href="#i-code"></use></svg></span><span data-i18n="routeCodeTitle">OpenCode + VS Code</span></h3><p data-i18n="routeCodeText">Editar, pedir ayuda al agente, revisar cambios y aprender de Git.</p><div class="tags"><span class="tag" data-i18n="tagProjects">proyectos</span><span class="tag" data-i18n="tagVersioning">versionado</span></div></button>
+        <button class="route-card" data-route="agent" style="--accent: var(--clay);" type="button"><h3><span class="icon" style="--accent: var(--clay); --soft: #f3e7d9;"><svg><use href="#i-agent"></use></svg></span><span data-i18n="routeAgentTitle">OpenClaw + Codex</span></h3><p data-i18n="routeAgentText">Autenticacion por navegador, gateway local y control de permisos.</p><div class="tags"><span class="tag" data-i18n="tagAgent">agente</span><span class="tag" data-i18n="tagControl">control</span></div></button>
+        <button class="route-card" data-route="full" style="--accent: var(--moss);" type="button"><h3><span class="icon" style="--accent: var(--moss); --soft: #e7efe2;"><svg><use href="#i-docker"></use></svg></span><span data-i18n="routeFullTitle">Ollama + Open WebUI</span></h3><p data-i18n="routeFullText">Modelo local, terminal, API y una interfaz web en Docker.</p><div class="tags"><span class="tag" data-i18n="tagComplete">completo</span><span class="tag">Docker</span></div></button>
+      </div>
+    </section>
+
+    <section id="commands">
+      <h2 class="section-title"><span class="icon" style="--accent: var(--lake); --soft: #e5f0f1;"><svg><use href="#i-terminal"></use></svg></span><span data-i18n="commandsTitle">Comandos por ruta</span></h2>
+
+      <article class="stack" data-stack="all" style="--accent: var(--lake); --soft: #e5f0f1;">
+        <div class="stack-head"><div><h3 data-i18n="baseTitle">Base comun: herramientas del Mac</h3><p data-i18n="baseText">Instala primero lo necesario para que las otras rutas tengan suelo.</p></div><span class="difficulty" data-i18n="badgeBase">previo</span></div>
+        <div class="stack-body">
+          <div class="steps"><div class="step"><b data-i18n="observe">Observa</b><p data-i18n="baseStep1">Comprueba que tienes herramientas de desarrollo, Git, Docker y Warp.</p></div><div class="step"><b data-i18n="think">Piensa</b><p data-i18n="baseStep2">Git es una libreta de cambios para revisar y volver atras.</p></div></div>
+          <div class="commands">
+            <div class="command"><div class="command-top"><span data-i18n="cmdBaseInstall">Instalar herramientas base</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>xcode-select --install
+brew update
+brew install git
+brew install --cask docker
+brew install --cask warp
+brew install --cask visual-studio-code</code></pre></div>
+            <div class="command"><div class="command-top"><span data-i18n="cmdGitConfig">Configurar identidad Git</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>git config --global user.name "Tu Nombre"
+git config --global user.email "tu-email@example.com"
+git config --global init.defaultBranch main</code></pre></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="stack" data-stack="chat" style="--accent: var(--gold); --soft: #f8efd8;">
+        <div class="stack-head"><div><h3 data-i18n="lmTitle">Ruta 1: LM Studio con Gemma o Ministral 3B</h3><p data-i18n="lmText">Para empezar por una interfaz de chat clasica y comparar modelos locales.</p></div><span class="difficulty" data-i18n="badgeEasy">facil</span></div>
+        <div class="stack-body">
+          <div class="steps"><div class="step"><b data-i18n="goal">Objetivo</b><p data-i18n="lmStep1">Chatear con un modelo local y observar tono, velocidad y calidad.</p></div><div class="step"><b data-i18n="privacy">Privacidad</b><p data-i18n="lmStep2">Verifica que el modelo esta descargado y corriendo localmente.</p></div></div>
+          <div class="commands"><div class="command"><div class="command-top"><span data-i18n="cmdLmInstall">Instalar LM Studio</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>brew install --cask lm-studio
+open -a "LM Studio"</code></pre></div><div class="command"><div class="command-top"><span data-i18n="cmdLmPrompt">Experimento de comparacion</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>Explica que es Git a una persona de 12 años,
+usando una analogia y un ejemplo de proyecto.</code></pre></div></div>
+        </div>
+      </article>
+
+      <article class="stack" data-stack="code" style="--accent: var(--plum); --soft: #ede9f0;">
+        <div class="stack-head"><div><h3 data-i18n="codeTitle">Ruta 2: OpenCode + VS Code + Git</h3><p data-i18n="codeText">Para administrar proyectos con versionado y revisar cambios antes de aceptarlos.</p></div><span class="difficulty" data-i18n="badgeMedium">media</span></div>
+        <div class="stack-body">
+          <div class="steps"><div class="step"><b data-i18n="goal">Objetivo</b><p data-i18n="codeStep1">Crear un proyecto pequeno, abrirlo en VS Code y revisar el diff con Git.</p></div><div class="step"><b data-i18n="versioning">Versionado</b><p data-i18n="codeStep2">Haz commit antes de pedir cambios al agente.</p></div></div>
+          <div class="commands"><div class="command"><div class="command-top"><span data-i18n="cmdOpenCodeInstall">Instalar o verificar OpenCode</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>brew install sst/tap/opencode
+opencode --version
+opencode auth list</code></pre></div><div class="command"><div class="command-top"><span data-i18n="cmdProject">Crear proyecto versionado</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>mkdir laboratorio-git-ia
+cd laboratorio-git-ia
+git init
+printf "# Laboratorio Git + IA\n" > README.md
+git add README.md
+git commit -m "Inicio del laboratorio"
+code .
+opencode .</code></pre></div></div>
+        </div>
+      </article>
+
+      <article class="stack" data-stack="agent" style="--accent: var(--clay); --soft: #f3e7d9;">
+        <div class="stack-head"><div><h3 data-i18n="agentTitle">Ruta 3: OpenClaw con Codex Auth via browser</h3><p data-i18n="agentText">Para entender autenticacion, gateway local y permisos de agente.</p></div><span class="difficulty" data-i18n="badgeAdvanced">avanzada</span></div>
+        <div class="stack-body">
+          <div class="steps"><div class="step"><b data-i18n="control">Control</b><p data-i18n="agentStep1">Empieza con permisos prudentes y pregunta por que cada permiso es necesario.</p></div><div class="step"><b data-i18n="securityShort">Seguridad</b><p data-i18n="agentStep2">Un agente que ejecuta comandos no es un juguete sin bordes.</p></div></div>
+          <div class="commands"><div class="command"><div class="command-top"><span data-i18n="cmdCodexAuth">Codex auth via navegador</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>codex login --device-auth
+codex login status
+codex doctor</code></pre></div><div class="command"><div class="command-top"><span data-i18n="cmdOpenClaw">OpenClaw setup local</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>openclaw onboard --mode local --flow quickstart
+openclaw models status
+openclaw status
+openclaw tui</code></pre></div></div>
+        </div>
+      </article>
+
+      <article class="stack" data-stack="full" style="--accent: var(--moss); --soft: #e7efe2;">
+        <div class="stack-head"><div><h3 data-i18n="fullTitle">Ruta 4: Ollama + llama3.2 + Open WebUI</h3><p data-i18n="fullText">Modelo local, API y una interfaz web en Docker.</p></div><span class="difficulty" data-i18n="badgeComplete">completa</span></div>
+        <div class="stack-body">
+          <div class="steps"><div class="step"><b data-i18n="goal">Objetivo</b><p data-i18n="fullStep1">Entender las capas: Ollama ejecuta el modelo, Open WebUI es la interfaz y Docker contiene la app.</p></div><div class="step"><b data-i18n="resources">Recursos</b><p data-i18n="fullStep2">Observa CPU, memoria, temperatura y disco.</p></div></div>
+          <div class="commands"><div class="command"><div class="command-top"><span data-i18n="cmdOllamaInstall">Instalar Ollama y bajar llama3.2</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>brew install ollama
+ollama serve
+ollama pull llama3.2
+ollama run llama3.2</code></pre></div><div class="command"><div class="command-top"><span data-i18n="cmdOpenWebUI">Levantar Open WebUI con Docker</span><button class="copy" data-i18n="copy">Copiar</button></div><pre><code>docker run -d \
+  -p 3000:8080 \
+  -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
+  -v open-webui:/app/backend/data \
+  --name open-webui \
+  --restart always \
+  ghcr.io/open-webui/open-webui:main
+
+open http://localhost:3000</code></pre></div></div>
+        </div>
+      </article>
+    </section>
+
+    <p class="footer-note" data-i18n="footer">Guia pensada para explorar capacidades con calma: probar, observar, comparar, guardar aprendizajes y construir proyectos propios.</p>
+  </main>
+
+  <script>
+    const translations = {
+      es: {
+        navHome: 'Raiz del proyecto', navRoutes: 'Itinerarios', navCommands: 'Comandos',
+        eyebrow: 'Guia de laboratorio IA local para Mac',
+        title: 'Montar ecosistemas de IA para aprender con control',
+        lead: 'El objetivo no es tener el modelo mas potente ni ganar una carrera de productividad. Es aprender a pensar con herramientas: medir recursos, decidir que delegas, entender que ocurre en tu maquina y construir proyectos propios con paciencia.',
+        heroNote: 'La espera tambien forma parte del experimento: sirve para ajustar expectativas, no para apagar el cerebro.',
+        principlesTitle: 'Antes de instalar nada',
+        p1Title: 'La IA no sustituye tu voluntad', p1Text: 'Un modelo puede proponer, resumir o ejecutar pasos, pero tu decides el objetivo.',
+        p2Title: 'La lentitud enseña', p2Text: 'Cuando un modelo tarda, pregunta que esperas, que podria fallar y como sabras si el resultado sirve.',
+        p3Title: 'Git es memoria del proyecto', p3Text: 'Git guarda versiones y ayuda a revisar lo que cambia antes de aceptarlo.',
+        noticesTitle: 'Avisos antes de elegir ruta', securityTitle: 'Seguridad y privacidad', securityText: 'No pegues contraseñas, claves API, tokens ni datos privados en herramientas que no entiendes. Local no significa automaticamente seguro.',
+        commandsDisclaimerTitle: 'Comandos de ejemplo', commandsDisclaimerText: 'Los comandos son una ruta posible para practicar. En macOS muchas herramientas tambien se instalan desde la web oficial del proyecto: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.',
+        routesTitle: 'Elige un itinerario de pruebas', filterAll: 'Todos', filterChat: 'Chat local', filterCode: 'Codigo + Git', filterAgent: 'Agentes', filterFull: 'Laboratorio completo',
+        routeChatTitle: 'LM Studio', routeChatText: 'Chat visual con Gemma o Ministral 3B para empezar sin pelear con Docker.',
+        routeCodeTitle: 'OpenCode + VS Code', routeCodeText: 'Editar, pedir ayuda al agente, revisar cambios y aprender de Git.',
+        routeAgentTitle: 'OpenClaw + Codex', routeAgentText: 'Autenticacion por navegador, gateway local y control de permisos.',
+        routeFullTitle: 'Ollama + Open WebUI', routeFullText: 'Modelo local, terminal, API y una interfaz web en Docker.',
+        tagEasy: 'facil', tagInterface: 'interfaz', tagProjects: 'proyectos', tagVersioning: 'versionado', tagAgent: 'agente', tagControl: 'control', tagComplete: 'completo',
+        commandsTitle: 'Comandos por ruta', baseTitle: 'Base comun: herramientas del Mac', baseText: 'Instala primero lo necesario para que las otras rutas tengan suelo.', badgeBase: 'previo',
+        observe: 'Observa', think: 'Piensa', goal: 'Objetivo', privacy: 'Privacidad', versioning: 'Versionado', control: 'Control', securityShort: 'Seguridad', resources: 'Recursos',
+        baseStep1: 'Comprueba que tienes herramientas de desarrollo, Git, Docker y Warp.', baseStep2: 'Git es una libreta de cambios para revisar y volver atras.',
+        cmdBaseInstall: 'Instalar herramientas base', cmdGitConfig: 'Configurar identidad Git', copy: 'Copiar',
+        lmTitle: 'Ruta 1: LM Studio con Gemma o Ministral 3B', lmText: 'Para empezar por una interfaz de chat clasica y comparar modelos locales.', badgeEasy: 'facil',
+        lmStep1: 'Chatear con un modelo local y observar tono, velocidad y calidad.', lmStep2: 'Verifica que el modelo esta descargado y corriendo localmente.', cmdLmInstall: 'Instalar LM Studio', cmdLmPrompt: 'Experimento de comparacion',
+        codeTitle: 'Ruta 2: OpenCode + VS Code + Git', codeText: 'Para administrar proyectos con versionado y revisar cambios antes de aceptarlos.', badgeMedium: 'media',
+        codeStep1: 'Crear un proyecto pequeno, abrirlo en VS Code y revisar el diff con Git.', codeStep2: 'Haz commit antes de pedir cambios al agente.', cmdOpenCodeInstall: 'Instalar o verificar OpenCode', cmdProject: 'Crear proyecto versionado',
+        agentTitle: 'Ruta 3: OpenClaw con Codex Auth via browser', agentText: 'Para entender autenticacion, gateway local y permisos de agente.', badgeAdvanced: 'avanzada',
+        agentStep1: 'Empieza con permisos prudentes y pregunta por que cada permiso es necesario.', agentStep2: 'Un agente que ejecuta comandos no es un juguete sin bordes.', cmdCodexAuth: 'Codex auth via navegador', cmdOpenClaw: 'OpenClaw setup local',
+        fullTitle: 'Ruta 4: Ollama + llama3.2 + Open WebUI', fullText: 'Modelo local, API y una interfaz web en Docker.', badgeComplete: 'completa',
+        fullStep1: 'Entender las capas: Ollama ejecuta el modelo, Open WebUI es la interfaz y Docker contiene la app.', fullStep2: 'Observa CPU, memoria, temperatura y disco.', cmdOllamaInstall: 'Instalar Ollama y bajar llama3.2', cmdOpenWebUI: 'Levantar Open WebUI con Docker',
+        footer: 'Guia pensada para explorar capacidades con calma: probar, observar, comparar, guardar aprendizajes y construir proyectos propios.', copied: 'Copiado', select: 'Selecciona'
+      },
+      ca: {
+        navHome: 'Arrel del projecte', navRoutes: 'Itineraris', navCommands: 'Ordres',
+        eyebrow: "Guia de laboratori d'IA local per a Mac",
+        title: "Muntar ecosistemes d'IA per aprendre amb control",
+        lead: "L'objectiu no es tenir el model mes potent ni guanyar una cursa de productivitat. Es aprendre a pensar amb eines: mesurar recursos, decidir que delegues, entendre que passa a la teva maquina i construir projectes propis amb paciencia.",
+        heroNote: "L'espera tambe forma part de l'experiment: serveix per ajustar expectatives, no per apagar el cervell.",
+        principlesTitle: "Abans d'instal·lar res",
+        p1Title: "La IA no substitueix la teva voluntat", p1Text: "Un model pot proposar, resumir o executar passos, pero tu decideixes l'objectiu.",
+        p2Title: "La lentitud ensenya", p2Text: "Quan un model triga, pregunta't que esperes, que podria fallar i com sabras si el resultat serveix.",
+        p3Title: "Git es memoria del projecte", p3Text: "Git desa versions i ajuda a revisar que canvia abans d'acceptar-ho.",
+        noticesTitle: "Avisos abans de triar ruta", securityTitle: "Seguretat i privadesa", securityText: "No enganxis contrasenyes, claus API, tokens ni dades privades en eines que no entens. Local no vol dir automaticament segur.",
+        commandsDisclaimerTitle: "Ordres d'exemple", commandsDisclaimerText: "Les ordres son una ruta possible per practicar. A macOS moltes eines tambe s'instal·len des del web oficial del projecte: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.",
+        routesTitle: "Tria un itinerari de proves", filterAll: "Tots", filterChat: "Xat local", filterCode: "Codi + Git", filterAgent: "Agents", filterFull: "Laboratori complet",
+        routeChatTitle: "LM Studio", routeChatText: "Xat visual amb Gemma o Ministral 3B per comencar sense barallar-se amb Docker.",
+        routeCodeTitle: "OpenCode + VS Code", routeCodeText: "Editar, demanar ajuda a l'agent, revisar canvis i aprendre Git.",
+        routeAgentTitle: "OpenClaw + Codex", routeAgentText: "Autenticacio pel navegador, gateway local i control de permisos.",
+        routeFullTitle: "Ollama + Open WebUI", routeFullText: "Model local, terminal, API i una interficie web en Docker.",
+        tagEasy: "facil", tagInterface: "interficie", tagProjects: "projectes", tagVersioning: "versionat", tagAgent: "agent", tagControl: "control", tagComplete: "complet",
+        commandsTitle: "Ordres per ruta", baseTitle: "Base comuna: eines del Mac", baseText: "Instal·la primer el necessari perque les altres rutes tinguin terra.", badgeBase: "previ",
+        observe: "Observa", think: "Pensa", goal: "Objectiu", privacy: "Privadesa", versioning: "Versionat", control: "Control", securityShort: "Seguretat", resources: "Recursos",
+        baseStep1: "Comprova que tens eines de desenvolupament, Git, Docker i Warp.", baseStep2: "Git es una llibreta de canvis per revisar i tornar enrere.",
+        cmdBaseInstall: "Instal·lar eines base", cmdGitConfig: "Configurar identitat Git", copy: "Copia",
+        lmTitle: "Ruta 1: LM Studio amb Gemma o Ministral 3B", lmText: "Per comencar amb una interficie de xat classica i comparar models locals.", badgeEasy: "facil",
+        lmStep1: "Xatejar amb un model local i observar to, velocitat i qualitat.", lmStep2: "Verifica que el model esta descarregat i corrent localment.", cmdLmInstall: "Instal·lar LM Studio", cmdLmPrompt: "Experiment de comparacio",
+        codeTitle: "Ruta 2: OpenCode + VS Code + Git", codeText: "Per administrar projectes amb versionat i revisar canvis abans d'acceptar-los.", badgeMedium: "mitjana",
+        codeStep1: "Crear un projecte petit, obrir-lo a VS Code i revisar el diff amb Git.", codeStep2: "Fes commit abans de demanar canvis a l'agent.", cmdOpenCodeInstall: "Instal·lar o verificar OpenCode", cmdProject: "Crear projecte versionat",
+        agentTitle: "Ruta 3: OpenClaw amb Codex Auth via browser", agentText: "Per entendre autenticacio, gateway local i permisos d'agent.", badgeAdvanced: "avancada",
+        agentStep1: "Comenca amb permisos prudents i pregunta per que cada permis es necessari.", agentStep2: "Un agent que executa ordres no es una joguina sense vores.", cmdCodexAuth: "Codex auth via navegador", cmdOpenClaw: "OpenClaw setup local",
+        fullTitle: "Ruta 4: Ollama + llama3.2 + Open WebUI", fullText: "Model local, API i una interficie web en Docker.", badgeComplete: "completa",
+        fullStep1: "Entendre les capes: Ollama executa el model, Open WebUI es la interficie i Docker conte l'app.", fullStep2: "Observa CPU, memoria, temperatura i disc.", cmdOllamaInstall: "Instal·lar Ollama i baixar llama3.2", cmdOpenWebUI: "Aixecar Open WebUI amb Docker",
+        footer: "Guia pensada per explorar capacitats amb calma: provar, observar, comparar, guardar aprenentatges i construir projectes propis.", copied: "Copiat", select: "Selecciona"
+      },
+      en: {
+        navHome: 'Project root', navRoutes: 'Routes', navCommands: 'Commands',
+        eyebrow: 'Local AI lab guide for Mac',
+        title: 'Build AI ecosystems to learn with control',
+        lead: 'The goal is not to run the most powerful model or win a productivity race. It is to learn how to think with tools: measure resources, choose what to delegate, understand what happens on your machine, and patiently build projects of your own.',
+        heroNote: 'Waiting is part of the experiment too: it helps you tune expectations, not switch your brain off.',
+        principlesTitle: 'Before installing anything',
+        p1Title: 'AI does not replace your will', p1Text: 'A model can suggest, summarize, or run steps, but you decide the objective.',
+        p2Title: 'Slowness teaches', p2Text: 'When a model takes time, ask what you expect, what may fail, and how you will know whether the result is useful.',
+        p3Title: 'Git is project memory', p3Text: 'Git stores versions and helps you review what changed before accepting it.',
+        noticesTitle: 'Read this before choosing a route', securityTitle: 'Security and privacy', securityText: 'Do not paste passwords, API keys, tokens, or private data into tools you do not understand. Local does not automatically mean safe.',
+        commandsDisclaimerTitle: 'Example commands', commandsDisclaimerText: 'The commands are one possible practice path. On macOS many tools can also be installed from the official project website: Git, Docker Desktop, LM Studio, Warp, Ollama, etc.',
+        routesTitle: 'Choose a test route', filterAll: 'All', filterChat: 'Local chat', filterCode: 'Code + Git', filterAgent: 'Agents', filterFull: 'Full lab',
+        routeChatTitle: 'LM Studio', routeChatText: 'Visual chat with Gemma or Ministral 3B, a gentle start without wrestling Docker.',
+        routeCodeTitle: 'OpenCode + VS Code', routeCodeText: 'Edit, ask the agent for help, review changes, and learn Git.',
+        routeAgentTitle: 'OpenClaw + Codex', routeAgentText: 'Browser auth, local gateway, and permission control.',
+        routeFullTitle: 'Ollama + Open WebUI', routeFullText: 'Local model, terminal, API, and a Docker-hosted web UI.',
+        tagEasy: 'easy', tagInterface: 'interface', tagProjects: 'projects', tagVersioning: 'versioning', tagAgent: 'agent', tagControl: 'control', tagComplete: 'complete',
+        commandsTitle: 'Commands by route', baseTitle: 'Common base: Mac tools', baseText: 'Install the basic tools first so the other routes have a floor.', badgeBase: 'setup',
+        observe: 'Observe', think: 'Think', goal: 'Goal', privacy: 'Privacy', versioning: 'Versioning', control: 'Control', securityShort: 'Security', resources: 'Resources',
+        baseStep1: 'Check that you have developer tools, Git, Docker, and Warp.', baseStep2: 'Git is a change notebook for reviewing and rolling back.',
+        cmdBaseInstall: 'Install base tools', cmdGitConfig: 'Configure Git identity', copy: 'Copy',
+        lmTitle: 'Route 1: LM Studio with Gemma or Ministral 3B', lmText: 'Start with a classic chat interface and compare local models.', badgeEasy: 'easy',
+        lmStep1: 'Chat with a local model and observe tone, speed, and quality.', lmStep2: 'Verify that the model is downloaded and running locally.', cmdLmInstall: 'Install LM Studio', cmdLmPrompt: 'Comparison experiment',
+        codeTitle: 'Route 2: OpenCode + VS Code + Git', codeText: 'Manage versioned projects and review changes before accepting them.', badgeMedium: 'medium',
+        codeStep1: 'Create a small project, open it in VS Code, and review the diff with Git.', codeStep2: 'Commit before asking the agent for changes.', cmdOpenCodeInstall: 'Install or verify OpenCode', cmdProject: 'Create a versioned project',
+        agentTitle: 'Route 3: OpenClaw with Codex Auth via browser', agentText: 'Understand authentication, local gateway, and agent permissions.', badgeAdvanced: 'advanced',
+        agentStep1: 'Start with cautious permissions and ask why each permission is needed.', agentStep2: 'An agent that runs commands is not a toy without edges.', cmdCodexAuth: 'Codex auth via browser', cmdOpenClaw: 'OpenClaw local setup',
+        fullTitle: 'Route 4: Ollama + llama3.2 + Open WebUI', fullText: 'Local model, API, and a Docker-hosted web interface.', badgeComplete: 'complete',
+        fullStep1: 'Understand the layers: Ollama runs the model, Open WebUI is the interface, and Docker contains the app.', fullStep2: 'Watch CPU, memory, temperature, and disk usage.', cmdOllamaInstall: 'Install Ollama and pull llama3.2', cmdOpenWebUI: 'Run Open WebUI with Docker',
+        footer: 'A guide for exploring capabilities calmly: test, observe, compare, keep lessons, and build projects of your own.', copied: 'Copied', select: 'Select'
+      }
+    };
+
+    let currentLang = 'es';
+    const translatable = Array.from(document.querySelectorAll('[data-i18n]'));
+    const languageButtons = Array.from(document.querySelectorAll('[data-lang]'));
+    const filters = Array.from(document.querySelectorAll('.filter'));
+    const stacks = Array.from(document.querySelectorAll('.stack'));
+    const routeCards = Array.from(document.querySelectorAll('.route-card'));
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      translatable.forEach((node) => {
+        const key = node.dataset.i18n;
+        if (translations[lang][key]) node.textContent = translations[lang][key];
+      });
+      languageButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.lang === lang));
+      });
+    }
+
+    function applyFilter(route) {
+      filters.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.filter === route));
+      });
+      stacks.forEach((stack) => {
+        const key = stack.dataset.stack;
+        stack.hidden = route !== 'all' && key !== 'all' && key !== route;
+      });
+      routeCards.forEach((card) => {
+        const active = route === 'all' || card.dataset.route === route;
+        card.style.opacity = active ? '1' : '.45';
+      });
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.lang));
+    });
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => applyFilter(button.dataset.filter));
+    });
+
+    routeCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        applyFilter(card.dataset.route);
+        document.querySelector('#commands').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    document.querySelectorAll('.copy').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const command = button.closest('.command').querySelector('code').innerText;
+        try {
+          await navigator.clipboard.writeText(command);
+          button.textContent = translations[currentLang].copied;
+          setTimeout(() => { button.textContent = translations[currentLang].copy; }, 1200);
+        } catch {
+          button.textContent = translations[currentLang].select;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
